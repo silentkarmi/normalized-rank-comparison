@@ -1,20 +1,19 @@
 import math
 
 class DataCollection:
-    # sumUpperDominantHalf = 0
-    # sumLowerDominantHalf = 0
-
-    # netTotalItemsInCollection = 0
-
     def __init__(self):
         self.dataCollectionList = []
-        DataCollection.netTotalItemsInCollection = 0
-        DataCollection.sumLowerDominantHalf = 0
-        DataCollection.sumUpperDominantHalf = 0
+        self.netTotalItemsInCollection = 0
+        self.sumTotal = 0
+        self.sumLowerDominantHalf = 0
+        self.sumUpperDominantHalf = 0
 
+    def getNumberOfGroups(self):
+        return len(self.dataCollectionList)
 
     def print(self):
         for itemGroup in self.dataCollectionList:
+            print(itemGroup.name, "Dominance Value:", itemGroup.dominanceValue)
             for itemElement in itemGroup.dataList:
                 print(itemGroup.name, itemElement.value, itemElement.rank)
 
@@ -35,17 +34,21 @@ class DataCollection:
     
         
     def __calculateNetTotalItemsInCollection(self):
-        DataCollection.netTotalItemsInCollection = 0
+        self.netTotalItemsInCollection = 0
         for itemGroup in self.dataCollectionList:
-            DataCollection.netTotalItemsInCollection += len(itemGroup.dataList)
-        # print("DataCollection.netTotalItemsInCollection", DataCollection.netTotalItemsInCollection)
+            self.netTotalItemsInCollection += len(itemGroup.dataList)
+        # print("self.netTotalItemsInCollection", self.netTotalItemsInCollection)
+
+    def __calculateTotalSum(self):
+        self.sumTotal = self.netTotalItemsInCollection * (self.netTotalItemsInCollection + 1) * 0.5
+
 
     def __calculateLowerDominantHalf(self):
-         DataCollection.sumLowerDominantHalf = 0
-         a = math.ceil(DataCollection.netTotalItemsInCollection)
+         a = math.floor(self.netTotalItemsInCollection/2)
+         self.sumLowerDominantHalf = a * (a + 1) * 0.5
 
     def __calculateUpperDominantHalf(self):
-        pass
+        self.sumUpperDominantHalf = self.sumTotal - self.sumLowerDominantHalf
 
     def __orderByRank(self):
         rank = 0
@@ -79,14 +82,31 @@ class DataCollection:
         self.__orderByRank()
         self.__averageOutSameRanks()
         self.__calculateNetTotalItemsInCollection()
+        self.__calculateTotalSum()
         self.__calculateLowerDominantHalf()
         self.__calculateUpperDominantHalf()
 
+        for group in self.dataCollectionList:
+            group.setDominanceValue()
+
 class DataGroup:
-    def __init__(self, name):
+    def __init__(self, name, parent):
         self.name = name
         self.dataList = []
         self.dominanceValue = -1
+        self.parent = parent
+        parent.dataCollectionList.append(self)
+
+    def getRankedGroupSum(self):
+        sum = 0
+        for elem in self.dataList:
+            sum += elem.rank
+        return sum
+
+    def setDominanceValue(self):
+        weightbias = self.parent.netTotalItemsInCollection /  (self.parent.getNumberOfGroups() * len(self.dataList))
+        rankedGroupSum = self.getRankedGroupSum()
+        self.dominanceValue = weightbias * rankedGroupSum / self.parent.sumUpperDominantHalf
 
 class DataElement:
     def __init__(self, value):
@@ -94,22 +114,30 @@ class DataElement:
         self.rank = -1
 
 def main():
-    dataGroup1 = DataGroup("GroupA")
-    dataGroup1.dataList.append(DataElement(10))
-    dataGroup1.dataList.append(DataElement(10))
-    dataGroup1.dataList.append(DataElement(10))
-    dataGroup1.dataList.append(DataElement(10))
-
-
-    dataGroup2 = DataGroup("GroupB")
-    dataGroup2.dataList.append(DataElement(100))
-    dataGroup2.dataList.append(DataElement(100))
-    dataGroup2.dataList.append(DataElement(100))
-    dataGroup2.dataList.append(DataElement(100))
-
     dataCollection = DataCollection()
-    dataCollection.dataCollectionList.append(dataGroup1)
-    dataCollection.dataCollectionList.append(dataGroup2)
+
+    dataGroup1 = DataGroup("GroupA", dataCollection)
+    dataGroup1.dataList.append(DataElement(95))
+    dataGroup1.dataList.append(DataElement(48))
+    dataGroup1.dataList.append(DataElement(25))
+    dataGroup1.dataList.append(DataElement(15))
+
+    dataGroup2 = DataGroup("GroupB", dataCollection)
+    dataGroup2.dataList.append(DataElement(83))
+    dataGroup2.dataList.append(DataElement(57))
+    dataGroup2.dataList.append(DataElement(100))
+
+    dataGroup3 = DataGroup("GroupC", dataCollection)
+    dataGroup3.dataList.append(DataElement(70))
+    dataGroup3.dataList.append(DataElement(20))
+    dataGroup3.dataList.append(DataElement(40))
+
+    dataGroup4 = DataGroup("GroupD", dataCollection)
+    dataGroup4.dataList.append(DataElement(95))
+    dataGroup4.dataList.append(DataElement(15))
+    dataGroup4.dataList.append(DataElement(18))
+    dataGroup4.dataList.append(DataElement(30))
+    dataGroup4.dataList.append(DataElement(10))
 
     dataCollection.process()
     dataCollection.print()
