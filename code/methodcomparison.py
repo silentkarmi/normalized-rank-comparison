@@ -1,4 +1,5 @@
 import math
+from scipy import stats
 
 class DataCollection:
     def __init__(self):
@@ -7,11 +8,23 @@ class DataCollection:
         self.sumTotal = 0
         self.sumLowerDominantHalf = 0
         self.sumUpperDominantHalf = 0
+        self.psignificanceValue = 0
+
+    def computeKruskalTest(self):
+
+        arrayDataCollectionGroups = []
+        
+        for itemGroup in self.dataCollectionList:
+            arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
+
+        tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
+        h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
 
     def getNumberOfGroups(self):
         return len(self.dataCollectionList)
 
     def print(self):
+        print("collection p Significance Value:", self.psignificanceValue)
         for itemGroup in self.dataCollectionList:
             print(itemGroup.name, "Dominance Value:", itemGroup.dominanceValue)
             for itemElement in itemGroup.dataList:
@@ -97,6 +110,12 @@ class DataGroup:
         self.parent = parent
         parent.dataCollectionList.append(self)
 
+    def getDataGroupTupleElements(self):
+        returnArray = []
+        for elem in self.dataList:
+            returnArray.append(elem.value)
+        return tuple(returnArray)
+
     def getRankedGroupSum(self):
         sum = 0
         for elem in self.dataList:
@@ -114,6 +133,8 @@ class DataElement:
         self.rank = -1
 
 def main():
+     
+    #example with multiple groups and tied ranks and uneven weights
     dataCollection = DataCollection()
 
     dataGroup1 = DataGroup("GroupA", dataCollection)
@@ -139,8 +160,30 @@ def main():
     dataGroup4.dataList.append(DataElement(30))
     dataGroup4.dataList.append(DataElement(10))
 
+    dataCollection.computeKruskalTest()
     dataCollection.process()
     dataCollection.print()
+    
+    #another simpler example
+    dataCollectionAnotherExample = DataCollection()
+    dg1 = DataGroup("GrpI", dataCollectionAnotherExample)
+    dg1.dataList.append(DataElement(10))
+    dg1.dataList.append(DataElement(11))
+    dg1.dataList.append(DataElement(11))
+    dg1.dataList.append(DataElement(11))
+    dg1.dataList.append(DataElement(11))
+
+
+    dg2 = DataGroup("GrpII", dataCollectionAnotherExample)
+    dg2.dataList.append(DataElement(11))
+    dg2.dataList.append(DataElement(11))
+    dg2.dataList.append(DataElement(11))
+    dg2.dataList.append(DataElement(11))
+    dg2.dataList.append(DataElement(11))
+
+    dataCollectionAnotherExample.computeKruskalTest()
+    dataCollectionAnotherExample.process()
+    dataCollectionAnotherExample.print()
 
 if __name__ == "__main__":
     main()
