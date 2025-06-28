@@ -9,6 +9,7 @@ class DataCollection:
         """Constructor defining, N (netTotalItemsInCollection), SUDH (Sum of upper dominant half), 
     also contains list of groups.
         """
+        
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
         self.sumTotal = 0
@@ -187,25 +188,25 @@ def main():
     dataGroup4.dataList.append(DataElement(30))
     dataGroup4.dataList.append(DataElement(10))
 
-    dataCollection.computeKruskalTest()
     dataCollection.process() #processes the collection, by applying the dominance value 
-    dataCollection.print() #prints the ranks of elements within each group, and the group dominance value
+    dataCollection.print() #prints the ranks of elements within each group, and the group dominance values
     
-    #another simpler example
+    #another simpler example, will calculate min and max bounds and,
+    #validate the research paper written bounds theoretically
     dataCollectionAnotherExample = DataCollection()
-    dg1 = DataGroup("GrpI", dataCollectionAnotherExample)
-    dg1.dataList.append(DataElement(10))
-    dg1.dataList.append(DataElement(11))
-    dg1.dataList.append(DataElement(11))
-    dg1.dataList.append(DataElement(11))
-    dg1.dataList.append(DataElement(11))
+    dg1 = DataGroup("Group I", dataCollectionAnotherExample)
+    dg1.dataList.append(DataElement(1))
 
-    dg2 = DataGroup("GrpII", dataCollectionAnotherExample)
-    dg2.dataList.append(DataElement(11))
-    dg2.dataList.append(DataElement(11))
-    dg2.dataList.append(DataElement(11))
-    dg2.dataList.append(DataElement(11))
-    dg2.dataList.append(DataElement(11))
+    dg2 = DataGroup("Gropup II", dataCollectionAnotherExample)
+    dg2.dataList.append(DataElement(2))
+    dg2.dataList.append(DataElement(3))
+    dg2.dataList.append(DataElement(4))
+    dg2.dataList.append(DataElement(5))
+    dg2.dataList.append(DataElement(6))
+    dg2.dataList.append(DataElement(7))
+    dg2.dataList.append(DataElement(8))
+    dg2.dataList.append(DataElement(9))
+    dg2.dataList.append(DataElement(10))
     
     dataCollectionAnotherExample.process()
     dataCollectionAnotherExample.print()
