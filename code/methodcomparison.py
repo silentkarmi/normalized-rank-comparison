@@ -2,7 +2,13 @@ import math
 from scipy import stats
 
 class DataCollection:
+    """Collection contains groups, which in turn contain data elements 
+    """
+    
     def __init__(self):
+        """Constructor defining, N (netTotalItemsInCollection), SUDH (Sum of upper dominant half), 
+    also contains list of groups.
+        """
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
         self.sumTotal = 0
@@ -11,7 +17,6 @@ class DataCollection:
         self.psignificanceValue = 0
 
     def computeKruskalTest(self):
-
         arrayDataCollectionGroups = []
         
         for itemGroup in self.dataCollectionList:
@@ -22,13 +27,6 @@ class DataCollection:
 
     def getNumberOfGroups(self):
         return len(self.dataCollectionList)
-
-    def print(self):
-        print("collection p Significance Value:", self.psignificanceValue)
-        for itemGroup in self.dataCollectionList:
-            print(itemGroup.name, "Dominance Value:", itemGroup.dominanceValue)
-            for itemElement in itemGroup.dataList:
-                print(itemGroup.name, itemElement.value, itemElement.rank)
 
     def __getNextElement(self):
         for itemGroup in self.dataCollectionList:
@@ -50,7 +48,6 @@ class DataCollection:
         self.netTotalItemsInCollection = 0
         for itemGroup in self.dataCollectionList:
             self.netTotalItemsInCollection += len(itemGroup.dataList)
-        # print("self.netTotalItemsInCollection", self.netTotalItemsInCollection)
 
     def __calculateTotalSum(self):
         self.sumTotal = self.netTotalItemsInCollection * (self.netTotalItemsInCollection + 1) * 0.5
@@ -92,6 +89,12 @@ class DataCollection:
                         item.rank = average
 
     def process(self):
+        """this function will process the DataCollection, in strict order,
+    1. sort the data in ascending order
+    2. if some data have tied ranks then average it out
+    3. calculates the total sum, lower dominant half to calculate the upper dominant half
+    4. then for each group in the collection, calculate the dominance value
+        """
         self.__orderByRank()
         self.__averageOutSameRanks()
         self.__calculateNetTotalItemsInCollection()
@@ -101,8 +104,24 @@ class DataCollection:
 
         for group in self.dataCollectionList:
             group.setDominanceValue()
+    
+            
+    def print(self):
+        """prints information regarding our group showing each group dominance value and 
+        all the data contained within each group and what rank the data element in the group
+        has been assigned
+        """
+        print("-" * 10)
+        print("self.netTotalItemsInCollection", self.netTotalItemsInCollection)
+        for itemGroup in self.dataCollectionList:
+            print(itemGroup.name, "Dominance Value:", itemGroup.dominanceValue)
+            for itemElement in itemGroup.dataList:
+                print(itemGroup.name, itemElement.value, itemElement.rank)
+        print("-" * 10)
 
 class DataGroup:
+    """This is a group, for which dominance value is calculte, which have date elements
+    """
     def __init__(self, name, parent):
         self.name = name
         self.dataList = []
@@ -128,7 +147,14 @@ class DataGroup:
         self.dominanceValue = weightbias * rankedGroupSum / self.parent.sumUpperDominantHalf
 
 class DataElement:
-    def __init__(self, value):
+    """Data element is a value, and the rank assigned is when the data is sorted in ascendinng order
+    """
+    def __init__(self, value):      
+        """This is constructor takes in the value to be set automatically for the object itself
+
+        Args:
+            value (variable): It depends on what elements being stored, what's the grading scale is (1-100, A-F etc.)
+        """
         self.value = value
         self.rank = -1
 
@@ -147,6 +173,7 @@ def main():
     dataGroup2.dataList.append(DataElement(83))
     dataGroup2.dataList.append(DataElement(57))
     dataGroup2.dataList.append(DataElement(100))
+    dataGroup2.dataList.append(DataElement(100))
 
     dataGroup3 = DataGroup("GroupC", dataCollection)
     dataGroup3.dataList.append(DataElement(70))
@@ -161,8 +188,8 @@ def main():
     dataGroup4.dataList.append(DataElement(10))
 
     dataCollection.computeKruskalTest()
-    dataCollection.process()
-    dataCollection.print()
+    dataCollection.process() #processes the collection, by applying the dominance value 
+    dataCollection.print() #prints the ranks of elements within each group, and the group dominance value
     
     #another simpler example
     dataCollectionAnotherExample = DataCollection()
@@ -173,15 +200,13 @@ def main():
     dg1.dataList.append(DataElement(11))
     dg1.dataList.append(DataElement(11))
 
-
     dg2 = DataGroup("GrpII", dataCollectionAnotherExample)
     dg2.dataList.append(DataElement(11))
     dg2.dataList.append(DataElement(11))
     dg2.dataList.append(DataElement(11))
     dg2.dataList.append(DataElement(11))
     dg2.dataList.append(DataElement(11))
-
-    dataCollectionAnotherExample.computeKruskalTest()
+    
     dataCollectionAnotherExample.process()
     dataCollectionAnotherExample.print()
 
