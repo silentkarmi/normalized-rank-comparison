@@ -192,7 +192,7 @@ def main():
     dataCollection.print() #prints the ranks of elements within each group, and the group dominance values
     
     #another simpler example, will calculate min and max bounds and,
-    #validate the research paper written bounds theoretically
+    #validate the research paper written bounds theoretically, for even numbers
     dataCollectionAnotherExample = DataCollection()
     dg1 = DataGroup("Group I", dataCollectionAnotherExample)
     dg1.dataList.append(DataElement(1))
@@ -210,6 +210,28 @@ def main():
     
     dataCollectionAnotherExample.process()
     dataCollectionAnotherExample.print()
+    
+    
+    #another simpler example, will calculate min and max bounds and,
+    #validate the research paper written bounds theoretically, for odd numbers
+    dataCollectionAnotherExampleOdd = DataCollection()
+    dg1 = DataGroup("Group I", dataCollectionAnotherExampleOdd)
+    dg1.dataList.append(DataElement(1))
+
+    dg2 = DataGroup("Gropup II", dataCollectionAnotherExampleOdd)
+    dg2.dataList.append(DataElement(2))
+    dg2.dataList.append(DataElement(3))
+    dg2.dataList.append(DataElement(4))
+    dg2.dataList.append(DataElement(5))
+    dg2.dataList.append(DataElement(6))
+    dg2.dataList.append(DataElement(7))
+    dg2.dataList.append(DataElement(8))
+    dg2.dataList.append(DataElement(9))
+    dg2.dataList.append(DataElement(10))
+    dg2.dataList.append(DataElement(11))
+    
+    dataCollectionAnotherExampleOdd.process()
+    dataCollectionAnotherExampleOdd.print()
 
 if __name__ == "__main__":
     main()
