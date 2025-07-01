@@ -99,9 +99,6 @@ class DataCollection:
         self.__orderByRank()
         self.__averageOutSameRanks()
         self.__calculateNetTotalItemsInCollection()
-        self.__calculateTotalSum()
-        self.__calculateLowerDominantHalf()
-        self.__calculateUpperDominantHalf()
 
         for group in self.dataCollectionList:
             group.setDominanceValue()
@@ -141,11 +138,19 @@ class DataGroup:
         for elem in self.dataList:
             sum += elem.rank
         return sum
+    
+    def getElementCount(self):
+        return len(self.dataList)
 
     def setDominanceValue(self):
-        weightbias = self.parent.netTotalItemsInCollection /  (self.parent.getNumberOfGroups() * len(self.dataList))
-        rankedGroupSum = self.getRankedGroupSum()
-        self.dominanceValue = weightbias * rankedGroupSum / self.parent.sumUpperDominantHalf
+        """Calculates the global dominance value, using the formula in the research paper
+        """
+        ni = self.getElementCount()
+        sigma_ri = self.getRankedGroupSum()
+        n = self.parent.netTotalItemsInCollection
+        k = self.parent.getNumberOfGroups()
+        self.dominanceValue = (-ni + sigma_ri)/(ni*(n-1))
+        
 
 class DataElement:
     """Data element is a value, and the rank assigned is when the data is sorted in ascendinng order
@@ -160,7 +165,7 @@ class DataElement:
         self.rank = -1
 
 def main():
-     
+    """
     #example with multiple groups and tied ranks and uneven weights
     dataCollection = DataCollection()
 
@@ -210,28 +215,30 @@ def main():
     
     dataCollectionAnotherExample.process()
     dataCollectionAnotherExample.print()
+    """
     
     
     #another simpler example, will calculate min and max bounds and,
     #validate the research paper written bounds theoretically, for odd numbers
     dataCollectionAnotherExampleOdd = DataCollection()
     dg1 = DataGroup("Group I", dataCollectionAnotherExampleOdd)
-    dg1.dataList.append(DataElement(1))
+    dg1.dataList.append(DataElement(1)) 
 
     dg2 = DataGroup("Gropup II", dataCollectionAnotherExampleOdd)
-    dg2.dataList.append(DataElement(2))
+    dg2.dataList.append(DataElement(20))
+    dg2.dataList.append(DataElement(30))
+    dg2.dataList.append(DataElement(4))
+    dg2.dataList.append(DataElement(5))
+    dg2.dataList.append(DataElement(6))
+    dg2.dataList.append(DataElement(7))
+    dg2.dataList.append(DataElement(8))
+    dg2.dataList.append(DataElement(9))
+    dg2.dataList.append(DataElement(100))
+    dg2.dataList.append(DataElement(100))
     
     dg3 = DataGroup("Group III", dataCollectionAnotherExampleOdd)
-    dg3.dataList.append(DataElement(3))
-    dg3.dataList.append(DataElement(4))
-    dg3.dataList.append(DataElement(5))
-    dg3.dataList.append(DataElement(6))
-    dg3.dataList.append(DataElement(7))
-    dg3.dataList.append(DataElement(8))
-    dg3.dataList.append(DataElement(9))
-    dg3.dataList.append(DataElement(10))
-    dg3.dataList.append(DataElement(11))
-    dg3.dataList.append(DataElement(12))
+    dg3.dataList.append(DataElement(90)) 
+    dg3.dataList.append(DataElement(100)) 
     
     dataCollectionAnotherExampleOdd.process()
     dataCollectionAnotherExampleOdd.print()
