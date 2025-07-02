@@ -57,7 +57,7 @@ This paper introduces a novel non-parametric method for calculating group-level 
 
 \begin{document}
 \maketitle
-This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing uneven number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance value, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
+This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing uneven number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
 This standardized scale can be used to compare within cross-collection which have different scales, see the \hyperref[fig:superset-collection]{Figure 1} to which , this formula can be applied towards.
 \begin{figure}[!htb]
     \caption{Superset Collection of Elementary Grade Groups and High School Groups}
@@ -81,7 +81,7 @@ P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
    
 \begin{itemize}
     \item \textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of dominance i.e. rank 1 is the lowest, with rank $N^{th}$ as the highest. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.
-    \item \textbf{$P_i$}: Normalized Performance value in the range of [0, 1]
+    \item \textbf{$P_i$}: Normalized Performance Measure value in the range of [0, 1]
     \item \textbf{$\sum r_i$}: Sum of ranks for group $i$.
     \item \textbf{$n_i$}: number of elements within the $i^{th}$ group
     \item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
@@ -114,7 +114,7 @@ If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively
     \label{fig:dominance_Understanding}
 \end{figure}
 
-This non-normalized performance value, with uneven number of groups is given by:
+This non-normalized performance measure, with uneven number of groups is given by:
 \begin{equation}
 \label{eq:non-normalized}
     p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_i}{ S_{UDH} }
@@ -132,7 +132,7 @@ This later non-normalized dominance would be used to derive the normalized versi
     \end{align}
 \end{itemize}
 
-\subsection*{Derivation of Non-normalized Performance}
+\subsection{Derivation of Non-normalized Performance}
 From, the understanding we gain from \hyperref[fig:dominance_Understanding]{Figure 2}, we can easily, ascertain the local dominance, if we divide the scale into two halves of lower ranks half, and upper rank half. So, the group with ranks in the upper half would have a more prominent or dominant performance. So, we need to figure out what's the ranks of the upper dominant half is.
 
 \subsubsection{Sum of Upper Dominant Half}
@@ -194,7 +194,7 @@ S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
 \end{enumerate}
 
 \subsubsection*{Non-normalized Performance Formulae (Biased)}
-So, to if we compare the ranked sum of the group with the upper dominant half, we can get a numerical understanding of performance value
+So, to if we compare the ranked sum of the group with the upper dominant half, we can get a numerical understanding of performance measure value
 \begin{equation}
 \label{eq:p-biased}
     p_i^{(biased)} = \frac{\sum r_i}{ S_{UDH} }
@@ -204,7 +204,7 @@ So, to if we compare the ranked sum of the group with the upper dominant half, w
     \item \textbf{$S_{UDH}$}: Sum of Upper Dominant Half
 \end{itemize}
 
-As, the formula doesn't take into account weight bias. A high number of items can still occupy lower ranks, but in account of total items in group being large, its ranked sum also gives a higher value. That's why weigh bias was added to adjust this non-normalized performance value.
+As, the formula doesn't take into account weight bias. A high number of items can still occupy lower ranks, but in account of total items in group being large, its ranked sum also gives a higher value. That's why weigh bias was added to adjust this non-normalized performance measure.
 
 \subsubsection*{Weight Bias Derivation}
 To derive the weight bias ($w_i$), we first understand, that if all the groups have equal number of items, then $w_i = 1$ i.e. no adjustment needed. That means all the groups have the same number of elements in them. The items expected in each group, can be written as:
@@ -253,7 +253,7 @@ where:
     \item $k$: Number of groups.
 \end{itemize}
 
-\subsubsection{Final Formula for unbiased (but non-normalized) Performance Value}
+\subsubsection{Final Formula for unbiased (but non-normalized) Performance Measure}
 Therefore, from \hyperref[eq:SUDH]{Equation 12}, \hyperref[eq:p-biased]{Equation 14},  \hyperref[eq:p-unbiased]{Equation 18}, and \hyperref[eq:weight-bias]{Equation 20}
 
 we derived unbiased(but non-normalized) formulae, as stated in the beginning of the section, in \hyperref[eq:non-normalized]{Equation 3}:
@@ -263,38 +263,24 @@ we derived unbiased(but non-normalized) formulae, as stated in the beginning of 
 
 Note in this research paper, $p_i^{(non-normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non-normalized)}$ moving forward.
 
+\section{Normalized Performance Measure}
 
-\subsection{Theoretical Justification}
-
-We explicitly derive this adjustment to satisfy several criteria:
+The non-normalized formulae is normalized, for to satisfy these following criteria:
 \begin{itemize}
-    \item The adjustment explicitly becomes smaller as the number of groups $k$ or total observations $N$ increases, ensuring minimal interference in larger datasets.
-    Mathematically, we justify the chosen form by observing its desirable properties in handling various scenarios:
-
-\begin{align*}
-\lim_{N \to \infty} \frac{8}{k(3N+2)} &= 0, \\
-\lim_{k \to \infty} \frac{8}{k(3N+2)} &= 0.
-\end{align*}
-    \item Explicitly provides a meaningful zero baseline for dominance measures.
-    \item dominance scores become standardized, allowing direct comparisons across multiple studies or scenario
+	\item Explicitly provides a meaningful zero baseline for dominance measures.
+	\item Performance scores become standardized, allowing direct comparisons across multiple studies or scenarios
 \end{itemize}
 
+\subsection{Derviation of Non-normalized Performance Measure}
 
+For normalizing the performance we will find the theoretical minima and maxima of non-normalized performance. 
 
+\subsubsection{Minima of Non-normalized Performance Measure}
 
-\subsection*{Derivation of Adjustment Term}
-
-We aim to minimize the dominance measure $U_i^{(local)}$ defined as:
-\begin{equation}
-U_i^{(local)} = w_i \cdot \frac{\sum r_i}{S_{UDH}}
-\end{equation}
-
-This is locally valid dominance measure for a single collection.
-
-Now, if we always assume that the net total number of items across all groups is even, it is safe to assume explicitly that:
+Thus, we start with the assumption that the net total number of items across all groups is even (odd case would be taken later in the paper), then it is safe to assume that:
 
 \begin{equation}
-a = \frac{N}{2}
+	a = \frac{N}{2}
 \end{equation}
 
 Thus, the lower and upper halves would be explicitly:
@@ -302,23 +288,41 @@ Thus, the lower and upper halves would be explicitly:
 \left[1, \frac{N}{2}\right] \quad \text{and} \quad \left[\frac{N}{2}+1, N\right]
 \]
 
-Simplifying explicitly, we get:
+Simplifying for $S_{UDH}$ when N is even, we get:
 
 \begin{align*}
-S_{UDH} &= \frac{N}{2} \times \frac{\left(\frac{N}{2} + 1 + N\right)}{2} \\
-&= \frac{N}{4} \times \frac{3N + 2}{2} \\
-&= \frac{N(3N + 2)}{8}
+	S_{UDH} &= \frac{N(3N + 2)}{8}
 \end{align*}
 
-Now explicitly substituting everything into our dominance equation:
+
+We aim to minimize the non-normalized measure $p_i^{(non-normalized)}$ defined as:
+\begin{equation}
+	p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_i}{ S_{UDH} }
+\end{equation}
+
+Substituting everything into our non-normalized measure equation, we get:
 
 \begin{align*}
-U_i &= \frac{N}{k n_i} \times \frac{\sum r_i \times 8}{N(3N + 2)} \\
-&= \frac{8}{k n_i} \times \frac{\sum r_i}{3N + 2}
+	p_i^{(non-normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_i}{n_i}
 \end{align*}
 
-This explicitly represents the simplified and explicitly minimized form of the dominance measure.
+As, 
+\begin{equation}
+	\frac{8}{k(3N + 2)} = Constant
+\end{equation}
 
+The minima, depends on $\frac{\sum r_i}{n_i}$. And, for this to be low $\sum r_i$ should be low. That means $\sum r_i$ have to occupy the lowest ranks such as 1, 2, 3,... so on. We can rewrite $\frac{\sum r_i}{n_i}$ in this format below:
+
+\begin{equation}
+	 = \frac{\sum r_i}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2} \cdot n_i + \frac{1}{2}
+\end{equation}
+
+As this is a linear increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_i}{n_i}$ is $1$ when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_i}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_i}{n_i} = 1 $
+
+Therefore minima of Non-normalized measure is:
+\begin{equation}
+	p_i^{(min, \, non-normalized)} = \frac{8}{k(3N + 2)}
+\end{equation}
 
 
 
