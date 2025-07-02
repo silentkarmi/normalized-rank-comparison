@@ -82,7 +82,7 @@ P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
 \begin{itemize}
     \item \textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of dominance i.e. rank 1 is the lowest, with rank $N^{th}$ as the highest. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.
     \item \textbf{$P_i$}: Normalized Performance Measure value in the range of [0, 1]
-    \item \textbf{$\sum r_i$}: Sum of ranks for group $i$.
+    \item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
     \item \textbf{$n_i$}: number of elements within the $i^{th}$ group
     \item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
     There are \[k = \text{number of groups}, \quad n_i = \text{number of items in each group }\]
@@ -117,7 +117,7 @@ If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively
 This non-normalized performance measure, with uneven number of groups is given by:
 \begin{equation}
 \label{eq:non-normalized}
-    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_i}{ S_{UDH} }
+    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 This later non-normalized dominance would be used to derive the normalized version of the formula. Therefore, non-normalized performance derivation would be discussed first.
 
@@ -197,10 +197,10 @@ S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
 So, to if we compare the ranked sum of the group with the upper dominant half, we can get a numerical understanding of performance measure value
 \begin{equation}
 \label{eq:p-biased}
-    p_i^{(biased)} = \frac{\sum r_i}{ S_{UDH} }
+    p_i^{(biased)} = \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 \begin{itemize}
-    \item \textbf{$\sum r_i$}: Sum of ranks for group $i$.
+    \item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
     \item \textbf{$S_{UDH}$}: Sum of Upper Dominant Half
 \end{itemize}
 
@@ -258,20 +258,28 @@ Therefore, from \hyperref[eq:SUDH]{Equation 12}, \hyperref[eq:p-biased]{Equation
 
 we derived unbiased(but non-normalized) formulae, as stated in the beginning of the section, in \hyperref[eq:non-normalized]{Equation 3}:
 \begin{equation}
-    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_i}{ S_{UDH} }
+    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 
 Note in this research paper, $p_i^{(non-normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non-normalized)}$ moving forward.
 
 \section{Normalized Performance Measure}
 
-The non-normalized formulae is normalized, for to satisfy these following criteria:
+The unbiased and non-normalized formulae, is needed to be normalized, for to satisfy these following criteria:
 \begin{itemize}
 	\item Explicitly provides a meaningful zero baseline for dominance measures.
 	\item Performance scores become standardized, allowing direct comparisons across multiple studies or scenarios
 \end{itemize}
+Given by:
+\begin{equation}
+	\boxed{
+		\mathbf{
+			P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
+	}
+\end{equation}
+This formulae is the conclusion of whole paper, which is named Normalized Performance Measure.
 
-\subsection{Derviation of Non-normalized Performance Measure}
+\subsection{Derivation of Normalized Performance Measure}
 
 For normalizing the performance we will find the theoretical minima and maxima of non-normalized performance. 
 
@@ -297,13 +305,13 @@ Simplifying for $S_{UDH}$ when N is even, we get:
 
 We aim to minimize the non-normalized measure $p_i^{(non-normalized)}$ defined as:
 \begin{equation}
-	p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_i}{ S_{UDH} }
+	p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 
 Substituting everything into our non-normalized measure equation, we get:
 
 \begin{align*}
-	p_i^{(non-normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_i}{n_i}
+	p_i^{(non-normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
 \end{align*}
 
 As, 
@@ -311,75 +319,29 @@ As,
 	\frac{8}{k(3N + 2)} = Constant
 \end{equation}
 
-The minima, depends on $\frac{\sum r_i}{n_i}$. And, for this to be low $\sum r_i$ should be low. That means $\sum r_i$ have to occupy the lowest ranks such as 1, 2, 3,... so on. We can rewrite $\frac{\sum r_i}{n_i}$ in this format below:
+The minima, depends on $\frac{\sum r_j}{n_i}$. And, for this to be low $\sum r_j$ should be low. That means $r_j$ have to occupy the lowest ranks such as 1, 2, 3,... so on. We can rewrite $\frac{\sum r_j}{n_i}$ in this format below:
 
 \begin{equation}
-	 = \frac{\sum r_i}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2} \cdot n_i + \frac{1}{2}
+	 = \frac{\sum r_j}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2} \cdot n_i + \frac{1}{2}
 \end{equation}
 
-As this is a linear increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_i}{n_i}$ is $1$ when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_i}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_i}{n_i} = 1 $
+As this is a linearly increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_j}{n_i}$ occurs when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_j}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_j}{n_i} = 1 $
 
 Therefore minima of Non-normalized measure is:
 \begin{equation}
 	p_i^{(min, \, non-normalized)} = \frac{8}{k(3N + 2)}
 \end{equation}
 
-
-
-\subsection*{Minimizing Expression}
-
-For the given expression to be minimized, $\sum r_i$ should be low. Consider exdplicitly:
+\subsubsection{Maxima of Non-normalized Performance Measure}
+Similar to minima, being:
 
 \begin{equation}
-\frac{\sum r_i}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2}(n_i + n_i^2)
+	\frac{8}{k(3N + 2)} = Constant
 \end{equation}
 
-Differentiating explicitly and setting to zero for minimization:
+Maxima depends on $\frac{\sum r_j}{n_i}$, which needs to be maximized. Therefore, $r_j$ will contain higher ranks, such as N, N-1, N-2,...,k. So, The lowest rank in this arithmetic series can contain is k. Because, there are k groups, that means, each will have at least one element, occupying the lowest ranks, to maximize $\frac{\sum r_j}{n_i}$. That means, first group will contain rank 1, second group will contain rank 2, so on..., and the $k^{th}$ group will have the rest of the elements from rank $k^{th}$ to $N^{th}$ element.
 
-\begin{equation}
-\frac{d}{d n_i}\left[\frac{1}{2}(n_i + n_i^2)\right] = \frac{1}{2}(1 + 2 n_i) = 0
-\end{equation}
 
-Solving explicitly, we find:
-
-\begin{equation}
-n_i = -\frac{1}{2}
-\end{equation}
-
-Explicitly confirming via second derivative:
-
-\begin{equation}
-\frac{d^2}{d n_i^2}\left[\frac{1}{2}(n_i + n_i^2)\right] = 1
-\end{equation}
-
-The second derivative explicitly indicates a minimum. However, explicitly, since $n_i$ represents a countable quantity and cannot be negative or fractional, we evaluate explicitly at the nearest valid positive integer, i.e., $n_i = 1$:
-
-\begin{equation}
-f(1) = \frac{1}{2}(1 + 1^2) = 1
-\end{equation}
-
-Thus explicitly, the minimum feasible value of the expression $\frac{\sum r_i}{n_i}$ is: 1
-
-\subsection*{Minimum Dominance Value Analysis}
-
-This explicitly indicates that the lowest dominance value occurs when there is a singular group within the collection having one element with the lowest rank. Additionally, explicitly, the number of groups ($k$) and total number of items ($N$) across all groups should be high.
-
-Therefore, explicitly, the minimum dominance value depends on the term:
-
-\begin{equation}
-\frac{8}{k(3N+2)}
-\end{equation}
-
-\subsection{Final Adjusted Dominance Score}
-
-The dominance score, explicitly adjusted, is presented as:
-\begin{equation}
-\mathbf{
-U_i = U_i^{(local)} - \frac{8}{k(3N+2)}
-}
-\end{equation}
-
-Thus explicitly, the adjusted dominance measure is both fairer and more interpretable across diverse datasets.
 
 \section{Validation of Dominance Formula}
 \begin{itemize}
@@ -484,7 +446,7 @@ Calculate explicitly:
 
 Dominance scores explicitly computed as:
 \begin{equation}
-U_i = w_i \cdot \frac{r_i}{S_{UDH}}
+U_i = w_i \cdot \frac{r_j}{S_{UDH}}
 \end{equation}
 
 Calculate:
@@ -502,7 +464,7 @@ Results have been summarized in \hyperref[dominance-result]{Table 2}
 \caption{Dominance Calculation Results}
 \begin{tabular}{lccc}
 \toprule
-Group & Rank Sum ($r_i$) & Weight Bias ($w_i$) & Dominance Score ($U_i$) \\
+Group & Rank Sum ($r_j$) & Weight Bias ($w_i$) & Dominance Score ($U_i$) \\
 \midrule
 A & 31 & 0.9375 & 0.316 \\
 B & 37 & 1.2500 & 0.503 (Most Dominant) \\
