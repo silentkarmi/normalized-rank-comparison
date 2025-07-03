@@ -95,6 +95,7 @@ P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
 \subsection{Applications}
 This is a list of Applications scenario, the formula was designed for:
 \begin{itemize}
+	\item \textbf{Psychology}: In Psychology, we have a big arsenal of therapy techniques, all having their own benefits. If, mutually exclusive groups, each group taking a particular therapy, needs to be analyzed which group performed better, and the group sizes are even unequal. Then, Performance Measure Formula can be applied.
     \item \textbf{Educational}: Awarding Best Class Performance in a school, when classes have uneven students, and even different grading scales.
     \item \textbf{Organizational}: To identify best-performing team in the organization, and least-performing, for restructuring and guidance purposes, when number of person per team are uneven, and performance scale at various sector of an organization is different.
    \item \textbf{Business}: Often businesses have economy segment and luxury segment for services and products. Often, just price is not an enough indicator what segment of products fared better. If, a ranking is created, on customer feedback, return on investment, less-after-cost-maintenance, expenses etc. Then, this formula can be used to find the dominant product/services of their business, when there is uneven sale of each product/services sold.
@@ -108,7 +109,7 @@ Mathematical derivation, along with its theoretical justification, would be disc
 
 If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively easy to understand that Group B performance is more dominant, that Group A, simply because Group B occupy the higher ranks, and Group A lower ranks.
 \begin{figure}[!htb]
-    \caption{Visual intuition of the Dominance Formula, where Dominance: Group B > Group A}
+    \caption{Visual intuition of the Performance Measure, Performance: Group B > Group A}
     \centering
     \includegraphics[scale=0.65]{images/dominance-intuition.png}
     \label{fig:dominance_Understanding}
@@ -117,7 +118,7 @@ If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively
 This non-normalized performance measure, with uneven number of groups is given by:
 \begin{equation}
 \label{eq:non-normalized}
-    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+    p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 This later non-normalized dominance would be used to derive the normalized version of the formula. Therefore, non-normalized performance derivation would be discussed first.
 
@@ -253,15 +254,15 @@ where:
     \item $k$: Number of groups.
 \end{itemize}
 
-\subsubsection{Final Formula for unbiased (but non-normalized) Performance Measure}
+\subsubsection{Final Formula for unbiased (but non\text{-}normalized) Performance Measure}
 Therefore, from \hyperref[eq:SUDH]{Equation 12}, \hyperref[eq:p-biased]{Equation 14},  \hyperref[eq:p-unbiased]{Equation 18}, and \hyperref[eq:weight-bias]{Equation 20}
 
-we derived unbiased(but non-normalized) formulae, as stated in the beginning of the section, in \hyperref[eq:non-normalized]{Equation 3}:
+we derived unbiased(but non\text{-}normalized) formulae, as stated in the beginning of the section, in \hyperref[eq:non-normalized]{Equation 3}:
 \begin{equation}
-    p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+    p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 
-Note in this research paper, $p_i^{(non-normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non-normalized)}$ moving forward.
+Note in this research paper, $p_i^{(non\text{-}normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non\text{-}normalized)}$ moving forward.
 
 \section{Normalized Performance Measure}
 
@@ -303,15 +304,15 @@ Simplifying for $S_{UDH}$ when N is even, we get:
 \end{align*}
 
 
-We aim to minimize the non-normalized measure $p_i^{(non-normalized)}$ defined as:
+We aim to minimize the non-normalized measure $p_i^{(non\text{-}normalized)}$ defined as:
 \begin{equation}
-	p_i^{(non-normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+	p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
 
 Substituting everything into our non-normalized measure equation, we get:
 
 \begin{align*}
-	p_i^{(non-normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
+	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
 \end{align*}
 
 As, 
@@ -329,18 +330,48 @@ As this is a linearly increasing line equation with a positive slope ($y = mx + 
 
 Therefore minima of Non-normalized measure is:
 \begin{equation}
-	p_i^{(min, \, non-normalized)} = \frac{8}{k(3N + 2)}
+	p_i^{(min, \, non\text{-}normalized)} = \frac{8}{k(3N + 2)}
 \end{equation}
 
 \subsubsection{Maxima of Non-normalized Performance Measure}
 Similar to minima, being:
 
+\begin{align*}
+	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
+\end{align*}
+
+As, 
 \begin{equation}
 	\frac{8}{k(3N + 2)} = Constant
 \end{equation}
 
-Maxima depends on $\frac{\sum r_j}{n_i}$, which needs to be maximized. Therefore, $r_j$ will contain higher ranks, such as N, N-1, N-2,...,k. So, The lowest rank in this arithmetic series can contain is k. Because, there are k groups, that means, each will have at least one element, occupying the lowest ranks, to maximize $\frac{\sum r_j}{n_i}$. That means, first group will contain rank 1, second group will contain rank 2, so on..., and the $k^{th}$ group will have the rest of the elements from rank $k^{th}$ to $N^{th}$ element.
+Maxima depends on $\frac{\sum r_j}{n_i}$, which needs to be maximized. Therefore, $r_j$ will contain higher ranks, such as N, N-1, N-2,...,k. So, The lowest rank in this arithmetic series can contain is k. Because, there are k groups, that means, each will have at least one element, occupying the lowest ranks, to maximize $\frac{\sum r_j}{n_i}$. That means, first group will contain rank 1, second group will contain rank 2, so on..., and the $k^{th}$ group will have the rest of the elements from rank $k^{th}$ to $N^{th}$ element which we are trying to maximize. Then $\sum r_j$, can be expanded to:
+\begin{equation}
+	\frac{(N-k+1)(N+k)}{2}
+\end{equation}
+As, $n_i$ are the number of elements in the group which is equal to $N-k+1$, then simplifying $\frac{\sum r_j}{n_i}$, we get:
+\begin{equation}
+	\frac{N+k}{2}
+\end{equation}
 
+Now to maximize, we can substitute k with N, as k are number of groups, and the max number of groups would be equal to total number of items in the collection, where each group has just one element.
+hence maximum value comes out to be:
+\begin{equation}
+	\frac{\sum r_j}{n_i} = N
+\end{equation}
+ 
+Therefore maxima of Non-normalized Measure is:
+\begin{equation}
+	p_i^{(max, \, non\text{-}normalized)} = \frac{8N}{k(3N + 2)}
+\end{equation}
+
+\subsubsection{Final formuale of Normalized Performance Measure}
+Normalized Performance measure would be given by:
+\begin{equation}
+	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
+\end{equation}
+
+Now substituting their corresponding value from 
 
 
 \section{Validation of Dominance Formula}
