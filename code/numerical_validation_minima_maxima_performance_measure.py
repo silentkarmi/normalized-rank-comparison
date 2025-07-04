@@ -6,16 +6,10 @@ class DataCollection:
     """
     
     def __init__(self):
-        """Constructor defining, N (netTotalItemsInCollection), SUDH (Sum of upper dominant half), 
-    also contains list of groups.
+        """Constructor defining, N (netTotalItemsInCollection), also contains list of groups.
         """
-        
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
-        self.sumTotal = 0
-        self.sumLowerDominantHalf = 0
-        self.sumUpperDominantHalf = 0
-        self.psignificanceValue = 0
 
     def computeKruskalTest(self):
         arrayDataCollectionGroups = []
@@ -44,22 +38,10 @@ class DataCollection:
 
         return lstBelongingToSameRank
     
-        
     def __calculateNetTotalItemsInCollection(self):
         self.netTotalItemsInCollection = 0
         for itemGroup in self.dataCollectionList:
             self.netTotalItemsInCollection += len(itemGroup.dataList)
-
-    def __calculateTotalSum(self):
-        self.sumTotal = self.netTotalItemsInCollection * (self.netTotalItemsInCollection + 1) * 0.5
-
-
-    def __calculateLowerDominantHalf(self):
-         a = math.floor(self.netTotalItemsInCollection/2)
-         self.sumLowerDominantHalf = a * (a + 1) * 0.5
-
-    def __calculateUpperDominantHalf(self):
-        self.sumUpperDominantHalf = self.sumTotal - self.sumLowerDominantHalf
 
     def __orderByRank(self):
         rank = 0
@@ -99,9 +81,6 @@ class DataCollection:
         self.__orderByRank()
         self.__averageOutSameRanks()
         self.__calculateNetTotalItemsInCollection()
-        self.__calculateTotalSum()
-        self.__calculateLowerDominantHalf()
-        self.__calculateUpperDominantHalf()
 
         for group in self.dataCollectionList:
             group.setDominanceValue()
@@ -112,13 +91,14 @@ class DataCollection:
         all the data contained within each group and what rank the data element in the group
         has been assigned
         """
-        print("-" * 10)
-        print("self.netTotalItemsInCollection", self.netTotalItemsInCollection)
+        print("-" * 15)
+        print("Total Items in Collection ( N =", self.netTotalItemsInCollection,")")
         for itemGroup in self.dataCollectionList:
-            print(itemGroup.name, "Dominance Value:", itemGroup.dominanceValue)
+            print()
+            print(itemGroup.name, "Normalized Performance Measure:", itemGroup.dominanceValue)
             for itemElement in itemGroup.dataList:
-                print(itemGroup.name, itemElement.value, itemElement.rank)
-        print("-" * 10)
+                print(itemGroup.name,", Value:", itemElement.value,", Rank", itemElement.rank)
+        print("-" * 15)
 
 class DataGroup:
     """This is a group, for which dominance value is calculte, which have date elements
@@ -141,11 +121,19 @@ class DataGroup:
         for elem in self.dataList:
             sum += elem.rank
         return sum
+    
+    def getElementCount(self):
+        return len(self.dataList)
 
     def setDominanceValue(self):
-        weightbias = self.parent.netTotalItemsInCollection /  (self.parent.getNumberOfGroups() * len(self.dataList))
-        rankedGroupSum = self.getRankedGroupSum()
-        self.dominanceValue = weightbias * rankedGroupSum / self.parent.sumUpperDominantHalf
+        """Calculates the normalized performance value, using the formula in the research paper
+        """
+        ni = self.getElementCount()
+        sigma_ri = self.getRankedGroupSum()
+        n = self.parent.netTotalItemsInCollection
+        k = self.parent.getNumberOfGroups()
+        self.dominanceValue = (-ni + sigma_ri)/(ni*(n-1))
+        
 
 class DataElement:
     """Data element is a value, and the rank assigned is when the data is sorted in ascendinng order
@@ -160,44 +148,17 @@ class DataElement:
         self.rank = -1
 
 def main():
-     
-    #example with multiple groups and tied ranks and uneven weights
-    dataCollection = DataCollection()
-
-    dataGroup1 = DataGroup("GroupA", dataCollection)
-    dataGroup1.dataList.append(DataElement(95))
-    dataGroup1.dataList.append(DataElement(48))
-    dataGroup1.dataList.append(DataElement(25))
-    dataGroup1.dataList.append(DataElement(15))
-
-    dataGroup2 = DataGroup("GroupB", dataCollection)
-    dataGroup2.dataList.append(DataElement(83))
-    dataGroup2.dataList.append(DataElement(57))
-    dataGroup2.dataList.append(DataElement(100))
-    dataGroup2.dataList.append(DataElement(100))
-
-    dataGroup3 = DataGroup("GroupC", dataCollection)
-    dataGroup3.dataList.append(DataElement(70))
-    dataGroup3.dataList.append(DataElement(20))
-    dataGroup3.dataList.append(DataElement(40))
-
-    dataGroup4 = DataGroup("GroupD", dataCollection)
-    dataGroup4.dataList.append(DataElement(95))
-    dataGroup4.dataList.append(DataElement(15))
-    dataGroup4.dataList.append(DataElement(18))
-    dataGroup4.dataList.append(DataElement(30))
-    dataGroup4.dataList.append(DataElement(10))
-
-    dataCollection.process() #processes the collection, by applying the dominance value 
-    dataCollection.print() #prints the ranks of elements within each group, and the group dominance values
+   
+    # simple example, will calculate min and max bounds and,
+    # validate the research paper written bounds theoretically for Normalized Performance Measure
+    dataCollectionAnotherExampleOdd = DataCollection()
     
-    #another simpler example, will calculate min and max bounds and,
-    #validate the research paper written bounds theoretically, for even numbers
-    dataCollectionAnotherExample = DataCollection()
-    dg1 = DataGroup("Group I", dataCollectionAnotherExample)
-    dg1.dataList.append(DataElement(1))
+    # Group 1
+    dg1 = DataGroup("Group I", dataCollectionAnotherExampleOdd)
+    dg1.dataList.append(DataElement(1))  #minima as contains one element with rank 1
 
-    dg2 = DataGroup("Gropup II", dataCollectionAnotherExample)
+    # Group 2
+    dg2 = DataGroup("Gropup II", dataCollectionAnotherExampleOdd)
     dg2.dataList.append(DataElement(2))
     dg2.dataList.append(DataElement(3))
     dg2.dataList.append(DataElement(4))
@@ -208,30 +169,9 @@ def main():
     dg2.dataList.append(DataElement(9))
     dg2.dataList.append(DataElement(10))
     
-    dataCollectionAnotherExample.process()
-    dataCollectionAnotherExample.print()
-    
-    
-    #another simpler example, will calculate min and max bounds and,
-    #validate the research paper written bounds theoretically, for odd numbers
-    dataCollectionAnotherExampleOdd = DataCollection()
-    dg1 = DataGroup("Group I", dataCollectionAnotherExampleOdd)
-    dg1.dataList.append(DataElement(1))
-
-    dg2 = DataGroup("Gropup II", dataCollectionAnotherExampleOdd)
-    dg2.dataList.append(DataElement(2))
-    
+    # Group 3
     dg3 = DataGroup("Group III", dataCollectionAnotherExampleOdd)
-    dg3.dataList.append(DataElement(3))
-    dg3.dataList.append(DataElement(4))
-    dg3.dataList.append(DataElement(5))
-    dg3.dataList.append(DataElement(6))
-    dg3.dataList.append(DataElement(7))
-    dg3.dataList.append(DataElement(8))
-    dg3.dataList.append(DataElement(9))
-    dg3.dataList.append(DataElement(10))
-    dg3.dataList.append(DataElement(11))
-    dg3.dataList.append(DataElement(12))
+    dg3.dataList.append(DataElement(11)) #maxima as contains one element with the Nth rank
     
     dataCollectionAnotherExampleOdd.process()
     dataCollectionAnotherExampleOdd.print()
