@@ -372,6 +372,7 @@ Therefore maxima of Non-normalized Measure is:
 \subsubsection{Final formualae of Normalized Performance Measure}
 Normalized Performance measure would be given by:
 \begin{equation}
+	\label{eq:normalized-simpler}
 	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
 \end{equation}
 
@@ -390,8 +391,64 @@ Now substituting their corresponding value from \hyperref[p-non-normalized]{Equa
 	\item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
 \end{itemize}
 
+\subsubsection{Normalized Performance Measure (Scenario: N is odd)}
+We will not go in thorough detail, but the Normalized performance measure formula is same. Because the, Sum of Upper Dominant half ($S_{UDH}$), maxima and minima just differ slightly in nature. But, as these terms occur in the numerator and denominator, they cancel each other out. And, \textbf{the Normalized Performance Measure remains unchanged}. Just, to be complete, we will just list down the equations, which result in the same formula as above.
 
-\section{Validation of Dominance Formula}
+As, N is odd, where $N^{(min)} = 3$, because there has to be minimum of two groups, therefore, we will take,
+\begin{align*}
+	a = \frac{N-1}{2}
+\end{align*}
+
+Thus, the lower and upper halves would be explicitly:
+\[
+\left[1, \frac{N-1}{2}\right] \quad \text{and} \quad \left[\frac{N+1}{2}, N\right]
+\]
+
+when N is odd:
+
+\begin{equation}
+	\label{eq:even-SUDH-odd}
+	S_{UDH} = \frac{(N+1)(3N+1)}{8}
+\end{equation}
+
+\begin{equation}
+	\label{eq:minima-odd}
+	p_i^{(min, \, non\text{-}normalized)} = \frac{8N}{k (N+1)(3N+1)}
+\end{equation}
+
+\begin{equation}
+	\label{eq:maxima-odd}
+	p_i^{(max, \, non\text{-}normalized)} = \frac{8N^2}{k (N+1)(3N+1)}
+\end{equation}
+
+substituting their corresponding value in \hyperref[eq:normalized-simpler]{Equation 33} from \hyperref[p-non-normalized]{Equation 21},  
+\hyperref[eq:even-SUDH-odd]{Equation 35}, \hyperref[eq:minima-odd]{Equation 36} and \hyperref[eq:maxima-odd]{Equation 37}, and simplifying, we get the final form of Normalized Performance Measure (same as when N is even):
+\begin{equation}
+	\boxed{
+		\mathbf{
+			P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
+	}
+\end{equation}
+
+
+\subsubsection{Range of Normalized Performance Measure}
+Minima of $P_i = 0$, which means is the least dominant performance, that means in the entire collection they have a group containing, one element with Rank 1. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(min, \, non\text{-}normalized)}$, thus, putting the value in the \hyperref[eq:normalized-simpler]{Equation 33}, we get:
+\begin{equation}
+	P_i^{(min)} = \frac{p_i^{(min, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 0
+\end{equation}
+
+Similarly,
+Maxima of $P_i^{(max)} = 1$, which means is the most dominant performance, that means in the entire collection they have a group containing, one element with Rank $N^{th}$, the highest ranked element possible. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(max, \, non\text{-}normalized)}$, thus, putting the value in the \hyperref[eq:normalized-simpler]{Equation 33}, we get:
+\begin{equation}
+	P_i^{(max)} = \frac{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 1
+\end{equation}
+
+Therefore, the range of normalized performance measure is [0,1]
+
+
+\section{Validation}
+
+
 \begin{itemize}
     \item Mathematical proof of sympy
     \item Numerical proof annd implementation in Python 
