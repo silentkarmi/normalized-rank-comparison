@@ -35,6 +35,44 @@
 \DeclareLanguageMapping{american}{american-apa}
 \addbibresource{normalized-rank-comparison.bib}
 
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+	breakable=true,
+	listing engine=minted,
+	listing only,
+	minted language=#2,
+	minted style=default,
+	minted options={%
+		linenos,
+		gobble=0,
+		breaklines=true,
+		breakafter=,,
+		fontsize=\small,
+		numbersep=8pt,
+		#1},
+	boxsep=0pt,
+	left skip=0pt,
+	right skip=0pt,
+	left=25pt,
+	right=0pt,
+	top=3pt,
+	bottom=3pt,
+	arc=5pt,
+	leftrule=0pt,
+	rightrule=0pt,
+	bottomrule=2pt,
+	toprule=2pt,
+	colback=bg,
+	colframe=orange!70,
+	enhanced,
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+	\end{tcbclipinterior}},
+	#3}
+
 \title{A \textsf{Novel} Method for Ranking Group Performance}
 \shorttitle{Normalized Rank Dominance}
 
@@ -54,6 +92,7 @@ This paper introduces a novel non-parametric method for calculating group-level 
    %add the link when research paper is complete and fill the details in the orcid to add the link
 
   Correspondence concerning this article should be addressed to Kartikeya Mishra 50-D, Block E-3, Shatabdi Vihar, Sector 52, Noida, UP - 201307, India. E-mail: kartik.maxwell@gmail.com}
+
 
 \begin{document}
 \maketitle
@@ -450,6 +489,40 @@ Therefore, the range of normalized performance measure is [0,1]
 
 \subsection{Mathematical Validation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica).
+
+\begin{mintedbox}{python}
+	display("N is odd then,")
+	
+	a = (n - 1)/2
+	s_udh = n*(n+1)/2 - a*(a+1)/2
+	display("S_UDH = ",simplify(s_udh))
+	
+	p_i = w_i * sigma_r_j / s_udh
+	display("p_i_normalized = ", simplify(p_i))
+	
+	p_i_min = p_i.subs({n_i:1}) # number of elements = 1
+	p_i_min = p_i_min.doit()
+	p_i_min = p_i_min.subs({r[1]:1}) # containing one element rank = 1
+	display("p_i_minima_non-normalized = ",simplify(p_i_min))
+	
+	p_i_max = p_i.subs({n_i:1}) # number of elements = 1
+	p_i_max = p_i_max.doit()
+	p_i_max = p_i_max.subs({r[1]:n}) # containing one element rank = Nth
+	display("p_i_maxima_non-normalized = ",simplify(p_i_max))
+	
+	P_i = (p_i - p_i_min)/(p_i_max - p_i_min)
+	display("Normalized Performance Measure, P_i = ", factor(simplify(P_i)))
+\end{mintedbox}
+
+%\hyperref[fig:superset-collection]{Figure 1} to which , this formula can be applied towards.
+\begin{figure}[!htb]
+	\caption{Output}
+	\centering
+	\includegraphics [scale=1]{images/output-mathematical-validation.png}
+	\label{fig:output-mathematical-validation}
+\end{figure}
+
+\end{document}
 
 \begin{itemize}
     \item Mathematical proof of sympy
