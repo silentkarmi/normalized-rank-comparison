@@ -1,5 +1,5 @@
 class DataGroup:
-    """This is a group, for which dominance value is calculte, which have date elements
+    """This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements
     """
     def __init__(self, name, parent):
         self.name = name

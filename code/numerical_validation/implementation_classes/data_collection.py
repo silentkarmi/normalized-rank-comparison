@@ -8,14 +8,14 @@ class DataCollection:
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
 
-    def computeKruskalTest(self):
-        arrayDataCollectionGroups = []
+    # def computeKruskalTest(self):
+    #     arrayDataCollectionGroups = []
         
-        for itemGroup in self.dataCollectionList:
-            arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
+    #     for itemGroup in self.dataCollectionList:
+    #         arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
 
-        tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
-        h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
+    #     tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
+    #     h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
 
     def getNumberOfGroups(self):
         return len(self.dataCollectionList)
@@ -72,8 +72,8 @@ class DataCollection:
         """this function will process the DataCollection, in strict order,
     1. sort the data in ascending order
     2. if some data have tied ranks then average it out
-    3. calculates the total sum, lower dominant half to calculate the upper dominant half
-    4. then for each group in the collection, calculate the dominance value
+    3. calculates the N, the total items across all collection
+    4. then for each group in the collection, calculate the Normalized Performance Measure
         """
         self.__orderByRank()
         self.__averageOutSameRanks()
@@ -84,7 +84,7 @@ class DataCollection:
     
             
     def print(self):
-        """prints information regarding our group showing each group dominance value and 
+        """prints information regarding our group showing each Normalized Performance Measure and 
         all the data contained within each group and what rank the data element in the group
         has been assigned
         """

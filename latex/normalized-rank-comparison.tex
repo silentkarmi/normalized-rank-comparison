@@ -29,13 +29,12 @@
 %% 
 \documentclass[man,floatsintext]{apa7}
 \usepackage[american]{babel}
-\usepackage{csquotes}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \usepackage{amsmath, amssymb, geometry, graphicx, booktabs}
 \DeclareLanguageMapping{american}{american-apa}
-\addbibresource{normalized-rank-comparison.bib}
-
+\addbibresource{refs.bib}
 \usepackage{tcolorbox}
+
 \tcbuselibrary{minted,breakable,xparse,skins}
 \definecolor{bg}{gray}{0.95}
 \DeclareTCBListing{mintedbox}{O{}m!O{}}{%
@@ -74,7 +73,7 @@
 	#3}
 
 \title{A \textsf{Novel} Method for Ranking Group Performance}
-\shorttitle{Normalized Rank Dominance}
+\shorttitle{Normalized Performance Measure}
 
 \author{Kartikeya Mishra}
 \authorsaffiliations{Independent Researcher}
@@ -93,7 +92,7 @@ This paper introduces a novel non-parametric method for calculating group-level 
 
   Correspondence concerning this article should be addressed to Kartikeya Mishra 50-D, Block E-3, Shatabdi Vihar, Sector 52, Noida, UP - 201307, India. E-mail: kartik.maxwell@gmail.com}
 
-
+\usepackage{csquotes}
 \begin{document}
 \maketitle
 This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing uneven number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
@@ -486,11 +485,17 @@ Therefore, the range of normalized performance measure is [0,1]
 
 
 \section{Validation}
+All mathematical and numerical validation scripts, as well as the full manuscript source, are available in the GitHub repository \cite{silentkarmi2025normalized}. See the repository's folder structure and README for details on specific files and validation types.
 
 \subsection{Mathematical Validation via SymPy Library in Python}
-To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica).
+To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
 
+A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance_measure]{Python (SymPy) Code Snippet}. This snippet is for: When N is odd, Mathematical Derivation of Normalized Performance Measure.
+
+ 	\label{code:snippet_odd_performance_measure}
 \begin{mintedbox}{python}
+	# code snippet
+	
 	display("N is odd then,")
 	
 	a = (n - 1)/2
@@ -514,15 +519,13 @@ To, validate all manual work, the formula also has been derived through mathemat
 	display("Normalized Performance Measure, P_i = ", factor(simplify(P_i)))
 \end{mintedbox}
 
-%\hyperref[fig:superset-collection]{Figure 1} to which , this formula can be applied towards.
+\hyperref[fig:output-mathematical-validation]{Figure 3} shows the output of the Snippet Code
 \begin{figure}[!htb]
-	\caption{Output}
+	\caption{Output: When N is odd, Mathematical Derivation of Normalized Performance Measure}
 	\centering
 	\includegraphics [scale=1]{images/output-mathematical-validation.png}
 	\label{fig:output-mathematical-validation}
 \end{figure}
-
-\end{document}
 
 \begin{itemize}
     \item Mathematical proof of sympy
@@ -532,135 +535,10 @@ To, validate all manual work, the formula also has been derived through mathemat
 
 \section{Detailed Example of Dominance Method}
 
-To explicitly demonstrate the utility and robustness of the normalized dominance scoring method, we consider a complex example meeting the following conditions:
-\begin{itemize}
-    \item Multiple groups (in example four groups)
-    \item Unequal number of items per group (minimum three items per group)
-    \item Tied ranks
-    \item Odd total number of participants ($N=15$)
-\end{itemize}
-
-\subsection{Data and Initial Rankings}
-
-Participants from four intervention groups (A, B, C, D) were ranked based on their effectiveness scores. Ties were assigned average ranks explicitly in \hyperref[initial-data]{Table 1}:
-
-\begin{table}[htbp!]
-\centering
-\caption{Effectiveness Scores and Verified Assigned Ranks}
-\begin{tabular}{llcc}
-\toprule
-Participant & Group & Score & Rank \\
-\midrule
-1 & A & 95 & 13.5 (tie) \\
-2 & A & 48 & 9 \\
-3 & A & 25 & 6 \\
-4 & A & 15 & 2.5 (tie) \\
-5 & B & 83 & 12 \\
-6 & B & 57 & 10 \\
-7 & B & 100 & 15 \\
-8 & C & 70 & 11 \\
-9 & C & 20 & 5 \\
-10 & C & 40 & 8 \\
-11 & D & 95 & 13.5 (tie) \\
-12 & D & 15 & 2.5 (tie) \\
-13 & D & 18 & 4 \\
-14 & D & 30 & 7 \\
-15 & D & 10 & 1 \\
-\bottomrule
-\end{tabular}
-\label{initial-data}
-\end{table}
-
-\subsection{Calculations}
-
-\textbf{Step 1: Rank Sums}
-\begin{itemize}
-\item $r_A = 13.5 + 9 + 6 + 2.5 = 31$
-\item $r_B = 12 + 10 + 15 = 37$
-\item $r_C = 11 + 5 + 8 = 24$
-\item $r_D = 13.5 + 2.5 + 4 + 7 + 1 = 28$
-\end{itemize}
-
-\textbf{Step 2: Define Parameters}
-
-Total participants: $N=15$, Number of groups: $k=4$.
-
-Group sizes:
-\begin{itemize}
-\item $n_A = 4$, $n_B = 3$, $n_C = 3$, $n_D = 5$
-\end{itemize}
-
-Compute explicitly $a = \lfloor N/2 \rfloor = \lfloor 15/2 \rfloor = 7$.
-
-\textbf{Step 3: Calculate Upper Dominant Half}
-
-Lower Dominant Half (LDH):
-\begin{equation}
-S_{lower} = \frac{a(a+1)}{2} = \frac{7 \times 8}{2} = 28
-\end{equation}
-
-Total sum of ranks:
-\begin{equation}
-S = \frac{N(N+1)}{2} = \frac{15 \times 16}{2} = 120
-\end{equation}
-
-Upper Dominant Half (UDH):
-\begin{equation}
-S_{UDH} = S - S_{lower} = 120 - 28 = 92
-\end{equation}
-
-\textbf{Step 4: Weight Bias Calculation}
-\begin{equation}
-w_i = \frac{N}{k \cdot n_i}
-\end{equation}
-
-Calculate explicitly:
-\begin{itemize}
-\item $w_A = \frac{15}{4 \times 4} = 0.9375$
-\item $w_B = \frac{15}{4 \times 3} = 1.25$
-\item $w_C = \frac{15}{4 \times 3} = 1.25$
-\item $w_D = \frac{15}{4 \times 5} = 0.75$
-\end{itemize}
-
-\textbf{Step 5: Dominance Scores}
-
-Dominance scores explicitly computed as:
-\begin{equation}
-U_i = w_i \cdot \frac{r_j}{S_{UDH}}
-\end{equation}
-
-Calculate:
-\begin{itemize}
-\item $U_A = 0.9375 \times \frac{31}{92} = 0.316$
-\item $U_B = 1.25 \times \frac{37}{92} = 0.503$
-\item $U_C = 1.25 \times \frac{24}{92} = 0.326$
-\item $U_D = 0.75 \times \frac{28}{92} = 0.228$
-\end{itemize}
-
-\subsection{Summary of Dominance Results}
-Results have been summarized in \hyperref[dominance-result]{Table 2}
-\begin{table}[htb!]
-\centering
-\caption{Dominance Calculation Results}
-\begin{tabular}{lccc}
-\toprule
-Group & Rank Sum ($r_j$) & Weight Bias ($w_i$) & Dominance Score ($U_i$) \\
-\midrule
-A & 31 & 0.9375 & 0.316 \\
-B & 37 & 1.2500 & 0.503 (Most Dominant) \\
-C & 24 & 1.2500 & 0.326 \\
-D & 28 & 0.7500 & 0.228 (Least Dominant) \\
-\bottomrule
-\end{tabular}
-\label{dominance-result}
-\end{table}
-
-\subsection{Interpretation of Results}
-
-Group B achieves the highest dominance score, demonstrating superior effectiveness. Despite the variations in group size and tied ranks, the method accurately balances these complexities. Group D has the lowest dominance score, emphasizing the method’s robustness and fairness in clearly assessing relative performance.
-
 \subsection{Validation of Results}
 
+\section{References}
+Refs
 \printbibliography
 \appendix
 \end{document}
