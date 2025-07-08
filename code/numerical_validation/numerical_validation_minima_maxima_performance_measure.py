@@ -14,15 +14,8 @@ def main():
     
     # Group 2
     dg2 = DataGroup("Gropup II", dataCollectionExample)
-    dg2.dataList.append(DataElement(2))
-    dg2.dataList.append(DataElement(3))
-    dg2.dataList.append(DataElement(4))
-    dg2.dataList.append(DataElement(5))
-    dg2.dataList.append(DataElement(6))
-    dg2.dataList.append(DataElement(7))
-    dg2.dataList.append(DataElement(8))
-    dg2.dataList.append(DataElement(9))
-    dg2.dataList.append(DataElement(10))
+    for i in range(2,11):
+        dg2.dataList.append(DataElement(i))
     
     # Group 3
     dg3 = DataGroup("Group III", dataCollectionExample)

@@ -27,10 +27,11 @@
 %% 
 %% ----------------------------------------------------------------------
 %% 
+\vbadness=10000
 \documentclass[man,floatsintext]{apa7}
 \usepackage[american]{babel}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
-\usepackage{amsmath, amssymb, geometry, graphicx, booktabs}
+\usepackage{amsmath, amssymb, geometry, graphicx, booktabs, multirow}
 \DeclareLanguageMapping{american}{american-apa}
 \addbibresource{refs.bib}
 \usepackage{tcolorbox}
@@ -39,6 +40,8 @@
 \definecolor{bg}{gray}{0.95}
 \DeclareTCBListing{mintedbox}{O{}m!O{}}{%
 	breakable=true,
+	before skip=10pt, 
+	after skip=10pt,
 	listing engine=minted,
 	listing only,
 	minted language=#2,
@@ -54,7 +57,7 @@
 	boxsep=0pt,
 	left skip=0pt,
 	right skip=0pt,
-	left=25pt,
+	left=20pt,
 	right=0pt,
 	top=3pt,
 	bottom=3pt,
@@ -141,7 +144,7 @@ This is a list of Applications scenario, the formula was designed for:
 There could be applications outside the scope of this paper. But, when designing the formula these above listed applications were being thought of.
 
 \hfill \break
-Mathematical derivation, along with its theoretical justification, would be discussed, with its analogous visual intuition where possible. Maxima and Minima, range of dominance [0, 1], would be proven as well.
+Mathematical derivation, along with its theoretical justification, would be discussed, with its analogous visual intuition where possible. Maxima and Minima, range of normalized performance measure [0, 1], would be proven as well.
 
 \section{Non-normalized Performance}
 
@@ -158,18 +161,21 @@ This non-normalized performance measure, with uneven number of groups is given b
 \label{eq:non-normalized}
     p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
 \end{equation}
-This later non-normalized dominance would be used to derive the normalized version of the formula. Therefore, non-normalized performance derivation would be discussed first.
+
 
 \begin{itemize}
-    \item Sum of Upper Dominant Half ($S_{UDH}$):
-    \begin{align}
-        S_{UDH} = \frac{N(N+1)}{2} - \frac{a(a+1)}{2}, \quad a = \lfloor N/2 \rfloor
-    \end{align}
-    \item Weight Bias ($w_i$):
-    \begin{align}
-        w_i = \frac{N}{k n_i}
-    \end{align}
+	\item Sum of Upper Dominant Half ($S_{UDH}$):
+	\begin{align}
+		S_{UDH} = \frac{N(N+1)}{2} - \frac{a(a+1)}{2}, \quad a = \lfloor N/2 \rfloor
+	\end{align}
+	\item Weight Bias ($w_i$):
+	\begin{align}
+		w_i = \frac{N}{k n_i}
+	\end{align}
 \end{itemize}
+
+This later non-normalized dominance would be used to derive the normalized version of the formula. Therefore, non-normalized performance derivation would be discussed first.
+
 
 \subsection{Derivation of Non-normalized Performance}
 From, the understanding we gain from \hyperref[fig:dominance_Understanding]{Figure 2}, we can easily, ascertain the local dominance, if we divide the scale into two halves of lower ranks half, and upper rank half. So, the group with ranks in the upper half would have a more prominent or dominant performance. So, we need to figure out what's the ranks of the upper dominant half is.
@@ -487,7 +493,7 @@ Therefore, the range of normalized performance measure is [0,1]
 \section{Validation}
 All mathematical and numerical validation scripts, as well as the full manuscript source, are available in the GitHub repository \cite{silentkarmi2025normalized}. See the repository's folder structure and README for details on specific files and validation types.
 
-\subsection{Mathematical Validation via SymPy Library in Python}
+\subsection{Mathematical Validation: Theoretical Derivation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
 
 A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance_measure]{Python (SymPy) Code Snippet}. This snippet is for: When N is odd, Mathematical Derivation of Normalized Performance Measure.
@@ -521,23 +527,75 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 
 \hyperref[fig:output-mathematical-validation]{Figure 3} shows the output of the Snippet Code
 \begin{figure}[!htb]
-	\caption{Output: When N is odd, Mathematical Derivation of Normalized Performance Measure}
+	\caption{Output: Mathematical Derivation of Normalized Performance Measure via SymPy}
 	\centering
 	\includegraphics [scale=1]{images/output-mathematical-validation.png}
 	\label{fig:output-mathematical-validation}
 \end{figure}
 
-\begin{itemize}
-    \item Mathematical proof of sympy
-    \item Numerical proof annd implementation in Python 
-    \item cross-validation from a different method
-\end{itemize}
+\subsection{Numerical Validation: Range of Normalized Performance Measure}
+We have mathematically and theoretically have proven the range to [0,1].
+Zero means the group has single element with Rank 1 element, lowest performance measure value possible.
+And, one means the group has single element with Rank $N^th$ element, highest performance measure value possible.
+Any combination of elements in the group will be in the range of [0,1].
+
+We have used this simple numerical example to validate, where value is same with their rank.
+\begin{table}[htbp]
+	\centering
+	\caption{Example used for Validation of Range for Normalized Performance Measure}
+	\begin{tabular}{llcc}
+		\toprule
+		\textbf{Group} & \textbf{Member Value} & \textbf{Rank} & \textbf{Normalized Performance Measure} \\
+		\midrule
+		I     & 1   & 1   & 0.0 \\
+		\midrule
+		\multirow{9}{*}{II} 
+		& 2   & 2   & \multirow{9}{*}{0.5} \\
+		& 3   & 3   &  \\
+		& 4   & 4   &  \\
+		& 5   & 5   &  \\
+		& 6   & 6   &  \\
+		& 7   & 7   &  \\
+		& 8   & 8   &  \\
+		& 9   & 9   &  \\
+		& 10  & 10  &  \\
+		\midrule
+		III   & 11  & 11  & 1.0 \\
+		\bottomrule
+	\end{tabular}
+	\label{tab:validation}
+\end{table}
+
+
+This is numerically validated via Python code, by applying the formulae discussed in the research paper, the code snippet is attached below:
+
+
+\begin{mintedbox}{python}
+	def setPerformanceMeasureValue(self):
+	"""Calculates the normalized performance value, using the formula in the research paper
+	"""
+	ni = self.getElementCount()
+	sigma_ri = self.getRankedGroupSum()
+	n = self.parent.netTotalItemsInCollection
+	k = self.parent.getNumberOfGroups()
+	self.performanceMeasureValue = (-ni + sigma_ri)/(ni*(n-1))
+\end{mintedbox}
+
+\hyperref[fig:output-numerical-validation-minima-maxima]{Figure 4} shows the output of Maxima and Minima Validation.
+\begin{figure}[!htbp]
+	\caption{Output: Numerical Validation of Range for Normalized Performance Measure via Python}
+	\centering
+	\includegraphics [scale=1]{images/output-validation-minima-maxima.png}
+	\label{fig:output-numerical-validation-minima-maxima}
+\end{figure}
+
 
 \section{Detailed Example of Dominance Method}
 
 \subsection{Validation of Results}
-
-\section{References}
+\begin{itemize}
+	\item cross-validation from a different method
+\end{itemize}
 \printbibliography
 \appendix
 \end{document}
