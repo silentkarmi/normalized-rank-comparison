@@ -1,3 +1,5 @@
+from scipy import stats
+
 class DataCollection:
     """Collection contains groups, which in turn contain data elements 
     """
@@ -8,14 +10,14 @@ class DataCollection:
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
 
-    # def computeKruskalTest(self):
-    #     arrayDataCollectionGroups = []
+    def computeKruskalTest(self):
+        arrayDataCollectionGroups = []
         
-    #     for itemGroup in self.dataCollectionList:
-    #         arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
+        for itemGroup in self.dataCollectionList:
+            arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
 
-    #     tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
-    #     h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
+        tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
+        h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
 
     def getNumberOfGroups(self):
         return len(self.dataCollectionList)
