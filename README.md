@@ -33,6 +33,64 @@ P_i = \frac{-n_i + \sum_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}
 - **N**: Total number of items across all groups.
 N = sum of n_i over all groups
 
+## Folder Structure
+
+├── Code
+│ ├── numerical_validation/
+│ │ ├── implementation_classes/
+│ │ │ ├── init.py
+│ │ │ ├── data_collection.py
+│ │ │ ├── data_group.py
+│ │ │ └── data_element.py
+│ │ ├── numerical_validation_kruskal_dunnett_performance_measure
+│ │ └── numerical_validation_minima_maxima_performance_measure
+│ └── mathematical_validation/
+│ └── mathematical_validation_normalized_performacne_measure.ipynb
+├── Latex
+│ ├── normalized-rank-comparison.tex
+│ ├── normalized-rank-comparison.pdf
+│ └── refs.bib
+
+
+### 🔍 Description of Folders
+
+- **`Code/`**  
+  Main directory for the source code of the project.
+
+- **`Code/numerical_validation/implementation_classes/`**  
+  Core Python classes used for data structuring, grouping, and collection.  
+  - `data_element.py`: Defines the atomic unit of a data element.  
+  - `data_group.py`: Groups data elements and calculates related stats.  
+  - `data_collection.py`: Manages multiple groups.  
+  - `__init__.py`: Initializes the folder as a Python module.
+
+- **`Code/numerical_validation/numerical_validation_kruskal_dunnett_performance_measure/`**  
+  Contains scripts and logic applying Kruskal-Wallis H-test and Dunnett post-hoc test for comparing groups on performance.
+
+- **`Code/numerical_validation/numerical_validation_minima_maxima_performance_measure/`**  
+  Focuses on normalized scoring based on identifying minima and maxima in rank comparison.
+
+- **`Code/mathematical_validation/`**  
+  Symbolic or mathematical validation of the Normalized Performance Measure.  
+  - `mathematical_validation_normalized_performacne_measure.ipynb`: A Jupyter notebook validating formulas symbolically.
+
+- **`Latex/`**  
+  Contains the academic report/paper written in LaTeX.  
+  - `normalized-rank-comparison.tex`: Main TeX document.  
+  - `normalized-rank-comparison.pdf`: Compiled PDF report.  
+  - `refs.bib`: Bibliography used in the paper.
+
+---
+
+## ▶️ How to Run
+
+To ensure your imports work correctly, always run scripts using the `-m` flag from the root of the project:
+
+```bash
+cd Code
+python -m numerical_validation.implementation_classes.data_group
+
+
 ## Purpose
 
 ✅ Normalize performance scores across groups of unequal sizes.  
