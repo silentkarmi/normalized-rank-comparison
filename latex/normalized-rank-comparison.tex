@@ -137,6 +137,7 @@ P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
 This is a list of Applications scenario, the formula was designed for:
 \begin{itemize}
 	\item \textbf{Psychology}: In Psychology, we have a big arsenal of therapy techniques, all having their own benefits. If, mutually exclusive groups, each group taking a particular therapy, needs to be analyzed which group performed better, and the group sizes are even unequal. Then, Performance Measure Formula can be applied.
+	\item \textbf{Medical}: Significance Value only tells us that a drug is performing. And, there are multiple drugs being compared, and there is a uneven sample size, then Normalized Performance Measure can be used to see how the drugs are performing compared to each other.
     \item \textbf{Educational}: Awarding Best Class Performance in a school, when classes have uneven students, and even different grading scales.
     \item \textbf{Organizational}: To identify best-performing team in the organization, and least-performing, for restructuring and guidance purposes, when number of person per team are uneven, and performance scale at various sector of an organization is different.
    \item \textbf{Business}: Often businesses have economy segment and luxury segment for services and products. Often, just price is not an enough indicator what segment of products fared better. If, a ranking is created, on customer feedback, return on investment, less-after-cost-maintenance, expenses etc. Then, this formula can be used to find the dominant product/services of their business, when there is uneven sale of each product/services sold.
@@ -491,7 +492,32 @@ Therefore, the range of normalized performance measure is [0,1]
 
 
 \section{Validation}
+A theoretical research is only holistic if, validated mathematically, numerically and cross-validated via existing established methods. So, in this section this is what we intend to do so.
+
 All mathematical and numerical validation scripts, as well as the full manuscript source, are available in the GitHub repository \cite{silentkarmi2025normalized}. See the repository's folder structure and README for details on specific files and validation types.
+
+\subsection{Cross-validation with existing Statistical Methods}
+Normalized Performance Measure indicates a value which tells us the group performance dominance, if it's closer to 1, then that group had an exceptional performance. And, if its closer to 0, then it was a dismissal performance.
+For, cross validation of the results, we use \cite{kruskal1952use} H test, to identify if the performance among all the groups were similar or different. And, then we use \cite{dunnett1955multiple} test to identify which group has the highest deviation, where the control groups could be the mid performing group, that would mean the exceptional performance group and dismissal performance group will show the highest deviation.
+
+\subsubsection{Relationship with p-value}
+With Normalized Performance Measure, there is a intuitive relationship with the significane value. For example, if there was a Control Group, Drug A and Drug B. And, what drug performed better. We will apply, \cite{kruskal1952use} H Test. Using the 'H' characteristic the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one of the drug has shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if Drug A or Drug B has shown deviation. Now, one question is still left un-answered. Now, is this deviation is negative or positve, assuming we have performed two-tailed test for p-value. Now, we can use Normalized Performance Measure to understand, if these drugs performed exceptionally well, or dismissal, or about the same.
+This is summarized in the table below:
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|l|}
+		\hline
+		\textbf{p-value} & \textbf{Deviation} & \textbf{Normalized Performance Measure} \\
+		\hline
+		$\leq 0.05$ & Yes & Dismissal = closer to 0 or Exceptional = closer to 1 \\
+		\hline
+		$> 0.05$ & No & Closer to 0.5 (mid-performing) \\
+		\hline
+	\end{tabular}
+	\vspace{2pt}
+	\caption{Interpretation of p-values in relation to deviation and normalized performance}
+\end{table}
+So, if we are able to show numerically, by taking an example, that the results follow the table above, then Normalized Performance Measure can be said to be validated.
 
 \subsection{Mathematical Validation: Theoretical Derivation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
@@ -536,10 +562,10 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 \subsection{Numerical Validation: Range of Normalized Performance Measure}
 We have mathematically and theoretically have proven the range to [0,1].
 Zero means the group has single element with Rank 1 element, lowest performance measure value possible.
-And, one means the group has single element with Rank $N^th$ element, highest performance measure value possible.
+And, one means the group has single element with Rank $N^{th}$ element, highest performance measure value possible.
 Any combination of elements in the group will be in the range of [0,1].
 
-We have used this simple numerical example to validate, where value is same with their rank.
+We have used this simple numerical example to validate the theoretical Maxima and Minima, where value is same as their rank.
 \begin{table}[htbp]
 	\centering
 	\caption{Example used for Validation of Range for Normalized Performance Measure}
@@ -591,11 +617,6 @@ This is numerically validated via Python code, by applying the formulae discusse
 
 
 \section{Detailed Example of Dominance Method}
-
-\subsection{Validation of Results}
-\begin{itemize}
-	\item cross-validation from a different method
-\end{itemize}
 \printbibliography
 \appendix
 \end{document}
