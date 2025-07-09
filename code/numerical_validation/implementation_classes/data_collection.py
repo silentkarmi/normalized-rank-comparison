@@ -18,6 +18,21 @@ class DataCollection:
 
         tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
         h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
+        
+    def getNestedArrayCollection(self):
+        arrayDataCollectionGroups = []
+        
+        for itemGroup in self.dataCollectionList:
+            arrayDataCollectionGroups.append(itemGroup.getDataGroupElementsArray())
+            
+        return arrayDataCollectionGroups
+        
+    def getLabels(self):
+        listLabels = []
+        for itemGroup in self.dataCollectionList:
+            listLabels.append(itemGroup.name)
+        
+        return listLabels
 
     def getNumberOfGroups(self):
         return len(self.dataCollectionList)
@@ -25,7 +40,7 @@ class DataCollection:
     def __getNextElement(self):
         for itemGroup in self.dataCollectionList:
             for itemElement in itemGroup.dataList:
-                if itemElement.rank == -1:
+                if itemElement.rank == None:
                     return itemElement
                 
     def __getListBelongingToSameRank(self, valueToCheck):
@@ -48,7 +63,7 @@ class DataCollection:
         while itemToRank:
             for itemGroup in self.dataCollectionList:
                 for itemElement in itemGroup.dataList:
-                    if itemElement.rank == -1:
+                    if itemElement.rank == None:
                         if itemElement.value < itemToRank.value:
                             itemToRank = itemElement
 

@@ -8,4 +8,4 @@ class DataElement:
             value (variable): It depends on what elements being stored, what's the grading scale is (1-100, A-F etc.)
         """
         self.value = value
-        self.rank = -1
+        self.rank = None
