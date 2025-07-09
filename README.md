@@ -35,21 +35,7 @@ N = sum of n_i over all groups
 
 ## Folder Structure
 
-├── Code
-│ ├── numerical_validation/
-│ │ ├── implementation_classes/
-│ │ │ ├── init.py
-│ │ │ ├── data_collection.py
-│ │ │ ├── data_group.py
-│ │ │ └── data_element.py
-│ │ ├── numerical_validation_kruskal_dunnett_performance_measure
-│ │ └── numerical_validation_minima_maxima_performance_measure
-│ └── mathematical_validation/
-│ └── mathematical_validation_normalized_performacne_measure.ipynb
-├── Latex
-│ ├── normalized-rank-comparison.tex
-│ ├── normalized-rank-comparison.pdf
-│ └── refs.bib
+<pre> ## 📁 Folder Structure Code/ ├── numerical_validation/ │ ├── implementation_classes/ │ │ ├── __init__.py │ │ ├── data_collection.py │ │ ├── data_group.py │ │ └── data_element.py │ ├── numerical_validation_kruskal_dunnett_performance_measure/ │ └── numerical_validation_minima_maxima_performance_measure/ ├── mathematical_validation/ │ └── mathematical_validation_normalized_performacne_measure.ipynb Latex/ ├── normalized-rank-comparison.tex ├── normalized-rank-comparison.pdf └── refs.bib </pre>
 
 
 ### 🔍 Description of Folders
