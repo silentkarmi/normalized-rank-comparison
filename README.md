@@ -33,7 +33,7 @@ P_i = \frac{-n_i + \sum_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}
 - **N**: Total number of items across all groups.
 N = sum of n_i over all groups
 
- ## 📁 Folder Structure
+## 📁 Folder Structure
 
 <pre>
 ├── Code
@@ -54,7 +54,7 @@ N = sum of n_i over all groups
 </pre>
 
 
-### 🔍 Description of Folders
+## 🔍 Description of Folders
 
 - **`Code/`**  
   Main directory for the source code of the project.
