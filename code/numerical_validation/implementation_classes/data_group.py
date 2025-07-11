@@ -6,6 +6,7 @@ class DataGroup:
     """
     def __init__(self, name = "", dataList = None, parent = None):
         self.name = name
+        self.pValue = None
         
         self.dataList = []
         if dataList:

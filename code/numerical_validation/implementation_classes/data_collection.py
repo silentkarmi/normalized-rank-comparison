@@ -4,17 +4,18 @@ class DataCollection:
     """Collection contains groups, which in turn contain data elements 
     """
     
-    def __init__(self):
+    def __init__(self, ascendingOrder = True):
         """Constructor defining, N (netTotalItemsInCollection), also contains list of groups.
         """
         self.dataCollectionList = []
         self.netTotalItemsInCollection = 0
+        self.ascendingOrder = ascendingOrder
 
     def computeKruskalTest(self):
         arrayDataCollectionGroups = []
         
         for itemGroup in self.dataCollectionList:
-            arrayDataCollectionGroups.append(itemGroup.getDataGroupTupleElements())
+            arrayDataCollectionGroups.append(itemGroup.getDataGroupElementsTuple())
 
         tupleDataCollectionGroups = tuple(arrayDataCollectionGroups)
         h, self.psignificanceValue = stats.kruskal(*tupleDataCollectionGroups)
@@ -27,10 +28,22 @@ class DataCollection:
             
         return arrayDataCollectionGroups
         
-    def getLabels(self):
+    def getLabels(self, performenceIndexLabel = False):
         listLabels = []
         for itemGroup in self.dataCollectionList:
-            listLabels.append(itemGroup.name)
+            if performenceIndexLabel:
+                
+                if itemGroup.name == "Control Group":
+                    listLabels.append(itemGroup.name + 
+                                    ",\n$P_i=$" + str(round(itemGroup.performanceMeasureValue,2))
+                                    )
+                else:
+                    listLabels.append(itemGroup.name + 
+                                    ",\n$P_i=$" + str(round(itemGroup.performanceMeasureValue,2)) +
+                                    ",\n$pValue=$" + str(round(itemGroup.pValue,4))
+                                    )
+            else:
+                listLabels.append(itemGroup.name)
         
         return listLabels
 
@@ -64,8 +77,12 @@ class DataCollection:
             for itemGroup in self.dataCollectionList:
                 for itemElement in itemGroup.dataList:
                     if itemElement.rank == None:
-                        if itemElement.value < itemToRank.value:
-                            itemToRank = itemElement
+                        if self.ascendingOrder:
+                            if itemElement.value < itemToRank.value:
+                                itemToRank = itemElement
+                        else:
+                            if itemElement.value > itemToRank.value:
+                                itemToRank = itemElement
 
             rank += 1
             itemToRank.rank = rank
