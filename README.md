@@ -33,9 +33,25 @@ P_i = \frac{-n_i + \sum_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}
 - **N**: Total number of items across all groups.
 N = sum of n_i over all groups
 
-## Folder Structure
+ ## 📁 Folder Structure
 
-<pre> ## 📁 Folder Structure Code/ ├── numerical_validation/ │ ├── implementation_classes/ │ │ ├── __init__.py │ │ ├── data_collection.py │ │ ├── data_group.py │ │ └── data_element.py │ ├── numerical_validation_kruskal_dunnett_performance_measure/ │ └── numerical_validation_minima_maxima_performance_measure/ ├── mathematical_validation/ │ └── mathematical_validation_normalized_performacne_measure.ipynb Latex/ ├── normalized-rank-comparison.tex ├── normalized-rank-comparison.pdf └── refs.bib </pre>
+<pre>
+├── Code
+│ ├── numerical_validation/
+│ │ ├── implementation_classes/
+│ │ │ ├── init.py
+│ │ │ ├── data_collection.py
+│ │ │ ├── data_group.py
+│ │ │ └── data_element.py
+│ │ ├── numerical_validation_kruskal_dunnett_performance_measure
+│ │ └── numerical_validation_minima_maxima_performance_measure
+│ └── mathematical_validation/
+│ └── mathematical_validation_normalized_performacne_measure.ipynb
+├── Latex
+│ ├── normalized-rank-comparison.tex
+│ ├── normalized-rank-comparison.pdf
+│ └── refs.bib 
+</pre>
 
 
 ### 🔍 Description of Folders
