@@ -89,8 +89,8 @@ N = sum of n_i over all groups
 To ensure your imports work correctly, always run scripts using the `-m` flag from the root of the project:
 
 ```bash
-cd Code
-python -m numerical_validation.implementation_classes.data_group
+cd code\numerical_validation
+python numerical_validation_kruskal_dunnett_performance_measure.py
 ```
 
 ## Purpose
