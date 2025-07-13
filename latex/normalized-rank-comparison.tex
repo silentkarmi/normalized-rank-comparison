@@ -31,7 +31,7 @@
 \documentclass[man,floatsintext]{apa7}
 \usepackage[american]{babel}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
-\usepackage{amsmath, amssymb, geometry, graphicx, booktabs, multirow}
+\usepackage{amsmath, amssymb, geometry, graphicx, booktabs, multirow, makecell}
 \DeclareLanguageMapping{american}{american-apa}
 \addbibresource{refs.bib}
 \usepackage{tcolorbox}
@@ -497,13 +497,12 @@ A theoretical research is only holistic if, validated mathematically, numericall
 All mathematical and numerical validation scripts, as well as the full manuscript source, are available in the GitHub repository \cite{silentkarmi2025normalized}. See the repository's folder structure and README for details on specific files and validation types.
 
 \subsection{Cross-validation with existing Statistical Methods}
-Normalized Performance Measure indicates a value which tells us the group performance dominance, if it's closer to 1, then that group had an exceptional performance. And, if its closer to 0, then it was a dismissal performance.
-For, cross validation of the results, we use \cite{kruskal1952use} H test, to identify if the performance among all the groups were similar or different. And, then we use \cite{dunnett1955multiple} test to identify which group has the highest deviation, where the control groups could be the mid performing group, that would mean the exceptional performance group and dismissal performance group will show the highest deviation.
+Normalized Performance Measure indicates a value which tells us the group performance dominance, if it's closer to 1, then that group performed exceptionally well. And, if its closer to 0, then it was a dismissal performance. If, we can establish a relationship between p-Value and Normalized Performance Measure. Then this result can be used to cross-validate Normalized Performance Measure.
 
 \subsubsection{Relationship with p-value}
-With Normalized Performance Measure, there is a intuitive relationship with the significane value. For example, if there was a Control Group, Drug A and Drug B. And, what drug performed better. We will apply, \cite{kruskal1952use} H Test. Using the 'H' characteristic the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one of the drug has shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if Drug A or Drug B has shown deviation. Now, one question is still left un-answered. Now, is this deviation is negative or positve, assuming we have performed two-tailed test for p-value. Now, we can use Normalized Performance Measure to understand, if these drugs performed exceptionally well, or dismissal, or about the same.
+With Normalized Performance Measure, there is a intuitive relationship with the significane value. For instance along with Control Group, if we need to know what experimental group performed better or worse. We can apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one or more experimental groups have shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if any experimental group has shown deviation. Now, one question is still left unanswered. Now, is this deviation negative or positive i.e. experimental group performed well or worse than the control group, assuming we have performed two-tailed test for p-value. Now, we can use Normalized Performance Measure to understand, if these experimental groups performed exceptionally well, or dismissal, or about the same.
 This is summarized in the table below:
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{|c|c|l|}
 		\hline
@@ -511,13 +510,52 @@ This is summarized in the table below:
 		\hline
 		$\leq 0.05$ & Yes & Dismissal = closer to 0 or Exceptional = closer to 1 \\
 		\hline
-		$> 0.05$ & No & Closer to 0.5 (mid-performing) \\
+		$> 0.05$ & No & Closer to 0.5 (mid-performing groups) \\
 		\hline
 	\end{tabular}
 	\vspace{2pt}
 	\caption{Interpretation of p-values in relation to deviation and normalized performance}
+	\label{table:p-value-relationship}
 \end{table}
-So, if we are able to show numerically, by taking an example, that the results follow the table above, then Normalized Performance Measure can be said to be validated.
+So, if we are able to show numerically, by taking an example, that the results follow the \hyperref[table:p-value-relationship]{Table 1} above, then Normalized Performance Measure can be said to be validated.
+
+
+\subsubsection{Simulated Data Numerical Cross Validation: Medical Drug Performance}
+To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data is shown in the form of BoxPlot in \hyperref[fig:box-plot]{Figure 3}, 
+\begin{figure}[!htbp]
+	\caption{Drugs comparison and showing relationship between Permormance Measure and pValue}
+	\centering
+	\includegraphics [scale=0.75]{images/simulation-data-kruskal-dunnett.png}
+	\label{fig:box-plot}
+\end{figure}
+on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, the results are summarized in the table below:
+	
+
+\begin{table}[!htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{lccccc}
+		\toprule
+		\textbf{Group} &
+		\makecell{\textbf{Kruskal-Wallis} \\ \textbf{'H' Test (pValue)}} &
+		\makecell{\textbf{Group} \\ \textbf{Deviation (Y/N)}} &
+		\makecell{\textbf{Dunnett's} \\ \textbf{Test (pValue)}} &
+		\makecell{\textbf{Deviation} \\ \textbf{(Yes/No)}} &
+		\makecell{\textbf{Normalized} \\ \textbf{Performance} \\ \textbf{Measure}} \\
+		\midrule
+		Control &         &     & -      & -    & 0.49 \\
+		Drug A  &         &     & 0.001  & Yes  & 0.86 \\
+		Drug B  &         &     & 0.8414 & No   & 0.53 \\
+		Drug C  & \multirow{-3}{*}{0.00045} & \multirow{-3}{*}{Yes} & 0.0013 & Yes & 0.12 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{5pt}
+	\caption{Group-wise statistical comparison and normalized performance.}
+	\label{table:results-simulated-data}
+\end{table}
+
+\textbf{Interpretation of Results}:
+As seen in  \hyperref[fig:box-plot]{Figure 3, BoxPlot}, visually, it can be seen that Drug A and Drug C show deviation significantly. This is confirmed numerically in \hyperref[table:results-simulated-data]{Table 2}. Because Kruskal Wallis 'H' Test results in pValue < 0.05 therefore, we need to reject the null hypothesis that "these Drugs Performance belong to the same distribution as of Control Group". Because, there is a deviation amongst the group. Dunnett's test pValue confirms us which group has deviated which is Drug A and Drug C. In the normalized performance measure validates the relationship in \hyperref[table:p-value-relationship]{Table 1}, as Drug A is closer 1 (Exceptional Performance), Drug C is closer to 0 (Dismissal Performance) and Drug B shows similar performance measure to control group (closer to 0.5)
 
 \subsection{Mathematical Validation: Theoretical Derivation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
@@ -616,7 +654,7 @@ This is numerically validated via Python code, by applying the formulae discusse
 \end{figure}
 
 
-\section{Detailed Example of Dominance Method}
+\section{Detailed Example of Normalized Performance Method}
 \printbibliography
 \appendix
 \end{document}
