@@ -115,6 +115,7 @@ class DataCollection:
 
         for group in self.dataCollectionList:
             group.setPerformanceMeasureValue()
+            group.setNonNormalizedPerformanceMeasureValue()
     
             
     def print(self):
@@ -127,6 +128,7 @@ class DataCollection:
         for itemGroup in self.dataCollectionList:
             print()
             print(itemGroup.name, "Normalized Performance Measure:", itemGroup.performanceMeasureValue)
+            print(itemGroup.name, "Non Normalized Performance Measure:", itemGroup.nonNormalizedPerformanceMeasureValue)
             for itemElement in itemGroup.dataList:
                 print(itemGroup.name,", Value:", itemElement.value,", Rank", itemElement.rank)
         print("-" * 15)

@@ -1,5 +1,6 @@
 from implementation_classes.data_element import DataElement
 import numpy as np
+import math as Math
 
 class DataGroup:
     """This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements
@@ -13,6 +14,7 @@ class DataGroup:
             self.addElements(dataList)
             
         self.performanceMeasureValue = None
+        self.nonNormalizedPerformanceMeasureValue = None
         self.parent = parent
         if parent:
             parent.dataCollectionList.append(self)
@@ -69,3 +71,18 @@ class DataGroup:
         n = self.parent.netTotalItemsInCollection
         k = self.parent.getNumberOfGroups()
         self.performanceMeasureValue = (-ni + sigma_ri)/(ni*(n-1))
+        
+    def setNonNormalizedPerformanceMeasureValue(self):
+        """Calculates the non-normalized performance value, given in the research paper
+        """
+        ni = self.getElementCount()
+        sigma_ri = self.getRankedGroupSum()
+        n = self.parent.netTotalItemsInCollection
+        k = self.parent.getNumberOfGroups()
+        
+        a =  Math.floor(n/2)
+        sudh = n*(n+1)*0.5 - a*(a+1)*0.5        
+        
+        wi =  n/(k * ni)
+        self.nonNormalizedPerformanceMeasureValue = wi * sigma_ri /  sudh
+        
