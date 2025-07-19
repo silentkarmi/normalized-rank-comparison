@@ -43,6 +43,7 @@ N = sum of n_i over all groups
 │ │ │ ├── data_collection.py
 │ │ │ ├── data_group.py
 │ │ │ └── data_element.py
+| | | ├── code_doc/
 │ │ ├── numerical_validation_kruskal_dunnett_performance_measure
 │ │ └── numerical_validation_minima_maxima_performance_measure
 │ └── mathematical_validation/
@@ -60,7 +61,7 @@ N = sum of n_i over all groups
   Main directory for the source code of the project.
 
 - **`Code/numerical_validation/implementation_classes/`**  
-  Core Python classes used for data structuring, grouping, and collection.  
+  Core Python classes used for data structuring, grouping, and collection and reusability of code in all types of numerical validation
   - `data_element.py`: Defines the atomic unit of a data element.  
   - `data_group.py`: Groups data elements and calculates related stats.  
   - `data_collection.py`: Manages multiple groups.  
@@ -68,6 +69,9 @@ N = sum of n_i over all groups
 
 - **`Code/numerical_validation/numerical_validation_kruskal_dunnett_performance_measure/`**  
   Contains scripts and logic applying Kruskal-Wallis H-test and Dunnett post-hoc test for comparing groups on performance.
+
+- **`Code/numerical_validation/code_doc/'**
+  Contains documentation for the Object Oriented Classes used to write the numerical validation
 
 - **`Code/numerical_validation/numerical_validation_minima_maxima_performance_measure/`**  
   Focuses on normalized scoring based on identifying minima and maxima in rank comparison.

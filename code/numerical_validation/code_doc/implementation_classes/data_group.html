@@ -40,16 +40,34 @@
                                 <a class="variable" href="#DataGroup.name">name</a>
                         </li>
                         <li>
+                                <a class="variable" href="#DataGroup.pValue">pValue</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#DataGroup.dataList">dataList</a>
                         </li>
                         <li>
                                 <a class="variable" href="#DataGroup.performanceMeasureValue">performanceMeasureValue</a>
                         </li>
                         <li>
+                                <a class="variable" href="#DataGroup.nonNormalizedPerformanceMeasureValue">nonNormalizedPerformanceMeasureValue</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#DataGroup.parent">parent</a>
                         </li>
                         <li>
-                                <a class="function" href="#DataGroup.getDataGroupTupleElements">getDataGroupTupleElements</a>
+                                <a class="function" href="#DataGroup.addElements">addElements</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DataGroup.addElement">addElement</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DataGroup.getDataGroupElementsArray">getDataGroupElementsArray</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DataGroup.getDataGroupElementsTuple">getDataGroupElementsTuple</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DataGroup.getDataGroupElementsNumpyArray">getDataGroupElementsNumpyArray</a>
                         </li>
                         <li>
                                 <a class="function" href="#DataGroup.getRankedGroupSum">getRankedGroupSum</a>
@@ -59,6 +77,9 @@
                         </li>
                         <li>
                                 <a class="function" href="#DataGroup.setPerformanceMeasureValue">setPerformanceMeasureValue</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DataGroup.setNonNormalizedPerformanceMeasureValue">setNonNormalizedPerformanceMeasureValue</a>
                         </li>
                 </ul>
 
@@ -84,39 +105,94 @@
 
                         <label class="view-source-button" for="mod-data_group-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataGroup</span><span class="p">:</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>        <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupTupleElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>        <span class="n">returnArray</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>            <span class="n">returnArray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">returnArray</span><span class="p">)</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="k">return</span> <span class="nb">sum</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">implementation_classes.data_element</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataElement</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Math</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataGroup</span><span class="p">:</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dataList</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>        
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>        <span class="k">if</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">addElements</span><span class="p">(</span><span class="n">dataList</span><span class="p">)</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>            
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>            <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataList</span><span class="p">):</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elementValue</span><span class="p">):</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">elementValue</span><span class="p">))</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>               
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of List</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="sd">        Returns:</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="sd">            List : Data Elements but only values</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="sd">        &quot;&quot;&quot;</span>           
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>        <span class="n">elementsValueList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="k">for</span> <span class="n">dataElement</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>            <span class="n">elementsValueList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataElement</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="k">return</span> <span class="n">elementsValueList</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Tuple</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">        Returns:</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">            Tuple : Data Elements but only values</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsNumpyArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Numpy Array</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="sd">        Returns:</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="sd">            Numpy Array : Data Elements but only values</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="nb">sum</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>        
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setNonNormalizedPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the non-normalized performance value, given in the research paper</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>        
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>        <span class="n">a</span> <span class="o">=</span>  <span class="n">Math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>        <span class="n">sudh</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span>        
+</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>        
+</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>        <span class="n">wi</span> <span class="o">=</span>  <span class="n">n</span><span class="o">/</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">ni</span><span class="p">)</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="n">wi</span> <span class="o">*</span> <span class="n">sigma_ri</span> <span class="o">/</span>  <span class="n">sudh</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a>        
 </span></pre></div>
 
 
@@ -132,39 +208,89 @@
 
     </div>
     <a class="headerlink" href="#DataGroup"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup-2"><a href="#DataGroup-2"><span class="linenos"> 2</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataGroup</span><span class="p">:</span>
-</span><span id="DataGroup-3"><a href="#DataGroup-3"><span class="linenos"> 3</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements</span>
-</span><span id="DataGroup-4"><a href="#DataGroup-4"><span class="linenos"> 4</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="DataGroup-5"><a href="#DataGroup-5"><span class="linenos"> 5</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-</span><span id="DataGroup-6"><a href="#DataGroup-6"><span class="linenos"> 6</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="DataGroup-7"><a href="#DataGroup-7"><span class="linenos"> 7</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="DataGroup-8"><a href="#DataGroup-8"><span class="linenos"> 8</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span id="DataGroup-9"><a href="#DataGroup-9"><span class="linenos"> 9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-</span><span id="DataGroup-10"><a href="#DataGroup-10"><span class="linenos">10</span></a>        <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="DataGroup-11"><a href="#DataGroup-11"><span class="linenos">11</span></a>
-</span><span id="DataGroup-12"><a href="#DataGroup-12"><span class="linenos">12</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupTupleElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup-13"><a href="#DataGroup-13"><span class="linenos">13</span></a>        <span class="n">returnArray</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="DataGroup-14"><a href="#DataGroup-14"><span class="linenos">14</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="DataGroup-15"><a href="#DataGroup-15"><span class="linenos">15</span></a>            <span class="n">returnArray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</span><span id="DataGroup-16"><a href="#DataGroup-16"><span class="linenos">16</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">returnArray</span><span class="p">)</span>
-</span><span id="DataGroup-17"><a href="#DataGroup-17"><span class="linenos">17</span></a>
-</span><span id="DataGroup-18"><a href="#DataGroup-18"><span class="linenos">18</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup-19"><a href="#DataGroup-19"><span class="linenos">19</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="DataGroup-20"><a href="#DataGroup-20"><span class="linenos">20</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="DataGroup-21"><a href="#DataGroup-21"><span class="linenos">21</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
-</span><span id="DataGroup-22"><a href="#DataGroup-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="nb">sum</span>
-</span><span id="DataGroup-23"><a href="#DataGroup-23"><span class="linenos">23</span></a>    
-</span><span id="DataGroup-24"><a href="#DataGroup-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup-25"><a href="#DataGroup-25"><span class="linenos">25</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
-</span><span id="DataGroup-26"><a href="#DataGroup-26"><span class="linenos">26</span></a>
-</span><span id="DataGroup-27"><a href="#DataGroup-27"><span class="linenos">27</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup-28"><a href="#DataGroup-28"><span class="linenos">28</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
-</span><span id="DataGroup-29"><a href="#DataGroup-29"><span class="linenos">29</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="DataGroup-30"><a href="#DataGroup-30"><span class="linenos">30</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
-</span><span id="DataGroup-31"><a href="#DataGroup-31"><span class="linenos">31</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
-</span><span id="DataGroup-32"><a href="#DataGroup-32"><span class="linenos">32</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
-</span><span id="DataGroup-33"><a href="#DataGroup-33"><span class="linenos">33</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
-</span><span id="DataGroup-34"><a href="#DataGroup-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup-6"><a href="#DataGroup-6"><span class="linenos"> 6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataGroup</span><span class="p">:</span>
+</span><span id="DataGroup-7"><a href="#DataGroup-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a group, for which the Normalized Performance Measure is calculted, also contain the data elements</span>
+</span><span id="DataGroup-8"><a href="#DataGroup-8"><span class="linenos"> 8</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DataGroup-9"><a href="#DataGroup-9"><span class="linenos"> 9</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dataList</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="DataGroup-10"><a href="#DataGroup-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="DataGroup-11"><a href="#DataGroup-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup-12"><a href="#DataGroup-12"><span class="linenos">12</span></a>        
+</span><span id="DataGroup-13"><a href="#DataGroup-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="DataGroup-14"><a href="#DataGroup-14"><span class="linenos">14</span></a>        <span class="k">if</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup-15"><a href="#DataGroup-15"><span class="linenos">15</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">addElements</span><span class="p">(</span><span class="n">dataList</span><span class="p">)</span>
+</span><span id="DataGroup-16"><a href="#DataGroup-16"><span class="linenos">16</span></a>            
+</span><span id="DataGroup-17"><a href="#DataGroup-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup-18"><a href="#DataGroup-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup-19"><a href="#DataGroup-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+</span><span id="DataGroup-20"><a href="#DataGroup-20"><span class="linenos">20</span></a>        <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
+</span><span id="DataGroup-21"><a href="#DataGroup-21"><span class="linenos">21</span></a>            <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="DataGroup-22"><a href="#DataGroup-22"><span class="linenos">22</span></a>        
+</span><span id="DataGroup-23"><a href="#DataGroup-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataList</span><span class="p">):</span>
+</span><span id="DataGroup-24"><a href="#DataGroup-24"><span class="linenos">24</span></a>        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup-25"><a href="#DataGroup-25"><span class="linenos">25</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+</span><span id="DataGroup-26"><a href="#DataGroup-26"><span class="linenos">26</span></a>    
+</span><span id="DataGroup-27"><a href="#DataGroup-27"><span class="linenos">27</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elementValue</span><span class="p">):</span>
+</span><span id="DataGroup-28"><a href="#DataGroup-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">elementValue</span><span class="p">))</span>
+</span><span id="DataGroup-29"><a href="#DataGroup-29"><span class="linenos">29</span></a>               
+</span><span id="DataGroup-30"><a href="#DataGroup-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-31"><a href="#DataGroup-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of List</span>
+</span><span id="DataGroup-32"><a href="#DataGroup-32"><span class="linenos">32</span></a>
+</span><span id="DataGroup-33"><a href="#DataGroup-33"><span class="linenos">33</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup-34"><a href="#DataGroup-34"><span class="linenos">34</span></a><span class="sd">            List : Data Elements but only values</span>
+</span><span id="DataGroup-35"><a href="#DataGroup-35"><span class="linenos">35</span></a><span class="sd">        &quot;&quot;&quot;</span>           
+</span><span id="DataGroup-36"><a href="#DataGroup-36"><span class="linenos">36</span></a>        <span class="n">elementsValueList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="DataGroup-37"><a href="#DataGroup-37"><span class="linenos">37</span></a>        <span class="k">for</span> <span class="n">dataElement</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup-38"><a href="#DataGroup-38"><span class="linenos">38</span></a>            <span class="n">elementsValueList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataElement</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span id="DataGroup-39"><a href="#DataGroup-39"><span class="linenos">39</span></a>        
+</span><span id="DataGroup-40"><a href="#DataGroup-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="n">elementsValueList</span>
+</span><span id="DataGroup-41"><a href="#DataGroup-41"><span class="linenos">41</span></a>
+</span><span id="DataGroup-42"><a href="#DataGroup-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-43"><a href="#DataGroup-43"><span class="linenos">43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Tuple</span>
+</span><span id="DataGroup-44"><a href="#DataGroup-44"><span class="linenos">44</span></a>
+</span><span id="DataGroup-45"><a href="#DataGroup-45"><span class="linenos">45</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup-46"><a href="#DataGroup-46"><span class="linenos">46</span></a><span class="sd">            Tuple : Data Elements but only values</span>
+</span><span id="DataGroup-47"><a href="#DataGroup-47"><span class="linenos">47</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup-48"><a href="#DataGroup-48"><span class="linenos">48</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span><span id="DataGroup-49"><a href="#DataGroup-49"><span class="linenos">49</span></a>    
+</span><span id="DataGroup-50"><a href="#DataGroup-50"><span class="linenos">50</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsNumpyArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-51"><a href="#DataGroup-51"><span class="linenos">51</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Numpy Array</span>
+</span><span id="DataGroup-52"><a href="#DataGroup-52"><span class="linenos">52</span></a>
+</span><span id="DataGroup-53"><a href="#DataGroup-53"><span class="linenos">53</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup-54"><a href="#DataGroup-54"><span class="linenos">54</span></a><span class="sd">            Numpy Array : Data Elements but only values</span>
+</span><span id="DataGroup-55"><a href="#DataGroup-55"><span class="linenos">55</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup-56"><a href="#DataGroup-56"><span class="linenos">56</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span><span id="DataGroup-57"><a href="#DataGroup-57"><span class="linenos">57</span></a>
+</span><span id="DataGroup-58"><a href="#DataGroup-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-59"><a href="#DataGroup-59"><span class="linenos">59</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="DataGroup-60"><a href="#DataGroup-60"><span class="linenos">60</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup-61"><a href="#DataGroup-61"><span class="linenos">61</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
+</span><span id="DataGroup-62"><a href="#DataGroup-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="nb">sum</span>
+</span><span id="DataGroup-63"><a href="#DataGroup-63"><span class="linenos">63</span></a>    
+</span><span id="DataGroup-64"><a href="#DataGroup-64"><span class="linenos">64</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-65"><a href="#DataGroup-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
+</span><span id="DataGroup-66"><a href="#DataGroup-66"><span class="linenos">66</span></a>
+</span><span id="DataGroup-67"><a href="#DataGroup-67"><span class="linenos">67</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-68"><a href="#DataGroup-68"><span class="linenos">68</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
+</span><span id="DataGroup-69"><a href="#DataGroup-69"><span class="linenos">69</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup-70"><a href="#DataGroup-70"><span class="linenos">70</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="DataGroup-71"><a href="#DataGroup-71"><span class="linenos">71</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="DataGroup-72"><a href="#DataGroup-72"><span class="linenos">72</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="DataGroup-73"><a href="#DataGroup-73"><span class="linenos">73</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="DataGroup-74"><a href="#DataGroup-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="DataGroup-75"><a href="#DataGroup-75"><span class="linenos">75</span></a>        
+</span><span id="DataGroup-76"><a href="#DataGroup-76"><span class="linenos">76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setNonNormalizedPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup-77"><a href="#DataGroup-77"><span class="linenos">77</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the non-normalized performance value, given in the research paper</span>
+</span><span id="DataGroup-78"><a href="#DataGroup-78"><span class="linenos">78</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup-79"><a href="#DataGroup-79"><span class="linenos">79</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="DataGroup-80"><a href="#DataGroup-80"><span class="linenos">80</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="DataGroup-81"><a href="#DataGroup-81"><span class="linenos">81</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="DataGroup-82"><a href="#DataGroup-82"><span class="linenos">82</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="DataGroup-83"><a href="#DataGroup-83"><span class="linenos">83</span></a>        
+</span><span id="DataGroup-84"><a href="#DataGroup-84"><span class="linenos">84</span></a>        <span class="n">a</span> <span class="o">=</span>  <span class="n">Math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="DataGroup-85"><a href="#DataGroup-85"><span class="linenos">85</span></a>        <span class="n">sudh</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span>        
+</span><span id="DataGroup-86"><a href="#DataGroup-86"><span class="linenos">86</span></a>        
+</span><span id="DataGroup-87"><a href="#DataGroup-87"><span class="linenos">87</span></a>        <span class="n">wi</span> <span class="o">=</span>  <span class="n">n</span><span class="o">/</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">ni</span><span class="p">)</span>
+</span><span id="DataGroup-88"><a href="#DataGroup-88"><span class="linenos">88</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="n">wi</span> <span class="o">*</span> <span class="n">sigma_ri</span> <span class="o">/</span>  <span class="n">sudh</span>
 </span></pre></div>
 
 
@@ -176,18 +302,25 @@
                                         <input id="DataGroup.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">DataGroup</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">name</span>, </span><span class="param"><span class="n">parent</span></span>)</span>
+        <span class="name">DataGroup</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span>, </span><span class="param"><span class="n">dataList</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">parent</span><span class="o">=</span><span class="kc">None</span></span>)</span>
 
                 <label class="view-source-button" for="DataGroup.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#DataGroup.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.__init__-5"><a href="#DataGroup.__init__-5"><span class="linenos"> 5</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-</span><span id="DataGroup.__init__-6"><a href="#DataGroup.__init__-6"><span class="linenos"> 6</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="DataGroup.__init__-7"><a href="#DataGroup.__init__-7"><span class="linenos"> 7</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="DataGroup.__init__-8"><a href="#DataGroup.__init__-8"><span class="linenos"> 8</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span id="DataGroup.__init__-9"><a href="#DataGroup.__init__-9"><span class="linenos"> 9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-</span><span id="DataGroup.__init__-10"><a href="#DataGroup.__init__-10"><span class="linenos">10</span></a>        <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.__init__-9"><a href="#DataGroup.__init__-9"><span class="linenos"> 9</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dataList</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="DataGroup.__init__-10"><a href="#DataGroup.__init__-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="DataGroup.__init__-11"><a href="#DataGroup.__init__-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup.__init__-12"><a href="#DataGroup.__init__-12"><span class="linenos">12</span></a>        
+</span><span id="DataGroup.__init__-13"><a href="#DataGroup.__init__-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="DataGroup.__init__-14"><a href="#DataGroup.__init__-14"><span class="linenos">14</span></a>        <span class="k">if</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup.__init__-15"><a href="#DataGroup.__init__-15"><span class="linenos">15</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">addElements</span><span class="p">(</span><span class="n">dataList</span><span class="p">)</span>
+</span><span id="DataGroup.__init__-16"><a href="#DataGroup.__init__-16"><span class="linenos">16</span></a>            
+</span><span id="DataGroup.__init__-17"><a href="#DataGroup.__init__-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup.__init__-18"><a href="#DataGroup.__init__-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="DataGroup.__init__-19"><a href="#DataGroup.__init__-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+</span><span id="DataGroup.__init__-20"><a href="#DataGroup.__init__-20"><span class="linenos">20</span></a>        <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
+</span><span id="DataGroup.__init__-21"><a href="#DataGroup.__init__-21"><span class="linenos">21</span></a>            <span class="n">parent</span><span class="o">.</span><span class="n">dataCollectionList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -201,6 +334,17 @@
         
     </div>
     <a class="headerlink" href="#DataGroup.name"></a>
+    
+    
+
+                            </div>
+                            <div id="DataGroup.pValue" class="classattr">
+                                <div class="attr variable">
+            <span class="name">pValue</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DataGroup.pValue"></a>
     
     
 
@@ -227,6 +371,17 @@
     
 
                             </div>
+                            <div id="DataGroup.nonNormalizedPerformanceMeasureValue" class="classattr">
+                                <div class="attr variable">
+            <span class="name">nonNormalizedPerformanceMeasureValue</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DataGroup.nonNormalizedPerformanceMeasureValue"></a>
+    
+    
+
+                            </div>
                             <div id="DataGroup.parent" class="classattr">
                                 <div class="attr variable">
             <span class="name">parent</span>
@@ -238,26 +393,134 @@
     
 
                             </div>
-                            <div id="DataGroup.getDataGroupTupleElements" class="classattr">
-                                        <input id="DataGroup.getDataGroupTupleElements-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="DataGroup.addElements" class="classattr">
+                                        <input id="DataGroup.addElements-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">getDataGroupTupleElements</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+        <span class="name">addElements</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">dataList</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="DataGroup.getDataGroupTupleElements-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="DataGroup.addElements-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#DataGroup.getDataGroupTupleElements"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getDataGroupTupleElements-12"><a href="#DataGroup.getDataGroupTupleElements-12"><span class="linenos">12</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupTupleElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup.getDataGroupTupleElements-13"><a href="#DataGroup.getDataGroupTupleElements-13"><span class="linenos">13</span></a>        <span class="n">returnArray</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="DataGroup.getDataGroupTupleElements-14"><a href="#DataGroup.getDataGroupTupleElements-14"><span class="linenos">14</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="DataGroup.getDataGroupTupleElements-15"><a href="#DataGroup.getDataGroupTupleElements-15"><span class="linenos">15</span></a>            <span class="n">returnArray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</span><span id="DataGroup.getDataGroupTupleElements-16"><a href="#DataGroup.getDataGroupTupleElements-16"><span class="linenos">16</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">returnArray</span><span class="p">)</span>
+    <a class="headerlink" href="#DataGroup.addElements"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.addElements-23"><a href="#DataGroup.addElements-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataList</span><span class="p">):</span>
+</span><span id="DataGroup.addElements-24"><a href="#DataGroup.addElements-24"><span class="linenos">24</span></a>        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup.addElements-25"><a href="#DataGroup.addElements-25"><span class="linenos">25</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
 </span></pre></div>
 
 
     
+
+                            </div>
+                            <div id="DataGroup.addElement" class="classattr">
+                                        <input id="DataGroup.addElement-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">addElement</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">elementValue</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="DataGroup.addElement-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DataGroup.addElement"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.addElement-27"><a href="#DataGroup.addElement-27"><span class="linenos">27</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elementValue</span><span class="p">):</span>
+</span><span id="DataGroup.addElement-28"><a href="#DataGroup.addElement-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataElement</span><span class="p">(</span><span class="n">elementValue</span><span class="p">))</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="DataGroup.getDataGroupElementsArray" class="classattr">
+                                        <input id="DataGroup.getDataGroupElementsArray-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">getDataGroupElementsArray</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="DataGroup.getDataGroupElementsArray-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DataGroup.getDataGroupElementsArray"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getDataGroupElementsArray-30"><a href="#DataGroup.getDataGroupElementsArray-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.getDataGroupElementsArray-31"><a href="#DataGroup.getDataGroupElementsArray-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of List</span>
+</span><span id="DataGroup.getDataGroupElementsArray-32"><a href="#DataGroup.getDataGroupElementsArray-32"><span class="linenos">32</span></a>
+</span><span id="DataGroup.getDataGroupElementsArray-33"><a href="#DataGroup.getDataGroupElementsArray-33"><span class="linenos">33</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup.getDataGroupElementsArray-34"><a href="#DataGroup.getDataGroupElementsArray-34"><span class="linenos">34</span></a><span class="sd">            List : Data Elements but only values</span>
+</span><span id="DataGroup.getDataGroupElementsArray-35"><a href="#DataGroup.getDataGroupElementsArray-35"><span class="linenos">35</span></a><span class="sd">        &quot;&quot;&quot;</span>           
+</span><span id="DataGroup.getDataGroupElementsArray-36"><a href="#DataGroup.getDataGroupElementsArray-36"><span class="linenos">36</span></a>        <span class="n">elementsValueList</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="DataGroup.getDataGroupElementsArray-37"><a href="#DataGroup.getDataGroupElementsArray-37"><span class="linenos">37</span></a>        <span class="k">for</span> <span class="n">dataElement</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup.getDataGroupElementsArray-38"><a href="#DataGroup.getDataGroupElementsArray-38"><span class="linenos">38</span></a>            <span class="n">elementsValueList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataElement</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span id="DataGroup.getDataGroupElementsArray-39"><a href="#DataGroup.getDataGroupElementsArray-39"><span class="linenos">39</span></a>        
+</span><span id="DataGroup.getDataGroupElementsArray-40"><a href="#DataGroup.getDataGroupElementsArray-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="n">elementsValueList</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>returns Data Elements in the Group in the form of List</p>
+
+<p>Returns:
+    List : Data Elements but only values</p>
+</div>
+
+
+                            </div>
+                            <div id="DataGroup.getDataGroupElementsTuple" class="classattr">
+                                        <input id="DataGroup.getDataGroupElementsTuple-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">getDataGroupElementsTuple</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="DataGroup.getDataGroupElementsTuple-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DataGroup.getDataGroupElementsTuple"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getDataGroupElementsTuple-42"><a href="#DataGroup.getDataGroupElementsTuple-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.getDataGroupElementsTuple-43"><a href="#DataGroup.getDataGroupElementsTuple-43"><span class="linenos">43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Tuple</span>
+</span><span id="DataGroup.getDataGroupElementsTuple-44"><a href="#DataGroup.getDataGroupElementsTuple-44"><span class="linenos">44</span></a>
+</span><span id="DataGroup.getDataGroupElementsTuple-45"><a href="#DataGroup.getDataGroupElementsTuple-45"><span class="linenos">45</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup.getDataGroupElementsTuple-46"><a href="#DataGroup.getDataGroupElementsTuple-46"><span class="linenos">46</span></a><span class="sd">            Tuple : Data Elements but only values</span>
+</span><span id="DataGroup.getDataGroupElementsTuple-47"><a href="#DataGroup.getDataGroupElementsTuple-47"><span class="linenos">47</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup.getDataGroupElementsTuple-48"><a href="#DataGroup.getDataGroupElementsTuple-48"><span class="linenos">48</span></a>        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>returns Data Elements in the Group in the form of Tuple</p>
+
+<p>Returns:
+    Tuple : Data Elements but only values</p>
+</div>
+
+
+                            </div>
+                            <div id="DataGroup.getDataGroupElementsNumpyArray" class="classattr">
+                                        <input id="DataGroup.getDataGroupElementsNumpyArray-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">getDataGroupElementsNumpyArray</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="DataGroup.getDataGroupElementsNumpyArray-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DataGroup.getDataGroupElementsNumpyArray"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getDataGroupElementsNumpyArray-50"><a href="#DataGroup.getDataGroupElementsNumpyArray-50"><span class="linenos">50</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getDataGroupElementsNumpyArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-51"><a href="#DataGroup.getDataGroupElementsNumpyArray-51"><span class="linenos">51</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;returns Data Elements in the Group in the form of Numpy Array</span>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-52"><a href="#DataGroup.getDataGroupElementsNumpyArray-52"><span class="linenos">52</span></a>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-53"><a href="#DataGroup.getDataGroupElementsNumpyArray-53"><span class="linenos">53</span></a><span class="sd">        Returns:</span>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-54"><a href="#DataGroup.getDataGroupElementsNumpyArray-54"><span class="linenos">54</span></a><span class="sd">            Numpy Array : Data Elements but only values</span>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-55"><a href="#DataGroup.getDataGroupElementsNumpyArray-55"><span class="linenos">55</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup.getDataGroupElementsNumpyArray-56"><a href="#DataGroup.getDataGroupElementsNumpyArray-56"><span class="linenos">56</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataGroupElementsArray</span><span class="p">())</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>returns Data Elements in the Group in the form of Numpy Array</p>
+
+<p>Returns:
+    Numpy Array : Data Elements but only values</p>
+</div>
+
 
                             </div>
                             <div id="DataGroup.getRankedGroupSum" class="classattr">
@@ -271,11 +534,11 @@
 
     </div>
     <a class="headerlink" href="#DataGroup.getRankedGroupSum"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getRankedGroupSum-18"><a href="#DataGroup.getRankedGroupSum-18"><span class="linenos">18</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup.getRankedGroupSum-19"><a href="#DataGroup.getRankedGroupSum-19"><span class="linenos">19</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="DataGroup.getRankedGroupSum-20"><a href="#DataGroup.getRankedGroupSum-20"><span class="linenos">20</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
-</span><span id="DataGroup.getRankedGroupSum-21"><a href="#DataGroup.getRankedGroupSum-21"><span class="linenos">21</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
-</span><span id="DataGroup.getRankedGroupSum-22"><a href="#DataGroup.getRankedGroupSum-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="nb">sum</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getRankedGroupSum-58"><a href="#DataGroup.getRankedGroupSum-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getRankedGroupSum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.getRankedGroupSum-59"><a href="#DataGroup.getRankedGroupSum-59"><span class="linenos">59</span></a>        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="DataGroup.getRankedGroupSum-60"><a href="#DataGroup.getRankedGroupSum-60"><span class="linenos">60</span></a>        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">:</span>
+</span><span id="DataGroup.getRankedGroupSum-61"><a href="#DataGroup.getRankedGroupSum-61"><span class="linenos">61</span></a>            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">.</span><span class="n">rank</span>
+</span><span id="DataGroup.getRankedGroupSum-62"><a href="#DataGroup.getRankedGroupSum-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="nb">sum</span>
 </span></pre></div>
 
 
@@ -293,8 +556,8 @@
 
     </div>
     <a class="headerlink" href="#DataGroup.getElementCount"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getElementCount-24"><a href="#DataGroup.getElementCount-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup.getElementCount-25"><a href="#DataGroup.getElementCount-25"><span class="linenos">25</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.getElementCount-64"><a href="#DataGroup.getElementCount-64"><span class="linenos">64</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">getElementCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.getElementCount-65"><a href="#DataGroup.getElementCount-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataList</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -312,18 +575,50 @@
 
     </div>
     <a class="headerlink" href="#DataGroup.setPerformanceMeasureValue"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.setPerformanceMeasureValue-27"><a href="#DataGroup.setPerformanceMeasureValue-27"><span class="linenos">27</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-28"><a href="#DataGroup.setPerformanceMeasureValue-28"><span class="linenos">28</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-29"><a href="#DataGroup.setPerformanceMeasureValue-29"><span class="linenos">29</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-30"><a href="#DataGroup.setPerformanceMeasureValue-30"><span class="linenos">30</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-31"><a href="#DataGroup.setPerformanceMeasureValue-31"><span class="linenos">31</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-32"><a href="#DataGroup.setPerformanceMeasureValue-32"><span class="linenos">32</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-33"><a href="#DataGroup.setPerformanceMeasureValue-33"><span class="linenos">33</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
-</span><span id="DataGroup.setPerformanceMeasureValue-34"><a href="#DataGroup.setPerformanceMeasureValue-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.setPerformanceMeasureValue-67"><a href="#DataGroup.setPerformanceMeasureValue-67"><span class="linenos">67</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-68"><a href="#DataGroup.setPerformanceMeasureValue-68"><span class="linenos">68</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the normalized performance value, using the formula in the research paper</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-69"><a href="#DataGroup.setPerformanceMeasureValue-69"><span class="linenos">69</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-70"><a href="#DataGroup.setPerformanceMeasureValue-70"><span class="linenos">70</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-71"><a href="#DataGroup.setPerformanceMeasureValue-71"><span class="linenos">71</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-72"><a href="#DataGroup.setPerformanceMeasureValue-72"><span class="linenos">72</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-73"><a href="#DataGroup.setPerformanceMeasureValue-73"><span class="linenos">73</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="DataGroup.setPerformanceMeasureValue-74"><a href="#DataGroup.setPerformanceMeasureValue-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">performanceMeasureValue</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">ni</span> <span class="o">+</span> <span class="n">sigma_ri</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">ni</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Calculates the normalized performance value, using the formula in the research paper</p>
+</div>
+
+
+                            </div>
+                            <div id="DataGroup.setNonNormalizedPerformanceMeasureValue" class="classattr">
+                                        <input id="DataGroup.setNonNormalizedPerformanceMeasureValue-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">setNonNormalizedPerformanceMeasureValue</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="DataGroup.setNonNormalizedPerformanceMeasureValue-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DataGroup.setNonNormalizedPerformanceMeasureValue"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-76"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-76"><span class="linenos">76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">setNonNormalizedPerformanceMeasureValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-77"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-77"><span class="linenos">77</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the non-normalized performance value, given in the research paper</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-78"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-78"><span class="linenos">78</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-79"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-79"><span class="linenos">79</span></a>        <span class="n">ni</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getElementCount</span><span class="p">()</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-80"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-80"><span class="linenos">80</span></a>        <span class="n">sigma_ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankedGroupSum</span><span class="p">()</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-81"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-81"><span class="linenos">81</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">netTotalItemsInCollection</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-82"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-82"><span class="linenos">82</span></a>        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getNumberOfGroups</span><span class="p">()</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-83"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-83"><span class="linenos">83</span></a>        
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-84"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-84"><span class="linenos">84</span></a>        <span class="n">a</span> <span class="o">=</span>  <span class="n">Math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-85"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-85"><span class="linenos">85</span></a>        <span class="n">sudh</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span>        
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-86"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-86"><span class="linenos">86</span></a>        
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-87"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-87"><span class="linenos">87</span></a>        <span class="n">wi</span> <span class="o">=</span>  <span class="n">n</span><span class="o">/</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">ni</span><span class="p">)</span>
+</span><span id="DataGroup.setNonNormalizedPerformanceMeasureValue-88"><a href="#DataGroup.setNonNormalizedPerformanceMeasureValue-88"><span class="linenos">88</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nonNormalizedPerformanceMeasureValue</span> <span class="o">=</span> <span class="n">wi</span> <span class="o">*</span> <span class="n">sigma_ri</span> <span class="o">/</span>  <span class="n">sudh</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Calculates the non-normalized performance value, given in the research paper</p>
 </div>
 
 
