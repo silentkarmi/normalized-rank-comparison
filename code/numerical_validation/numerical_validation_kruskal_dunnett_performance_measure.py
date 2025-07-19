@@ -21,9 +21,7 @@ def main():
     # Experimental Group, recover from a disease in days via Drug C 
     experimentalGroupDrugC =  DataGroup("Drug C", [13,12,10,11,14,15], dataCollectionDrugsComparison)
     
-    dataCollectionDrugsComparison.process()
-    dataCollectionDrugsComparison.print()
-    
+    # Perform Kruskal Wallish 'H' Test
     dataCollectionDrugsComparison.computeKruskalTest()
     print("Collection pValue:", dataCollectionDrugsComparison.psignificanceValue)
     if dataCollectionDrugsComparison.psignificanceValue < 0.05 :
@@ -31,6 +29,7 @@ def main():
     else:
         print("No deviation groups")
     
+    # perform Dunnett's Test
     result = dunnett(experimentalGroupDrugA.getDataGroupElementsNumpyArray(),
             experimentalGroupDrugB.getDataGroupElementsNumpyArray(),
             experimentalGroupDrugC.getDataGroupElementsNumpyArray(),
@@ -40,11 +39,15 @@ def main():
     experimentalGroupDrugB.pValue = result.pvalue[1].item()
     experimentalGroupDrugC.pValue = result.pvalue[2].item()
     
+    # perform Normalized Performance Measure
+    dataCollectionDrugsComparison.process()
+    
+    # print and plot the results
+    dataCollectionDrugsComparison.print()   
     fig, ax = plt.subplots(1, 1, figsize=(8, 6))
     ax.boxplot(dataCollectionDrugsComparison.getNestedArrayCollection())
     ax.set_xticklabels(dataCollectionDrugsComparison.getLabels(performenceIndexLabel=True))
     ax.set_ylabel("Recovery in Days")
-    
     plt.show()
     
 if __name__ == "__main__":
