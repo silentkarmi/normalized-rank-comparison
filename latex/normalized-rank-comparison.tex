@@ -1,40 +1,18 @@
-%%
-%% This is file `./samples/longsample.tex',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% apa7.dtx  (with options: `longsample')
-%% ----------------------------------------------------------------------
-%% 
-%% apa7 - A LaTeX class for formatting documents in compliance with the
-%% American Psychological Association's Publication Manual, 7th edition
-%% 
-%% Copyright (C) 2019 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
-%% 
-%% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License (LPPL), either
-%% version 1.3c of this license or (at your option) any later
-%% version.  The latest version of this license is in the file:
-%% 
-%% http://www.latex-project.org/lppl.txt
-%% 
-%% Users may freely modify these files without permission, as long as the
-%% copyright line and this statement are maintained intact.
-%% 
-%% This work is not endorsed by, affiliated with, or probably even known
-%% by, the American Psychological Association.
-%% 
-%% ----------------------------------------------------------------------
-%% 
 \vbadness=10000
-\documentclass[man,floatsintext]{apa7}
+\documentclass[a4paper,fleqn,review]{cas-sc}
+\usepackage[authoryear,longnamesfirst]{natbib}
 \usepackage[american]{babel}
-\usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \usepackage{amsmath, amssymb, geometry, graphicx, booktabs, multirow, makecell}
-\DeclareLanguageMapping{american}{american-apa}
-\addbibresource{refs.bib}
+\usepackage{todonotes}
 \usepackage{tcolorbox}
+
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+\tsc{WGM}
+\tsc{QE}
+\tsc{EP}
+\tsc{PMS}
+\tsc{BEC}
+\tsc{DE}
 
 \tcbuselibrary{minted,breakable,xparse,skins}
 \definecolor{bg}{gray}{0.95}
@@ -74,111 +52,155 @@
 			\fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
 	\end{tcbclipinterior}},
 	#3}
-
-\title{A \textsf{Novel} Method for Ranking Group Performance}
-\shorttitle{Normalized Performance Measure}
-
-\author{Kartikeya Mishra}
-\authorsaffiliations{Independent Researcher}
-
-\leftheader{Mishra}
-
-\abstract{
-This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, Empirical validations and detailed example are discussed.
-}
-
-\keywords{Normalized Rank Comparison, Performance Analysis, Weighted Bias Adjustment, Group Performance Metrics, Statistical Methods}
-
-\authornote{
-   \addORCIDlink{Kartikeya Mishra}{0009-0001-3311-3955}
-   %add the link when research paper is complete and fill the details in the orcid to add the link
-
-  Correspondence concerning this article should be addressed to Kartikeya Mishra 50-D, Block E-3, Shatabdi Vihar, Sector 52, Noida, UP - 201307, India. E-mail: kartik.maxwell@gmail.com}
-
 \usepackage{csquotes}
+
 \begin{document}
+	
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+\shorttitle{Normalized Performance Measure}
+\shortauthors{Kartikeya Mishra}
+%\begin{frontmatter}
+
+\title [mode = title]{A \textsf{Novel} Method for Ranking Group Performance}            
+\tnotemark[1]
+
+\tnotetext[1]{This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.}          
+
+\author[1]{Kartikeya Mishra}[type=editor,
+auid=000,
+orcid=0009-0001-3311-3955,
+linkedin=ninjaadvisor]
+\ead{kartik.maxwell@gmail.com}
+
+
+\affiliation[1]{organization={Independent Researcher},
+	addressline={50-D, Block E-3, Shatabdi Vihar, Sector 52}, 
+	city={Noida},
+	%               citysep={}, % Uncomment if no comma needed between city and postcode
+	postcode={201307}, 
+	state={Uttar Pradesh},
+	country={India}}	
+
+\credit{}
+
+\begin{abstract}
+	This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, Empirical validations and detailed example are discussed.
+\end{abstract}
+
+%\begin{graphicalabstract}
+%	\centering
+%	\includegraphics[scale=0.5]{dominance-intuition}
+%\end{graphicalabstract}
+%
+%\begin{highlights}
+%	\item Research highlights item 1
+%	\item Research highlights item 2
+%	\item Research highlights item 3
+%\end{highlights}
+
+\begin{keywords}
+	Normalized Rank Comparison \sep Performance Analysis \sep Weighted Bias  \sep Statistical Methods
+\end{keywords}
+
+
 \maketitle
-This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing uneven number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
+
+\section{Introduction}
+This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing unequal number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
 This standardized scale can be used to compare within cross-collection which have different scales, see the \hyperref[fig:superset-collection]{Figure 1} to which , this formula can be applied towards.
-\begin{figure}[!htb]
+\begin{figure}
+	\centering   
+    \includegraphics [scale=0.5]{superset_collection.png}
     \caption{Superset Collection of Elementary Grade Groups and High School Groups}
-    \centering
-    \includegraphics [scale=0.5]{images/superset_collection.png}
     \label{fig:superset-collection}
 \end{figure}
 
 The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. Though, the idea is inspired from their, but applied in terms of assessing performance comparison
-for groups having uneven elements, and expanded to create a standardize scale with cross-collection interpretability.
+for groups having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
-\section{Normalized Group Performance Assessment Formulae}
+\subsection{Normalized Performance Measure Formulae}
+The discovered formulae to assess performance measure is given by:
 
+\newdefinition{normalizedPerformanceMeasure}{Definition}
+\begin{normalizedPerformanceMeasure}
+	Normalized Performance Measure, is a performance indicator of a group, in the range of [0,1], indicating a universal scale, from least performance to best, while compensating for the unequalness in the number of elements in a group.
+	\begin{equation}
+		\boxed{
+			\mathbf{
+				P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
+		}
+	\end{equation}
+	
+	
+	\begin{itemize}
+		\item \textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of dominance i.e. rank 1 is the lowest, with rank $N^{th}$ as the highest. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.
+		\item \textbf{$P_i$}: Normalized Performance Measure value of the $i^{th}$ group in the range of [0, 1]
+		\item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
+		\item \textbf{$n_i$}: number of elements within the $i^{th}$ group
+		\item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
+		There are \[k = \text{number of groups}, \quad n_i = \text{number of items in each group }\]
+		\begin{align}
+			\text{N} = \sum\limits_i^k n_i, \quad \text{where N = total number of items}
+		\end{align}
+		
+	\end{itemize}
+\end{normalizedPerformanceMeasure}
 
-\begin{equation}
-\boxed{
-\mathbf{
-P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
-}
-\end{equation}
-   
-\begin{itemize}
-    \item \textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of dominance i.e. rank 1 is the lowest, with rank $N^{th}$ as the highest. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.
-    \item \textbf{$P_i$}: Normalized Performance Measure value of the $i^{th}$ group in the range of [0, 1]
-    \item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
-    \item \textbf{$n_i$}: number of elements within the $i^{th}$ group
-    \item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
-    There are \[k = \text{number of groups}, \quad n_i = \text{number of items in each group }\]
-    \begin{align}
-        \text{N} = \sum\limits_i^k n_i, \quad \text{where N = total number of items}
-    \end{align}
-
-\end{itemize}
 
 \subsection{Applications}
 This is a list of Applications scenario, the formula was designed for:
 \begin{itemize}
-	\item \textbf{Psychology}: In Psychology, we have a big arsenal of therapy techniques, all having their own benefits. If, mutually exclusive groups, each group taking a particular therapy, needs to be analyzed which group performed better, and the group sizes are even unequal. Then, Performance Measure Formula can be applied.
-	\item \textbf{Medical}: Significance Value only tells us that a drug is performing. And, there are multiple drugs being compared, and there is a uneven sample size, then Normalized Performance Measure can be used to see how the drugs are performing compared to each other.
-    \item \textbf{Educational}: Awarding Best Class Performance in a school, when classes have uneven students, and even different grading scales.
-    \item \textbf{Organizational}: To identify best-performing team in the organization, and least-performing, for restructuring and guidance purposes, when number of person per team are uneven, and performance scale at various sector of an organization is different.
-   \item \textbf{Business}: Often businesses have economy segment and luxury segment for services and products. Often, just price is not an enough indicator what segment of products fared better. If, a ranking is created, on customer feedback, return on investment, less-after-cost-maintenance, expenses etc. Then, this formula can be used to find the dominant product/services of their business, when there is uneven sale of each product/services sold.
+	\item \textbf{Psychology}: In Psychology, we have a big arsenal of therapy techniques, all having their own benefits. If, mutually exclusive groups, each group taking a particular therapy, needs to be analyzed which group performed better, and the group sizes are unequal. Then, Performance Measure Formula can be applied.
+	\item \textbf{Medical}: Similarly, sometimes Drugs treating the same illness, are compared to each other. Even, prototypes of the same Drugs are compared amongst themselves when in research phase. In these scenarios, even if, the sample size of each drug is unequal, Normalized Performance Measure Formulae can be applied for comparison.
+    \item \textbf{Educational}: Awarding Best Class Performance, in a school, when classes have unequal number of students, and even different grading scales.
+    \item \textbf{Organizational}: To identify best-performing team in the organization, and least-performing, for restructuring and guidance purposes, when number of person per team are unequal, and performance scale at various sector of an organization is different.
+   \item \textbf{Business}: Often businesses have economy segment and luxury segment for services and products. Often, just price is not an enough indicator what segment of products fared better. If, a ranking is created, on customer feedback, return on investment, maintenance-cost, advertisement, market reach etc. Then, this formula can be used to find the dominant product/services of their business, when there is unequal sale of each product/services sold.
 \end{itemize}
 There could be applications outside the scope of this paper. But, when designing the formula these above listed applications were being thought of.
 
 \hfill \break
-Mathematical derivation, along with its theoretical justification, would be discussed, with its analogous visual intuition where possible. Maxima and Minima, range of normalized performance measure [0, 1], would be proven as well.
+Mathematical derivation, along with its theoretical justification, would be discussed, with its analogous visual intuition where possible. Maxima and Minima i.e. range of normalized performance measure [0, 1], would be proven as well.
 
 \section{Non-normalized Performance}
 
+\newdefinition{nonNormalizedPerformanceMeasure}{Definition}
+\begin{nonNormalizedPerformanceMeasure}
+	Normalized Performance Measure, is a performance indicator of a group, in the range of [0,1], indicating a universal scale, from least performance to best, while compensating for the unequalness in the number of elements in a group.
+	\begin{equation}
+		\label{eq:non-normalized}
+		p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+	\end{equation}
+	
+	\begin{itemize}
+		\item Sum of Upper Dominant Half ($S_{UDH}$):
+		\begin{align}
+			S_{UDH} = \frac{N(N+1)}{2} - \frac{a(a+1)}{2}, \quad a = \lfloor N/2 \rfloor
+		\end{align}
+		\item Weight Bias ($w_i$):
+		\begin{align}
+			w_i = \frac{N}{k n_i}
+		\end{align}
+	\end{itemize}
+	
+\end{nonNormalizedPerformanceMeasure}
+
 If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively easy to understand that Group B performance is more dominant, that Group A, simply because Group B occupy the higher ranks, and Group A lower ranks.
-\begin{figure}[!htb]
+\begin{figure}
     \caption{Visual intuition of the Performance Measure, Performance: Group B > Group A}
     \centering
-    \includegraphics[scale=0.65]{images/dominance-intuition.png}
+    \includegraphics[scale=0.65]{dominance-intuition.png}
     \label{fig:dominance_Understanding}
 \end{figure}
 
-This non-normalized performance measure, with uneven number of groups is given by:
-\begin{equation}
-\label{eq:non-normalized}
-    p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
-\end{equation}
 
 
-\begin{itemize}
-	\item Sum of Upper Dominant Half ($S_{UDH}$):
-	\begin{align}
-		S_{UDH} = \frac{N(N+1)}{2} - \frac{a(a+1)}{2}, \quad a = \lfloor N/2 \rfloor
-	\end{align}
-	\item Weight Bias ($w_i$):
-	\begin{align}
-		w_i = \frac{N}{k n_i}
-	\end{align}
-\end{itemize}
-
-This later non-normalized dominance would be used to derive the normalized version of the formula. Therefore, non-normalized performance derivation would be discussed first.
+This non-normalized performance measure would be used later in the paper to derive the normalized version of the formula. Thus, non-normalized performance measure derivation would be discussed first.
 
 
 \subsection{Derivation of Non-normalized Performance}
+
 From, the understanding we gain from \hyperref[fig:dominance_Understanding]{Figure 2}, we can easily, ascertain the local dominance, if we divide the scale into two halves of lower ranks half, and upper rank half. So, the group with ranks in the upper half would have a more prominent or dominant performance. So, we need to figure out what's the ranks of the upper dominant half is.
 
 \subsubsection{Sum of Upper Dominant Half}
@@ -343,7 +365,7 @@ Thus, the lower and upper halves would be explicitly:
 \left[1, \frac{N}{2}\right] \quad \text{and} \quad \left[\frac{N}{2}+1, N\right]
 \]
 
-Simplifying for $S_{UDH}$ when N is even, we get:
+Simplifying $S_{UDH}$ by applying the Sum of Arithmetic Progression formulae for the upper half:
 
 \begin{equation}
 	\label{eq:even-SUDH}
@@ -502,7 +524,8 @@ Normalized Performance Measure indicates a value which tells us the group perfor
 \subsubsection{Relationship with p-value}
 With Normalized Performance Measure, there is a intuitive relationship with the significane value. For instance along with Control Group, if we need to know what experimental group performed better or worse. We can apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one or more experimental groups have shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if any experimental group has shown deviation. Now, one question is still left unanswered. Now, is this deviation negative or positive i.e. experimental group performed well or worse than the control group, assuming we have performed two-tailed test for p-value. Now, we can use Normalized Performance Measure to understand, if these experimental groups performed exceptionally well, or dismissal, or about the same.
 This is summarized in the table below:
-\begin{table}[!htbp]
+\begin{table}[h!tbp]
+	\label{table:p-value-relationship}
 	\centering
 	\begin{tabular}{|c|c|l|}
 		\hline
@@ -515,24 +538,25 @@ This is summarized in the table below:
 	\end{tabular}
 	\vspace{2pt}
 	\caption{Interpretation of p-values in relation to deviation and normalized performance}
-	\label{table:p-value-relationship}
+	
 \end{table}
-So, if we are able to show numerically, by taking an example, that the results follow the \hyperref[table:p-value-relationship]{Table 1} above, then Normalized Performance Measure can be said to be validated.
+So, if we are able to show numerically, by taking an example, that the results follow the \hyperref[table:p-value-relationship]{Table 1}, then Normalized Performance Measure can be said to be validated.
 
 
 \subsubsection{Simulated Data Numerical Cross Validation: Medical Drug Performance}
 To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data is shown in the form of BoxPlot in \hyperref[fig:box-plot]{Figure 3}, 
-\begin{figure}[!htbp]
+\begin{figure}
 	\caption{Drugs comparison and showing relationship between Permormance Measure and pValue}
 	\centering
-	\includegraphics [scale=0.75]{images/simulation-data-kruskal-dunnett.png}
+	\includegraphics [scale=0.75]{simulation-data-kruskal-dunnett.png}
 	\label{fig:box-plot}
 \end{figure}
 on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, the results are summarized in the table below:
 	
 
-\begin{table}[!htbp]
+\begin{table}[h!tbp]
 	\centering
+	\label{table:results-simulated-data}
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{lccccc}
 		\toprule
@@ -551,7 +575,7 @@ on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, th
 	\end{tabular}
 	\vspace{5pt}
 	\caption{Group-wise statistical comparison and normalized performance.}
-	\label{table:results-simulated-data}
+	
 \end{table}
 
 \textbf{Interpretation of Results}:
@@ -589,11 +613,11 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 	display("Normalized Performance Measure, P_i = ", factor(simplify(P_i)))
 \end{mintedbox}
 
-\hyperref[fig:output-mathematical-validation]{Figure 3} shows the output of the Snippet Code
-\begin{figure}[!htb]
+\hyperref[fig:output-mathematical-validation]{Figure 4} shows the output of the Snippet Code
+\begin{figure}
 	\caption{Output: Mathematical Derivation of Normalized Performance Measure via SymPy}
 	\centering
-	\includegraphics [scale=1]{images/output-mathematical-validation.png}
+	\includegraphics [scale=1]{output-mathematical-validation.png}
 	\label{fig:output-mathematical-validation}
 \end{figure}
 
@@ -604,7 +628,7 @@ And, one means the group has single element with Rank $N^{th}$ element, highest 
 Any combination of elements in the group will be in the range of [0,1].
 
 We have used this simple numerical example to validate the theoretical Maxima and Minima, where value is same as their rank.
-\begin{table}[htbp]
+\begin{table}[!htbp]
 	\centering
 	\caption{Example used for Validation of Range for Normalized Performance Measure}
 	\begin{tabular}{llcc}
@@ -646,10 +670,10 @@ This is numerically validated via Python code, by applying the formulae discusse
 \end{mintedbox}
 
 \hyperref[fig:output-numerical-validation-minima-maxima]{Figure 4} shows the output of Maxima and Minima Validation.
-\begin{figure}[!htbp]
+\begin{figure}
 	\caption{Output: Numerical Validation of Range for Normalized Performance Measure via Python}
 	\centering
-	\includegraphics [scale=1]{images/output-validation-minima-maxima.png}
+	\includegraphics [scale=1]{output-validation-minima-maxima.png}
 	\label{fig:output-numerical-validation-minima-maxima}
 \end{figure}
 
@@ -797,48 +821,7 @@ Where $N = 15$ (total items).
 	\caption{Final Normalized Performance Scores (Therapy Comparison Example)}
 \end{table}
 
-\printbibliography
+\bibliographystyle{refs-model}
+\bibliography{refs}
 \appendix
 \end{document}
-
-%% 
-%% Copyright (C) 2019 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
-%% 
-%% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License (LPPL), either
-%% version 1.3c of this license or (at your option) any later
-%% version.  The latest version of this license is in the file:
-%% 
-%% http://www.latex-project.org/lppl.txt
-%% 
-%% Users may freely modify these files without permission, as long as the
-%% copyright line and this statement are maintained intact.
-%% 
-%% This work is not endorsed by, affiliated with, or probably even known
-%% by, the American Psychological Association.
-%% 
-%% This work is "maintained" (as per LPPL maintenance status) by
-%% Daniel A. Weiss.
-%% 
-%% This work consists of the file  apa7.dtx
-%% and the derived files           apa7.ins,
-%%                                 apa7.cls,
-%%                                 apa7.pdf,
-%%                                 README,
-%%                                 APA7american.txt,
-%%                                 APA7british.txt,
-%%                                 APA7dutch.txt,
-%%                                 APA7english.txt,
-%%                                 APA7german.txt,
-%%                                 APA7ngerman.txt,
-%%                                 APA7greek.txt,
-%%                                 APA7czech.txt,
-%%                                 APA7turkish.txt,
-%%                                 APA7endfloat.cfg,
-%%                                 Figure1.pdf,
-%%                                 shortsample.tex,
-%%                                 longsample.tex, and
-%%                                 bibliography.bib.
-%% 
-%%
-%% End of file `./samples/longsample.tex'.
