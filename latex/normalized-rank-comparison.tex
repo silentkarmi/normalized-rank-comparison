@@ -117,6 +117,15 @@ This standardized scale can be used to compare within cross-collection which hav
     \label{fig:superset-collection}
 \end{figure}
 
+The newness of the approach is not in its individual concepts:
+\begin{enumerate}
+\item Ranked Sum and Median Comparison in Two Groups — Mann–Whitney U Test, \cite{mann1947test}
+\item Weight Bias Adjustment — Neural Network Backpropagation, \cite{goodfellow2016deep}
+\item Ranked-Based Ordering — Spearman’s Rank Correlation Coefficient, \cite{spearman1904proof}
+\item Min–Max Normalization — Standard Mathematical Preprocessing, \cite{han2011data}
+\end{enumerate}
+But, novelty is in putting these combination of ideas together, into a one simple formula called Normalized Performance Measure.
+
 The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. Though, the idea is inspired from their, but applied in terms of assessing performance comparison
 for groups having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
@@ -821,6 +830,7 @@ Where $N = 15$ (total items).
 	\caption{Final Normalized Performance Scores (Therapy Comparison Example)}
 \end{table}
 
+\pagebreak
 \bibliographystyle{refs-model}
 \bibliography{refs}
 \appendix
