@@ -1,10 +1,10 @@
-\vbadness=10000
 \documentclass[a4paper,fleqn,review]{cas-sc}
 \usepackage[authoryear,longnamesfirst]{natbib}
 \usepackage[american]{babel}
 \usepackage{amsmath, amssymb, geometry, graphicx, booktabs, multirow, makecell}
-\usepackage{todonotes}
+%\usepackage{todonotes}
 \usepackage{tcolorbox}
+\usepackage{placeins}
 
 \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
 \tsc{WGM}
@@ -54,14 +54,24 @@
 	#3}
 \usepackage{csquotes}
 
+\newcommand{\ldash}{--- }
+
+\newtheorem{theorem}{Formulae}
+\providecommand*{\theoremautorefname}{Formula}
+\newproof{pot}[theorem]{Derviation of Formulae}
+\providecommand*{\potautorefname}{Derivation}
+
+
+
 \begin{document}
-	
+
+%\begin{frontmatter}
 \let\WriteBookmarks\relax
 \def\floatpagepagefraction{1}
 \def\textpagefraction{.001}
 \shorttitle{Normalized Performance Measure}
 \shortauthors{Kartikeya Mishra}
-%\begin{frontmatter}
+
 
 \title [mode = title]{A \textsf{Novel} Method for Ranking Group Performance}            
 \tnotemark[1]
@@ -86,7 +96,7 @@ linkedin=ninjaadvisor]
 \credit{}
 
 \begin{abstract}
-	This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, Empirical validations and detailed example are discussed.
+	This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, mathematical and numerical validations with a detailed example are discussed.
 \end{abstract}
 
 %\begin{graphicalabstract}
@@ -103,13 +113,11 @@ linkedin=ninjaadvisor]
 \begin{keywords}
 	Normalized Rank Comparison \sep Performance Analysis \sep Weighted Bias  \sep Statistical Methods
 \end{keywords}
-
-
+%\end{frontmatter}
 \maketitle
-
 \section{Introduction}
 This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing unequal number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from non-dominant to dominant performance within their collection, which gives a more interpretable and practical scale, which could be visualized as 0 to 100\% dominance in performance via $P_i * 100$. 
-This standardized scale can be used to compare within cross-collection which have different scales, see the \hyperref[fig:superset-collection]{Figure 1} to which , this formula can be applied towards.
+This standardized scale can be used to compare within cross-collection which have different scales, see the \autoref{fig:superset-collection} to which, this formula can be applied towards.
 \begin{figure}
 	\centering   
     \includegraphics [scale=0.5]{superset_collection.png}
@@ -117,49 +125,49 @@ This standardized scale can be used to compare within cross-collection which hav
     \label{fig:superset-collection}
 \end{figure}
 
-The newness of the approach is not in its individual concepts:
-\begin{enumerate}
-\item Ranked Sum and Median Comparison in Two Groups — Mann–Whitney U Test, \cite{mann1947test}
-\item Weight Bias Adjustment — Neural Network Backpropagation, \cite{goodfellow2016deep}
-\item Ranked-Based Ordering — Spearman’s Rank Correlation Coefficient, \cite{spearman1904proof}
-\item Min–Max Normalization — Standard Mathematical Preprocessing, \cite{han2011data}
+These well-known concepts have been used to derive the formulae:
+\begin{enumerate}[i]
+\item Median Comparison in two groups \ldash Mann–Whitney U Test, \cite{mann1947test}
+\item Multiple Group Median Comparison \ldash Kruskal-Wallis H test, \cite{kruskal1952use}
+\item Ranked-Based Ordering \ldash Spearman’s Rank Correlation, \cite{spearman1904proof}
+\item Ranked-Sum \ldash Wilcoxon Signed-Rank Test, \cite{wilcoxon1945individual}
+\item Weight Bias Adjustment \ldash Neural Network Backpropagation, \cite{goodfellow2016deep}
+\item Min–Max Normalization \ldash Standard Mathematical Preprocessing, \cite{han2011data}
 \end{enumerate}
-But, novelty is in putting these combination of ideas together, into a one simple formula called Normalized Performance Measure.
+The novelty is in putting these combination of ideas together, to the concept of Group Performance Analysis and distilling it into a one simple formula called Normalized Performance Measure.
 
-The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. Though, the idea is inspired from their, but applied in terms of assessing performance comparison
-for groups having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
+The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. Though, the idea is inspired from their, but applied in terms of assessing performance comparison for multiple groups having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
-\subsection{Normalized Performance Measure Formulae}
-The discovered formulae to assess performance measure is given by:
+\subsection{Normalized Performance Measure Formulae} 
+The discovered formulae to assess performance measure, and is defined as:
 
-\newdefinition{normalizedPerformanceMeasure}{Definition}
-\begin{normalizedPerformanceMeasure}
+\begin{theorem}\label{def:normalized-performance-measure}
 	Normalized Performance Measure, is a performance indicator of a group, in the range of [0,1], indicating a universal scale, from least performance to best, while compensating for the unequalness in the number of elements in a group.
 	\begin{equation}
 		\boxed{
 			\mathbf{
 				P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
 		}
+	\label{eq:normalized-performance-measure}	
 	\end{equation}
-	
-	
-	\begin{itemize}
-		\item \textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of dominance i.e. rank 1 is the lowest, with rank $N^{th}$ as the highest. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.
-		\item \textbf{$P_i$}: Normalized Performance Measure value of the $i^{th}$ group in the range of [0, 1]
-		\item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
-		\item \textbf{$n_i$}: number of elements within the $i^{th}$ group
-		\item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
-		There are \[k = \text{number of groups}, \quad n_i = \text{number of items in each group }\]
-		\begin{align}
-			\text{N} = \sum\limits_i^k n_i, \quad \text{where N = total number of items}
-		\end{align}
-		
-	\end{itemize}
-\end{normalizedPerformanceMeasure}
+where,
+\begin{itemize}
+	\item \textbf{$P_i$}: Normalized Performance Measure value of the $i^{th}$ group in the range of [0, 1]
+	\item \textbf{$\sum r_j$}: Sum of ranks\footnote{{\textbf{Ranks}: Sequential ranks assigned to items within and across groups. Tied ranks are averaged out. Note ranks are in ascending order of performance i.e. rank 1 and rank $N^{th}$ are the worst and best performer respectively. This is done to keep symmetry with usage of ranks in other statistics methods such as \cite{mann1947test} etc.}} for group $i$.
+	\item \textbf{$n_i$}: number of elements within the $i^{th}$ group
+	\item \textbf{$k$}: number of groups in the collection
+	\item \textbf{$N$}: Total number of elements across all group combined.
+	\begin{align*}
+		\text{N} = \sum\limits_i^k n_i
+	\end{align*}
+\end{itemize}
+
+\end{theorem}
+
 
 
 \subsection{Applications}
-This is a list of Applications scenario, the formula was designed for:
+This is a list of Applications\footnote{There could be applications outside the scope of this paper. But, when designing the formula these listed applications were being considered.} scenario, the formula was designed for:
 \begin{itemize}
 	\item \textbf{Psychology}: In Psychology, we have a big arsenal of therapy techniques, all having their own benefits. If, mutually exclusive groups, each group taking a particular therapy, needs to be analyzed which group performed better, and the group sizes are unequal. Then, Performance Measure Formula can be applied.
 	\item \textbf{Medical}: Similarly, sometimes Drugs treating the same illness, are compared to each other. Even, prototypes of the same Drugs are compared amongst themselves when in research phase. In these scenarios, even if, the sample size of each drug is unequal, Normalized Performance Measure Formulae can be applied for comparison.
@@ -167,20 +175,39 @@ This is a list of Applications scenario, the formula was designed for:
     \item \textbf{Organizational}: To identify best-performing team in the organization, and least-performing, for restructuring and guidance purposes, when number of person per team are unequal, and performance scale at various sector of an organization is different.
    \item \textbf{Business}: Often businesses have economy segment and luxury segment for services and products. Often, just price is not an enough indicator what segment of products fared better. If, a ranking is created, on customer feedback, return on investment, maintenance-cost, advertisement, market reach etc. Then, this formula can be used to find the dominant product/services of their business, when there is unequal sale of each product/services sold.
 \end{itemize}
-There could be applications outside the scope of this paper. But, when designing the formula these above listed applications were being thought of.
 
-\hfill \break
-Mathematical derivation, along with its theoretical justification, would be discussed, with its analogous visual intuition where possible. Maxima and Minima i.e. range of normalized performance measure [0, 1], would be proven as well.
+\subsection{Scope of the Research Paper}
+The paper will present the theoretical foundation and mathematical derivation of the proposed measure, accompanied by logical justifications and—where applicable—visual intuitions to enhance conceptual understanding. The range of the normalized performance measure, bounded between 0 and 1, will be proven. Furthermore, the performance measure formula would be validated established via mathematical analysis, numerical simulations, and cross-validation against established statistical methods. A detailed example will also be provided to demonstrate the practical applicability and interpretability of the method.
 
 \section{Non-normalized Performance}
 
 \newdefinition{nonNormalizedPerformanceMeasure}{Definition}
-\begin{nonNormalizedPerformanceMeasure}
-	Normalized Performance Measure, is a performance indicator of a group, in the range of [0,1], indicating a universal scale, from least performance to best, while compensating for the unequalness in the number of elements in a group.
+\begin{theorem} \label{def:non-normalized-performance-measure}
+	\textit{Non-normalized Performance Measure} is a performance indicator for a group that compensates for unequal group sizes by introducing a weighted bias. The measure operates on a local scale defined by the collection-specific minima and maxima, and is dependent on the number of groups and their respective sizes.
+	
 	\begin{equation}
-		\label{eq:non-normalized}
 		p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+		\label{eq:non-normalized}
 	\end{equation}
+	
+	where, local minima and maxima of the collection is given by:
+	\begin{equation}
+	p_i^{(min, \, non\text{-}normalized)} = 
+	\begin{cases}
+			\frac{8}{k(3N + 2)}
+			 & \text{if, } N \text{ is even} \\
+			\frac{8N}{k (N+1)(3N+1)}, & \text{if, } N \text{ is odd}
+	\end{cases}
+	\end{equation}
+	
+	\begin{equation}
+		p_i^{(max, \, non\text{-}normalized)} = 
+		\begin{cases}
+			\frac{8N}{k(3N + 2)}, & \text{i,f } N \text{ is even} \\
+			\frac{8N^2}{k (N+1)(3N+1)}, & \text{if, } N \text{ is odd}
+		\end{cases}
+	\end{equation}
+	
 	
 	\begin{itemize}
 		\item Sum of Upper Dominant Half ($S_{UDH}$):
@@ -193,9 +220,9 @@ Mathematical derivation, along with its theoretical justification, would be disc
 		\end{align}
 	\end{itemize}
 	
-\end{nonNormalizedPerformanceMeasure}
+\end{theorem}
 
-If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively easy to understand that Group B performance is more dominant, that Group A, simply because Group B occupy the higher ranks, and Group A lower ranks.
+If you see, the \autoref{fig:dominance_Understanding}, its intuitively easy to understand that Group B performance is more dominant, that Group A, simply because Group B occupy the higher ranks, and Group A lower.
 \begin{figure}
     \caption{Visual intuition of the Performance Measure, Performance: Group B > Group A}
     \centering
@@ -205,12 +232,17 @@ If you see, the \hyperref[fig:dominance_Understanding]{Figure 2}, is intuitively
 
 
 
-This non-normalized performance measure would be used later in the paper to derive the normalized version of the formula. Thus, non-normalized performance measure derivation would be discussed first.
+This non-normalized performance measure would be used later in the paper to derive the normalized version of the formula. Thus, non-normalized performance measure, $p_i^{(non\text{-}normalized)}$\footnote{
+	can also be written as, $p_i^{(non\text{-}normalized)} = w_i \cdot p_i^{(biased)} \text{, where, } p_i^{(biased)}= \frac{\sum r_j}{ S_{UDH} }$ discussed in \autoref{def:non-normalized-biased-performance-measure} of the research paper}, derivation would be discussed first.
 
 
 \subsection{Derivation of Non-normalized Performance}
 
-From, the understanding we gain from \hyperref[fig:dominance_Understanding]{Figure 2}, we can easily, ascertain the local dominance, if we divide the scale into two halves of lower ranks half, and upper rank half. So, the group with ranks in the upper half would have a more prominent or dominant performance. So, we need to figure out what's the ranks of the upper dominant half is.
+From, the understanding we gain from \autoref{fig:dominance_Understanding}, we can easily, ascertain the local dominance, if we divide the scale into two halves of lower ranks half, and upper rank half. So, the group with ranks in the upper half would have a more prominent or dominant performance. So, we need to figure out what's the ranks of the upper dominant half is.
+
+\begin{pot}[\ref{def:non-normalized-performance-measure}]
+	 The ratio of ranked sum of the particular group and sum of upper dominant half will indicate a local (biased) performance measure, and subsequently made unbiased for unequal group sizes by introducing a weight bias.
+\end{pot}
 
 \subsubsection{Sum of Upper Dominant Half}
 \begin{enumerate}
@@ -257,8 +289,8 @@ S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
 
 \item{Final Formula}
 \begin{equation}
-\label{eq:SUDH}
 S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
+\label{eq:SUDH}
 \end{equation}
 
 \begin{itemize}
@@ -270,20 +302,28 @@ S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
 \end{itemize}
 \end{enumerate}
 
-\subsubsection*{Non-normalized Performance Formulae (Biased)}
-So, to if we compare the ranked sum of the group with the upper dominant half, we can get a numerical understanding of performance measure value
+\subsubsection{Non-normalized Performance Formulae (Biased)}
+
+
+\begin{theorem}\label{def:non-normalized-biased-performance-measure}
+	Non-normalized Performance Formuale (Biased), is the unweighted performance indicator of the group, indifferent to group sizes, and therefore biased.
 \begin{equation}
-\label{eq:p-biased}
     p_i^{(biased)} = \frac{\sum r_j}{ S_{UDH} }
+ \label{eq:p-biased}
 \end{equation}
 \begin{itemize}
     \item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
     \item \textbf{$S_{UDH}$}: Sum of Upper Dominant Half
 \end{itemize}
+\end{theorem}
 
-As, the formula doesn't take into account weight bias. A high number of items can still occupy lower ranks, but in account of total items in group being large, its ranked sum also gives a higher value. That's why weigh bias was added to adjust this non-normalized performance measure.
+\begin{pot}[\ref{def:non-normalized-biased-performance-measure}]
+	The ratio of ranked sum of the particular group and sum of upper dominant half will indicate a local (biased) performance measure, which is benchmark against upper dominant half ranks in the collection. \autoref{eq:SUDH}, hence, we derive \autoref{eq:non-normalized}
+\end{pot}
 
-\subsubsection*{Weight Bias Derivation}
+As, the formula doesn't take into account weight bias. A high number of items can still occupy lower ranks, but in account of total items in group being large, its ranked sum also gives a higher value. That's why weight bias was added to adjust this non-normalized performance measure.
+
+\subsubsection{Weight Bias Derivation}
 To derive the weight bias ($w_i$), we first understand, that if all the groups have equal number of items, then $w_i = 1$ i.e. no adjustment needed. That means all the groups have the same number of elements in them. The items expected in each group, can be written as:
 \begin{equation}
 X_e = \frac{N}{k}
@@ -308,8 +348,8 @@ then,
 
 in other words, taking $p_i^{(biased)}$ as common, we can rewrite it as
 \begin{equation}
-\label{eq:p-unbiased}
     p_i^{(unbiased)} = p_i^{(biased)} * (1 +  fractional \ change)
+\label{eq:p-unbiased}
 \end{equation}
 
 So, the term needed to adjust from $p_i^{(biased)}$ to $p_i^{(unbiased)}$, can be written as:
@@ -318,8 +358,9 @@ So, the term needed to adjust from $p_i^{(biased)}$ to $p_i^{(unbiased)}$, can b
 \end{equation}
 
 substituting everything we get, the derivation of weight bias:
-\begin{equation}\label{eq:weight-bias}
+\begin{equation}
     w_i = \frac{N}{kn_i}
+\label{eq:weight-bias}
 \end{equation}
 
 where:
@@ -331,15 +372,15 @@ where:
 \end{itemize}
 
 \subsubsection{Final Formula for unbiased (but non\text{-}normalized) Performance Measure}
-Therefore, from \hyperref[eq:SUDH]{Equation 12}, \hyperref[eq:p-biased]{Equation 14},  \hyperref[eq:p-unbiased]{Equation 18}, and \hyperref[eq:weight-bias]{Equation 20}
+Therefore, from \autoref{eq:SUDH}, \autoref{eq:p-biased}, \autoref{eq:p-unbiased}, and \autoref{eq:weight-bias}
 
-we derived unbiased(but non\text{-}normalized) formulae, as stated in the beginning of the section, in \hyperref[eq:non-normalized]{Equation 3}:
+we derived non-normalized performance measure\footnote{In this research paper, $p_i^{(non\text{-}normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non\text{-}normalized)}$ moving forward.}, as stated in the beginning of the section, in \autoref{eq:non-normalized}:
 \begin{equation}
-	\label{p-non-normalized}
     p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+\label{p-non-normalized}
 \end{equation}
 
-Note in this research paper, $p_i^{(non\text{-}normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non\text{-}normalized)}$ moving forward.
+
 
 \section{Normalized Performance Measure}
 
@@ -355,13 +396,13 @@ Given by:
 			P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
 	}
 \end{equation}
-This formulae is the conclusion of whole paper, which is named Normalized Performance Measure.
+This formulae is the conclusion of whole paper, which is named Normalized Performance Measure defined in the begining of paper in \autoref{def:normalized-performance-measure}
 
 \subsection{Derivation of Normalized Performance Measure}
 
 For normalizing the performance we will find the theoretical minima and maxima of non-normalized performance. 
 
-\subsubsection{Minima of Non-normalized Performance Measure}
+\subsubsection{Minima of Non-normalized Performance Measure (case: N is even)}
 
 Thus, we start with the assumption that the net total number of items across all groups is even (odd case would be taken later in the paper), then it is safe to assume that:
 
@@ -377,8 +418,8 @@ Thus, the lower and upper halves would be explicitly:
 Simplifying $S_{UDH}$ by applying the Sum of Arithmetic Progression formulae for the upper half:
 
 \begin{equation}
-	\label{eq:even-SUDH}
 	S_{UDH} = \frac{N(3N + 2)}{8}
+\label{eq:even-SUDH}
 \end{equation}
 
 
@@ -389,9 +430,11 @@ We aim to minimize the non-normalized measure $p_i^{(non\text{-}normalized)}$ de
 
 Substituting everything into our non-normalized measure equation, we get:
 
-\begin{align*}
+\begin{equation}
 	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
-\end{align*}
+	\label{eq:simplified-even-non-normalized}
+\end{equation}
+
 
 As, 
 \begin{equation}
@@ -406,18 +449,19 @@ The minima, depends on $\frac{\sum r_j}{n_i}$. And, for this to be low, $\sum r_
 
 As this is a linearly increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_j}{n_i}$ occurs when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_j}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_j}{n_i} = 1 $
 
-Therefore minima of Non-normalized measure is:
+Therefore when N is even, minima of Non-normalized measure is:
 \begin{equation}
-	\label{eq:minima}
 	p_i^{(min, \, non\text{-}normalized)} = \frac{8}{k(3N + 2)}
+	\label{eq:minima}
 \end{equation}
 
-\subsubsection{Maxima of Non-normalized Performance Measure}
+\subsubsection{Maxima of Non-normalized Performance Measure (case: N is even)}
 Similar to minima, being:
 
-\begin{align*}
+\begin{equation}
 	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
-\end{align*}
+\end{equation}
+
 
 As, 
 \begin{equation}
@@ -439,7 +483,7 @@ hence maximum value comes out to be:
 	\frac{\sum r_j}{n_i} = N
 \end{equation}
  
-Therefore maxima of Non-normalized Measure is:
+Therefore when N is even, maxima of Non-normalized Measure is:
 \begin{equation}
 	\label{eq:maxima}
 	p_i^{(max, \, non\text{-}normalized)} = \frac{8N}{k(3N + 2)}
@@ -448,12 +492,12 @@ Therefore maxima of Non-normalized Measure is:
 \subsubsection{Final formualae of Normalized Performance Measure}
 Normalized Performance measure would be given by:
 \begin{equation}
-	\label{eq:normalized-simpler}
 	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
+	\label{eq:normalized-simpler}
 \end{equation}
 
-Now substituting their corresponding value from \hyperref[p-non-normalized]{Equation 21},  
- \hyperref[eq:even-SUDH]{Equation 23}, \hyperref[eq:minima]{Equation 27} and \hyperref[eq:maxima]{Equation 32}, and simplifying, we get the final form of Normalized Performance Measure:
+Now substituting their corresponding value from \autoref{p-non-normalized},  
+ \autoref{eq:even-SUDH}, \autoref{eq:minima} and \autoref{eq:maxima}, then simplifying, we get the final form of Normalized Performance Measure:
 \begin{equation}
 	\boxed{
 		\mathbf{
@@ -464,10 +508,10 @@ Now substituting their corresponding value from \hyperref[p-non-normalized]{Equa
 	\item \textbf{$P_i$}: Normalized Performance Measure value of the $i^{th}$ group in the range of [0, 1]
 	\item \textbf{$\sum r_j$}: Sum of ranks for group $i$.
 	\item \textbf{$n_i$}: number of elements within the $i^{th}$ group
-	\item \textbf{$N$}: Total number of elements across all group combined. \hfill \break
+	\item \textbf{$N$}: Total number of elements across all group combined.
 \end{itemize}
 
-\subsubsection{Normalized Performance Measure (Scenario: N is odd)}
+\subsubsection{Normalized Performance Measure (case: N is odd)}
 We will not go in thorough detail, but the Normalized performance measure formula is same. Because the, Sum of Upper Dominant half ($S_{UDH}$), maxima and minima just differ slightly in nature. But, as these terms occur in the numerator and denominator, they cancel each other out. And, \textbf{the Normalized Performance Measure remains unchanged}. Just, to be complete, we will just list down the equations, which result in the same formula as above.
 
 As, N is odd, where $N^{(min)} = 3$, because there has to be minimum of two groups, therefore, we will take,
@@ -484,7 +528,7 @@ when N is odd:
 
 \begin{equation}
 	\label{eq:even-SUDH-odd}
-	S_{UDH} = \frac{(N+1)(3N+1)}{8}
+	p_i^{(non\text{-}normalized)} = \frac{8 \sum_{j=1}^{n_i} r_j}{k n_i (3N + 2)}
 \end{equation}
 
 \begin{equation}
@@ -497,8 +541,14 @@ when N is odd:
 	p_i^{(max, \, non\text{-}normalized)} = \frac{8N^2}{k (N+1)(3N+1)}
 \end{equation}
 
-substituting their corresponding value in \hyperref[eq:normalized-simpler]{Equation 33} from \hyperref[p-non-normalized]{Equation 21},  
-\hyperref[eq:even-SUDH-odd]{Equation 35}, \hyperref[eq:minima-odd]{Equation 36} and \hyperref[eq:maxima-odd]{Equation 37}, and simplifying, we get the final form of Normalized Performance Measure (same as when N is even):
+
+We apply min-max normalization given by,
+\begin{equation}
+	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
+\end{equation}
+
+we substitute their corresponding value from
+\autoref{eq:even-SUDH-odd}, \autoref{eq:minima-odd} and \autoref{eq:maxima-odd}, then simplifying, we get the final form of Normalized Performance Measure (same as when N is even):
 \begin{equation}
 	\boxed{
 		\mathbf{
@@ -508,13 +558,13 @@ substituting their corresponding value in \hyperref[eq:normalized-simpler]{Equat
 
 
 \subsubsection{Range of Normalized Performance Measure}
-Minima of $P_i = 0$, which means is the least dominant performance, that means in the entire collection they have a group containing, one element with Rank 1. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(min, \, non\text{-}normalized)}$, thus, putting the value in the \hyperref[eq:normalized-simpler]{Equation 33}, we get:
+Minima of $P_i = 0$, which means is the least dominant performance, that means in the entire collection they have a group containing, one element with Rank 1. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(min, \, non\text{-}normalized)}$, thus, putting the value in the \autoref{eq:normalized-simpler}, we get:
 \begin{equation}
 	P_i^{(min)} = \frac{p_i^{(min, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 0
 \end{equation}
 
 Similarly,
-Maxima of $P_i^{(max)} = 1$, which means is the most dominant performance, that means in the entire collection they have a group containing, one element with Rank $N^{th}$, the highest ranked element possible. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(max, \, non\text{-}normalized)}$, thus, putting the value in the \hyperref[eq:normalized-simpler]{Equation 33}, we get:
+Maxima of $P_i^{(max)} = 1$, which means is the most dominant performance, that means in the entire collection they have a group containing, one element with Rank $N^{th}$, the highest ranked element possible. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(max, \, non\text{-}normalized)}$, thus, putting the value in the \autoref{eq:normalized-simpler}, we get:
 \begin{equation}
 	P_i^{(max)} = \frac{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 1
 \end{equation}
@@ -531,10 +581,10 @@ All mathematical and numerical validation scripts, as well as the full manuscrip
 Normalized Performance Measure indicates a value which tells us the group performance dominance, if it's closer to 1, then that group performed exceptionally well. And, if its closer to 0, then it was a dismissal performance. If, we can establish a relationship between p-Value and Normalized Performance Measure. Then this result can be used to cross-validate Normalized Performance Measure.
 
 \subsubsection{Relationship with p-value}
-With Normalized Performance Measure, there is a intuitive relationship with the significane value. For instance along with Control Group, if we need to know what experimental group performed better or worse. We can apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one or more experimental groups have shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if any experimental group has shown deviation. Now, one question is still left unanswered. Now, is this deviation negative or positive i.e. experimental group performed well or worse than the control group, assuming we have performed two-tailed test for p-value. Now, we can use Normalized Performance Measure to understand, if these experimental groups performed exceptionally well, or dismissal, or about the same.
-This is summarized in the table below:
-\begin{table}[h!tbp]
-	\label{table:p-value-relationship}
+With Normalized Performance Measure, there is a intuitive relationship with the significane value. For instance along with Control Group, if we need to know what experimental group performed better or worse. This can be achieved by following the approach discussed.
+
+Apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one or more experimental groups have shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if any experimental group has shown deviation. Now, one question is still left unanswered. Now, is this deviation negative or positive i.e. experimental group performed well or worse than the control group, (assuming we have performed two-tailed test for p-value). Now, we can use Normalized Performance Measure to understand, if these experimental groups performed exceptionally well, dismissal, or about the same.
+\begin{table}
 	\centering
 	\begin{tabular}{|c|c|l|}
 		\hline
@@ -547,13 +597,12 @@ This is summarized in the table below:
 	\end{tabular}
 	\vspace{2pt}
 	\caption{Interpretation of p-values in relation to deviation and normalized performance}
-	
+	\label{table:p-value-relationship}
 \end{table}
-So, if we are able to show numerically, by taking an example, that the results follow the \hyperref[table:p-value-relationship]{Table 1}, then Normalized Performance Measure can be said to be validated.
-
+So, if we are able to show numerically, by taking an example, that the results follow the same results as in summarized in the \autoref{table:p-value-relationship}, then Normalized Performance Measure can be said to be validated.
 
 \subsubsection{Simulated Data Numerical Cross Validation: Medical Drug Performance}
-To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data is shown in the form of BoxPlot in \hyperref[fig:box-plot]{Figure 3}, 
+To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data is shown in the form of BoxPlot in \autoref{fig:box-plot}, 
 \begin{figure}
 	\caption{Drugs comparison and showing relationship between Permormance Measure and pValue}
 	\centering
@@ -563,9 +612,8 @@ To cross validate the relationship between pValue and Normalized Performance mea
 on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, the results are summarized in the table below:
 	
 
-\begin{table}[h!tbp]
+\begin{table}[!hbtp]
 	\centering
-	\label{table:results-simulated-data}
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{lccccc}
 		\toprule
@@ -584,18 +632,20 @@ on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, th
 	\end{tabular}
 	\vspace{5pt}
 	\caption{Group-wise statistical comparison and normalized performance.}
+	\label{table:results-simulated-data}
 	
 \end{table}
 
 \textbf{Interpretation of Results}:
-As seen in  \hyperref[fig:box-plot]{Figure 3, BoxPlot}, visually, it can be seen that Drug A and Drug C show deviation significantly. This is confirmed numerically in \hyperref[table:results-simulated-data]{Table 2}. Because Kruskal Wallis 'H' Test results in pValue < 0.05 therefore, we need to reject the null hypothesis that "these Drugs Performance belong to the same distribution as of Control Group". Because, there is a deviation amongst the group. Dunnett's test pValue confirms which group has deviated which is Drug A and Drug C. In the normalized performance measure validates the relationship in \hyperref[table:p-value-relationship]{Table 1}, as Drug A is closer 1 (Exceptional Performance), Drug C is closer to 0 (Dismissal Performance) and Drug B shows similar performance measure to control group (closer to 0.5)
+As seen in  \autoref{fig:box-plot}, visually, it can be seen that Drug A and Drug C show deviation significantly. This is confirmed numerically in \autoref{table:results-simulated-data}. Because Kruskal Wallis 'H' Test results in pValue < 0.05 therefore, we need to reject the null hypothesis that "these Drugs Performance belong to the same distribution as of Control Group". Because, there is a deviation amongst the group. Dunnett's test pValue confirms which group has deviated which is Drug A and Drug C. In the normalized performance measure validates the relationship in \autoref{table:p-value-relationship}, as Drug A is closer 1 (Exceptional Performance), Drug C is closer to 0 (Dismissal Performance) and Drug B shows similar performance measure to control group (closer to 0.5)
 
 \subsection{Mathematical Validation: Theoretical Derivation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
 
-A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance_measure]{Python (SymPy) Code Snippet}. This snippet is for: When N is odd, Mathematical Derivation of Normalized Performance Measure.
+A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance_measure]{Python (SymPy) Code Snippet}. This snippet simplifies and factorizes to get Normalized Performance Measure (when N is odd)j, acting as a validation for manual mathematical work.
 
- 	\label{code:snippet_odd_performance_measure}
+\autoref{fig:output-mathematical-validation} shows the output for the same.
+ 	
 \begin{mintedbox}{python}
 	# code snippet
 	
@@ -621,8 +671,9 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 	P_i = (p_i - p_i_min)/(p_i_max - p_i_min)
 	display("Normalized Performance Measure, P_i = ", factor(simplify(P_i)))
 \end{mintedbox}
+\label{code:snippet_odd_performance_measure}
 
-\hyperref[fig:output-mathematical-validation]{Figure 4} shows the output of the Snippet Code
+
 \begin{figure}
 	\caption{Output: Mathematical Derivation of Normalized Performance Measure via SymPy}
 	\centering
@@ -637,7 +688,7 @@ And, one means the group has single element with Rank $N^{th}$ element, highest 
 Any combination of elements in the group will be in the range of [0,1].
 
 We have used this simple numerical example to validate the theoretical Maxima and Minima, where value is same as their rank.
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\caption{Example used for Validation of Range for Normalized Performance Measure}
 	\begin{tabular}{llcc}
@@ -660,7 +711,7 @@ We have used this simple numerical example to validate the theoretical Maxima an
 		III   & 11  & 11  & 1.0 \\
 		\bottomrule
 	\end{tabular}
-	\label{tab:validation}
+	\label{table:validation}
 \end{table}
 
 
@@ -678,7 +729,7 @@ This is numerically validated via Python code, by applying the formulae discusse
 	self.performanceMeasureValue = (-ni + sigma_ri)/(ni*(n-1))
 \end{mintedbox}
 
-\hyperref[fig:output-numerical-validation-minima-maxima]{Figure 4} shows the output of Maxima and Minima Validation.
+\autoref{fig:output-numerical-validation-minima-maxima} shows the output of Maxima and Minima Validation.
 \begin{figure}
 	\caption{Output: Numerical Validation of Range for Normalized Performance Measure via Python}
 	\centering
@@ -704,7 +755,7 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 
 Each group represents a therapy technique and includes post-intervention psychological improvement scores. Higher scores indicate better performance.
 
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{|l|l|}
@@ -726,7 +777,7 @@ Each group represents a therapy technique and includes post-intervention psychol
 
 Ranks are assigned in ascending order. Tied scores receive the average of their rank positions.
 
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{|c|c|c|}
@@ -753,7 +804,7 @@ Ranks are assigned in ascending order. Tied scores receive the average of their 
 
 \subsection*{Step 3: Group-wise Ranked Values}
 
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{|l|l|c|c|}
@@ -783,7 +834,7 @@ Where $N = 15$ (total items).
 
 \noindent Calculated values for each group:
 
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{|l|c|c|c|c|}
@@ -814,7 +865,7 @@ Where $N = 15$ (total items).
 
 \subsection*{Step 6: Final Summary Table}
 
-\begin{table}[!htbp]
+\begin{table}[!hbtp]
 	\centering
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{|l|l|c|c|c|}

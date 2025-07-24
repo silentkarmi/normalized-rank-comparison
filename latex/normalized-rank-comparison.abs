@@ -1,0 +1,1 @@
+This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, mathematical and numerical validations with a detailed example are discussed.
