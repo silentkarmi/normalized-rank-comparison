@@ -644,8 +644,7 @@ Normalized Performance Measure indicates a value which tells us the group perfor
 With Normalized Performance Measure, there is a intuitive relationship with the significane value. For instance along with Control Group, if we need to know what experimental group performed better or worse. This can be achieved by following the approach discussed.
 
 Apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the significance value can be calculated. If p-value $\le$ 0.05, then we can reject the null hypothesis. This means that one or more experimental groups have shown deviation. Now, we can use a post-hoc \cite{dunnett1955multiple} test to see, if any experimental group has shown deviation. Now, one question is still left unanswered. Now, is this deviation negative or positive i.e. experimental group performed well or worse than the control group, (assuming we have performed two-tailed test for p-value). Now, we can use Normalized Performance Measure to understand, if these experimental groups performed exceptionally well, dismissal, or about the same.
-\begin{table}
-	\centering
+\begin{center}
 	\begin{tabular}{|c|c|l|}
 		\hline
 		\textbf{p-value} & \textbf{Deviation} & \textbf{Normalized Performance Measure} \\
@@ -656,24 +655,23 @@ Apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the sig
 		\hline
 	\end{tabular}
 	\vspace{2pt}
-	\caption{Interpretation of p-values in relation to deviation and normalized performance}
+	\captionof{table}{Interpretation of p-values in relation to deviation and normalized performance}
 	\label{table:p-value-relationship}
-\end{table}
+\end{center}
 So, if we are able to show numerically, by taking an example, that the results follow the same results as in summarized in the \autoref{table:p-value-relationship}, then Normalized Performance Measure can be said to be validated.
 
 \subsubsection{Simulated Data Numerical Cross Validation: Medical Drug Performance}
-To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data is shown in the form of BoxPlot in \autoref{fig:box-plot}, 
+To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data\footnote{fictitious data is being used} is shown in the form of BoxPlot in \autoref{fig:box-plot}, 
 \begin{figure}
 	\caption{Drugs comparison and showing relationship between Permormance Measure and pValue}
 	\centering
-	\includegraphics [scale=0.75]{simulation-data-kruskal-dunnett.png}
+	\includegraphics [scale=0.65]{simulation-data-kruskal-dunnett.png}
 	\label{fig:box-plot}
 \end{figure}
 on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, the results are summarized in the table below:
 	
 
-\begin{table}[!hbtp]
-	\centering
+\begin{center}
 	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{lccccc}
 		\toprule
@@ -691,13 +689,12 @@ on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, th
 		\bottomrule
 	\end{tabular}
 	\vspace{5pt}
-	\caption{Group-wise statistical comparison with normalized performance measure. Note: pValue < 0.05 is considered as deviation}
+	\captionof{table}{Group-wise statistical comparison with normalized performance measure. Note: pValue < 0.05 is considered as deviation}
 	\label{table:results-simulated-data}
-	
-\end{table}
+\end{center}
 
 \textbf{Interpretation of Results}:
-As seen in  \autoref{fig:box-plot}, visually, it can be seen that Drug A and Drug C show deviation significantly. This is confirmed numerically in \autoref{table:results-simulated-data}. Because Kruskal Wallis 'H' Test results in pValue < 0.05 therefore, we need to reject the null hypothesis that "these Drugs Performance belong to the same distribution as of Control Group". Because, there is a deviation amongst the group. Dunnett's test pValue confirms which group has deviated which is Drug A and Drug C. If, the deviation indicates best or worst performance is indicated by the Normalized Performance Measure validating the relationship in \autoref{table:p-value-relationship}, as Drug A is closer 1 (Exceptional Performance), Drug C is closer to 0 (Dismissal Performance) and Drug B shows similar performance measure to control group (closer to 0.5)
+As seen in  \autoref{fig:box-plot}, visually, it can be seen that Drug A and Drug C show deviation significantly. This is confirmed numerically in \autoref{table:results-simulated-data}. Because Kruskal Wallis 'H' Test results in pValue < 0.05 therefore, we need to reject the null hypothesis that "these Drugs Performance belong to the same distribution as of Control Group". Because, there is a deviation amongst the group. Dunnett's test pValue confirms which group has deviated which is Drug A and Drug C. If, the deviation indicates best or worst performance is indicated by the Normalized Performance Measure validating the relationship in \autoref{table:p-value-relationship}, as Drug A is closer to 1 (Exceptional Performance), Drug C is closer to 0 (Dismissal Performance) and Drug B shows similar performance measure to control group which is closer to 0.5
 
 \subsection{Mathematical Validation: Theoretical Derivation via SymPy Library in Python}
 To, validate all manual work, the formula also has been derived through mathematical coding via SymPy library using Python Language (a open source replacement tool for Mathematica), written inside a Jupyter Notebook.
@@ -707,8 +704,7 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 \autoref{fig:output-mathematical-validation} shows the output for the same.
  	
 \begin{mintedbox}{python}
-	# code snippet
-	
+	# Python (SymPy) Code Snippet
 	display("N is odd then,")
 	
 	a = (n - 1)/2
@@ -737,7 +733,7 @@ A snippet of the code is hereby attached: \hyperref[code:snippet_odd_performance
 \begin{figure}
 	\caption{Output: Mathematical Derivation of Normalized Performance Measure via SymPy}
 	\centering
-	\includegraphics [scale=1]{output-mathematical-validation.png}
+	\includegraphics [scale=0.75]{output-mathematical-validation.png}
 	\label{fig:output-mathematical-validation}
 \end{figure}
 
@@ -748,9 +744,7 @@ And, one means the group has single element with Rank $N^{th}$ element, highest 
 Any combination of elements in the group will be in the range of [0,1].
 
 We have used this simple numerical example to validate the theoretical Maxima and Minima, where value is same as their rank.
-\begin{table}[!hbtp]
-	\centering
-	\caption{Example used for Validation of Range for Normalized Performance Measure}
+\begin{center}
 	\begin{tabular}{llcc}
 		\toprule
 		\textbf{Group} & \textbf{Member Value} & \textbf{Rank} & \textbf{Normalized Performance Measure} \\
@@ -771,8 +765,9 @@ We have used this simple numerical example to validate the theoretical Maxima an
 		III   & 11  & 11  & 1.0 \\
 		\bottomrule
 	\end{tabular}
+	\captionof{table}{Example used for Validation of Range for Normalized Performance Measure}
 	\label{table:validation}
-\end{table}
+\end{center}
 
 
 This is numerically validated via Python code, by applying the formulae discussed in the research paper, the code snippet is attached below:
@@ -793,7 +788,7 @@ This is numerically validated via Python code, by applying the formulae discusse
 \begin{figure}
 	\caption{Output: Numerical Validation of Range for Normalized Performance Measure via Python}
 	\centering
-	\includegraphics [scale=1]{output-validation-minima-maxima.png}
+	\includegraphics [scale=0.75]{output-validation-minima-maxima.png}
 	\label{fig:output-numerical-validation-minima-maxima}
 \end{figure}
 
