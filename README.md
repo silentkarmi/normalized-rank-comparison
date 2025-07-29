@@ -70,7 +70,7 @@ N = sum of n_i over all groups
 - **`Code/numerical_validation/numerical_validation_kruskal_dunnett_performance_measure/`**  
   Contains scripts and logic applying Kruskal-Wallis H-test and Dunnett post-hoc test for comparing groups on performance.
 
-- **`Code/numerical_validation/code_doc/`**
+- **`Code/numerical_validation/code_doc/`**  
   Contains documentation for the Object Oriented Classes used to write the numerical validation
 
 - **`Code/numerical_validation/numerical_validation_minima_maxima_performance_measure/`**  
