@@ -292,8 +292,8 @@ From, the understanding we gain from \autoref{fig:dominance_Understanding}, we c
 Purpose of the Upper Dominant Half (UDH) is to provide benchmark for performance analysis in rank-based comparisons.
 
 Derivation of $S_{UDH}$:
-\begin{enumerate}[i.]
-\item{
+\begin{enumerate}
+\item[]{
 	Total Rank Sum for a dataset of natural numbers with N items, the total rank sum is
 	\begin{align*}
 		S = 1 + 2 + 3 + \ldots + N
@@ -304,15 +304,15 @@ Derivation of $S_{UDH}$:
 	\end{align*}
 }
 
-\item{
-	Split the Dataset into Halves
+\item[]{
+	Splitting the Dataset into two Halves
 	\begin{itemize}
 	  \item \( a = \lfloor \frac{N}{2} \rfloor \) represents the size of the non-dominant half (lower half).
 	  \item The dominant upper half includes the rank from \( a + 1 \) to \(N^{th}\) rank items.
 	\end{itemize}
 }
 
-\item{Rank Sum of non-dominant Half (lower half) consists of the smallest \( a \) ranks. Its rank sum is:
+\item[]{Rank Sum of non-dominant Half (lower half) consists of the smallest \( a \) ranks. Its rank sum is:
 	\begin{align*}
 		S_{lower} = 1 + 2 + \ldots + a
 	\end{align*}
@@ -322,8 +322,7 @@ Derivation of $S_{UDH}$:
 	\end{align*}
 }
 
-\item{Rank Sum of Dominant Half (Upper Half)
-	The Upper Dominant Half is calculated by subtracting the rank sum of the lower half from the total rank sum:
+\item[]{Rank Sum of Dominant Half (Upper Half) is calculated by subtracting the rank sum of the lower half from the total rank sum:
 	\begin{align*}
 	S_{UDH} = S - S_{lower}
 	\end{align*}
