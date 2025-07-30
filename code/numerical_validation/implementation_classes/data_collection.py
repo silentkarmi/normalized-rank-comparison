@@ -33,7 +33,7 @@ class DataCollection:
         for itemGroup in self.dataCollectionList:
             if performenceIndexLabel:
                 
-                if itemGroup.name == "Control Group":
+                if itemGroup.name == "Control Group" or itemGroup.name == "Control":
                     listLabels.append(itemGroup.name + 
                                     ",\n$P_i=$" + str(round(itemGroup.performanceMeasureValue,2))
                                     )

@@ -121,7 +121,7 @@ linkedin=ninjaadvisor]
 \maketitle
 \section{Introduction}
 This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing unequal number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from worst to best performance on a universal scale, is interpretable and practical, thus can be visualized as 0 to 100\% prominence in performance via $P_i * 100$. 
-This standardized scale can be used to compare within cross-collection with different scales, see the \autoref{fig:superset-collection} to which, this formula can be applied towards.
+This standardized scale can be used to compare within cross-collection with different scales. The \autoref{fig:superset-collection} illustrates towards which scenario, this formula can be applied to.
 \begin{figure}
 	\centering   
     \includegraphics [scale=0.5]{superset_collection.png}
@@ -140,6 +140,8 @@ The following terms are used throughout this paper:
 \begin{definition}
 	\textbf{Performance Measure} is a singular value for the performance of a group on a scale indicating worst to best.
 \end{definition}
+
+The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. While the idea draws inspiration from their work, but applied in the context of assessing multiple group performance comparison having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
 These well-known concepts have been used to derive the formulae:
 \begin{enumerate}[i]
@@ -180,10 +182,8 @@ where,
 This formula is the conclusion of the research paper for distilling the Group Performance Analysis to a simplified formulae for practical application.
 
 \begin{pot}[\ref{thm:normalized-performance-measure}]
-	Normalizing the Non-normalized Performance Measure, $p_i^{(non\text{-}normalized)}$\footnote{See the definition of \autoref{thm:non-normalized-performance-measure}}, into a standardized scale with bounds [0,1], making it independent of the minima and maxima of that particular collection.
+	Normalizing the Non-normalized Performance Measure, $p_i^{(non\text{-}normalized)}$\footnote{the definition of \autoref{thm:non-normalized-performance-measure}}, into a standardized scale with bounds [0,1], making it independent of the minima and maxima of that particular collection.
 \end{pot}
-
-The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. Though, the idea is inspired from their, but applied in terms of assessing performance comparison for multiple groups having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
 \subsection{Applications}
 This is a list of Applications\footnote{There could be applications outside the scope of this paper. But, when designing the formula these listed applications were being considered.} scenario, the formula was designed for:
@@ -346,6 +346,38 @@ where,
 \end{itemize}
 \end{enumerate}
 
+\begin{enumerate}[\textit{Scenario:}] 
+	\item \textbf{N is even} i.e net total number of items across all groups is even then it's safe to assume that:
+	\begin{align*}
+		a = \frac{N}{2}
+	\end{align*}
+	Thus, the lower and upper halves would be explicitly:
+	\[
+	\left[1, \frac{N}{2}\right] \quad \text{and} \quad \left[\frac{N}{2}+1, N\right]
+	\]
+	Simplifying $S_{UDH}$ by applying the Sum of Arithmetic Progression formulae for the upper half:
+	\begin{align*}
+		S_{UDH} = \frac{N(3N + 2)}{8}
+	\end{align*}
+	When N is even, the \autoref{thm:sum-upper-dominant-half} is derived.
+	
+	\item \textbf{N is odd} where $N^{(min)} = 3$, because there has to be minimum of two groups, therefore,  its safe to assume that,
+	\begin{align*}
+		a = \frac{N-1}{2}
+	\end{align*}
+	
+	Thus, the lower and upper halves would be explicitly:
+	\[
+	\left[1, \frac{N-1}{2}\right] \quad \text{and} \quad \left[\frac{N+1}{2}, N\right]
+	\]
+	
+	Applying the sum of arithmetic progression formula to upper half, we get:
+	\begin{align*}
+		S_{UDH} = \frac{(N+1)(3N+1)}{8}
+	\end{align*}
+	Hence, when N is odd, \autoref{thm:sum-upper-dominant-half} is derived.
+\end{enumerate}
+
 \subsubsection{Non-normalized Performance Formulae (Biased)}
 
 
@@ -436,145 +468,128 @@ Substituting their corresponding values, we derived the non-normalized performan
 \label{p-non-normalized}
 \end{align*}
 
-\subsubsection{Minima of Non-normalized Performance Measure (case: N is even)}
-\begin{theorem}
-	
+\subsection{Minima and Maxima of Non-normalized Performance Measure}
+As the \autoref{thm:non-normalized-performance-measure} i.e. Non-normalized performance measure, is not normalized, so it has a collection specific minima and maxima. In this following section we will derive the range. And later use it to normalize the performance measure to derive the final formula.
+\subsubsection{Minima of Non-normalized Performance Measure}
+\begin{theorem}\label{thm:non-normalized-minima}
+	\textbf{Minima for Non-normalized Performance Measure} is the lowest indicator of performance measure for that collection.
+	\begin{equation}
+		p_i^{(min, \, non\text{-}normalized)} =
+		\begin{cases}
+			\frac{8}{k(3N + 2)}, & \text{if, } N \text{ is even} \\
+			\frac{8N}{k (N+1)(3N+1)}, & \text{if, } N \text{ is odd}
+		\end{cases}
+	\end{equation}
 \end{theorem}
-Thus, we start with the assumption that the net total number of items across all groups is even (odd case would be taken later in the paper), then it is safe to assume that:
 
-\begin{align*}
-	a = \frac{N}{2}
-\end{align*}
+\begin{pot}[\ref{thm:non-normalized-minima}]
+	Minimizing \autoref{thm:non-normalized-performance-measure} i.e \textbf{Non-normalized Performance Measure} which in turn dependent on minimizing $\frac{\sum r_j}{n_i}$.
+\end{pot}
+\begin{enumerate}[\textit{Scenario:}] 
+	\item \textbf{N is even} i.e  net total number of items across all groups is even. So, we already know the sum of upper dominant half when n is even from \autoref{thm:sum-upper-dominant-half}. Recapitulating:
+	\begin{align*}
+		S_{UDH} = \frac{N(3N + 2)}{8}
+	\end{align*}
+	We aim to minimize the non-normalized measure $p_i^{(non\text{-}normalized)}$ defined as:
+	\begin{align*}
+		p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
+	\end{align*}
+	Substituting $S_{UDH}$ (from \autoref{thm:sum-upper-dominant-half}) and $w_i$ (from \autoref{thm:weight-bias}) in above, we get:
+	\begin{align*}
+		p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
+		\label{eq:simplified-even-non-normalized}
+	\end{align*}
+	As, 
+	\begin{align*}
+		\frac{8}{k(3N + 2)} = Constant
+	\end{align*}
+	Then it follows that, minima depends on $\frac{\sum r_j}{n_i}$. And, for this to be low, $\sum r_j$ should be low. That means $r_j$ have to occupy the lowest ranks such as 1, 2, 3,... so on. We can rewrite $\frac{\sum r_j}{n_i}$ in this format below:
+	\begin{align*}
+		\frac{\sum r_j}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2} \cdot n_i + \frac{1}{2}
+	\end{align*}
+	As this is a linearly increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_j}{n_i}$ occurs when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_j}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_j}{n_i} = 1 $
+	Therefore when N is even, minima of Non-normalized measure is:
+	\begin{align*}
+		p_i^{(min, \, non\text{-}normalized)} = \frac{8}{k(3N + 2)}
+	\end{align*}
+		Hence, when N is even, we derived the minima in \autoref{thm:non-normalized-minima}
+	\item \textbf{N is odd}, we already know the sum of upper dominant half \begin{align*}
+		S_{UDH} = \frac{(N+1)(3N+1)}{8}
+	\end{align*}
+	Substituting $S_{UDH}$ (from \autoref{thm:sum-upper-dominant-half}) and $w_i$ (from \autoref{thm:weight-bias}) in \autoref{thm:non-normalized-performance-measure}, 
+	we get:
+	\begin{align*}
+		p_i^{(non\text{-}normalized)} = \frac{8N}{k(N+1)(3N+1)} \cdot \frac{\sum r_j}{n_i}
+	\end{align*}
+	We have alredy established that $\frac{\sum r_j}{n_i} = 1$,
+	if we need to minimize the non-normalized performance measure,  we get:
+	\begin{align*}
+		p_i^{(min, \, non\text{-}normalized)} = \frac{8N}{k (N+1)(3N+1)}
+	\end{align*}
+	Hence, when N is odd, we derived the minima in \autoref{thm:non-normalized-minima}
+\end{enumerate}
 
-Thus, the lower and upper halves would be explicitly:
-\[
-\left[1, \frac{N}{2}\right] \quad \text{and} \quad \left[\frac{N}{2}+1, N\right]
-\]
+\subsubsection{Maxima of Non-normalized Performance Measure}
+\begin{theorem}\label{thm:non-normalized-maxima}
+	\textbf{Maxima for Non-normalized Performance Measure} is the highest indicator of performance measure for that collection.
+	\begin{equation}
+		p_i^{(max, \, non\text{-}normalized)} =
+		\begin{cases}
+			\frac{8N}{k(3N + 2)}, & \text{if, } N \text{ is even} \\
+			\frac{8N^2}{k (N+1)(3N+1)}, & \text{if, } N \text{ is odd}
+		\end{cases}
+	\end{equation}
+\end{theorem}
 
-Simplifying $S_{UDH}$ by applying the Sum of Arithmetic Progression formulae for the upper half:
-
-\begin{align*}
-	S_{UDH} = \frac{N(3N + 2)}{8}
-\end{align*}
-
-
-We aim to minimize the non-normalized measure $p_i^{(non\text{-}normalized)}$ defined as:
-\begin{align*}
-	p_i^{(non\text{-}normalized)} = w_i \cdot \frac{\sum r_j}{ S_{UDH} }
-\end{align*}
-
-Substituting everything into our non-normalized measure equation, we get:
-
-\begin{align*}
-	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
-	\label{eq:simplified-even-non-normalized}
-\end{align*}
-
-
-As, 
-\begin{align*}
-	\frac{8}{k(3N + 2)} = Constant
-\end{align*}
-
-Then it follows that, minima depends on $\frac{\sum r_j}{n_i}$. And, for this to be low, $\sum r_j$ should be low. That means $r_j$ have to occupy the lowest ranks such as 1, 2, 3,... so on. We can rewrite $\frac{\sum r_j}{n_i}$ in this format below:
-
-\begin{align*}
-	\frac{\sum r_j}{n_i} = \frac{\frac{n_i}{2}(1+n_i)}{n_i} = \frac{1}{2} \cdot n_i + \frac{1}{2}
-\end{align*}
-
-As this is a linearly increasing line equation with a positive slope ($y = mx + C$), minima of $\frac{\sum r_j}{n_i}$ occurs when $n_i = 1$, as $n_i$ is a natural number and can't be zero or negative, hence, substituting $n_i = 1$, we get, $\frac{\sum r_j}{n_i} = \frac{1}{2} + \frac{1}{2} = 1$, hence  $\frac{\sum r_j}{n_i} = 1 $
-
-Therefore when N is even, minima of Non-normalized measure is:
-\begin{align*}
-	p_i^{(min, \, non\text{-}normalized)} = \frac{8}{k(3N + 2)}
-\end{align*}
-
-\subsubsection{Maxima of Non-normalized Performance Measure (case: N is even)}
-Similar to minima, being:
-
-\begin{align*}
-	p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
-\end{align*}
-
-
-As, 
-\begin{align*}
-	\frac{8}{k(3N + 2)} = Constant
-\end{align*}
-
-Maxima depends on $\frac{\sum r_j}{n_i}$, which needs to be maximized. Therefore, $r_j$ will contain higher ranks, such as N, N-1, N-2,...,k. So, The lowest rank in this arithmetic series can contain is k. Because, there are k groups, that means, each will have at least one element, occupying the lowest ranks, to maximize $\frac{\sum r_j}{n_i}$. That means, first group will contain rank 1, second group will contain rank 2, so on..., and the $k^{th}$ group will have the rest of the elements from rank $k^{th}$ to $N^{th}$ element which we are trying to maximize. Then $\sum r_j$, can be expanded to:
-\begin{align*}
-	\frac{(N-k+1)(N+k)}{2}
-\end{align*}
-As, $n_i$ are the number of elements in the group which is equal to $N-k+1$, then simplifying $\frac{\sum r_j}{n_i}$, we get:
-\begin{align*}
-	\frac{N+k}{2}
-\end{align*}
-
-Now to maximize, we can substitute k with N, as k are number of groups, and the max number of groups would be equal to total number of items in the collection, where each group has just one element.
-hence maximum value comes out to be:
-\begin{align*}
-	\frac{\sum r_j}{n_i} = N
-\end{align*}
-
-Therefore when N is even, maxima of Non-normalized Measure is:
-\begin{align*}
-	p_i^{(max, \, non\text{-}normalized)} = \frac{8N}{k(3N + 2)}
-\end{align*}
-\subsubsection{Normalized Performance Measure: Minima and Maxima (case: N is odd)}
-We will not go in thorough detail, but the Normalized performance measure formula is same. Because the, Sum of Upper Dominant half ($S_{UDH}$), maxima and minima just differ slightly in nature. But, as these terms occur in the numerator and denominator, they cancel each other out. And, \textbf{the Normalized Performance Measure remains unchanged}. Just, to be complete, we will just list down the equations, which result in the same formula as above.
-
-As, N is odd, where $N^{(min)} = 3$, because there has to be minimum of two groups, therefore, we will take,
-\begin{align*}
-	a = \frac{N-1}{2}
-\end{align*}
-
-Thus, the lower and upper halves would be explicitly:
-\[
-\left[1, \frac{N-1}{2}\right] \quad \text{and} \quad \left[\frac{N+1}{2}, N\right]
-\]
-
-when N is odd:
-
-\begin{align*}
-	S_{UDH} = \frac{(N+1)(3N+1)}{8}
-\end{align*}
-
-Substituting  $S_{UDH}$ in \autoref{thm:non-normalized-performance-measure}, 
-we get:
-
-\begin{align*}
-	p_i^{(non\text{-}normalized)} = \frac{8N}{k(N+1)(3N+1)} \cdot \frac{\sum r_j}{n_i}
-\end{align*}
-
-We have alredy established that $\frac{\sum r_j}{n_i} = 1$,
-if we need to minimize the non-normalized performance measure:
-
-\begin{align*}
-	p_i^{(min, \, non\text{-}normalized)} = \frac{8N}{k (N+1)(3N+1)}
-\end{align*}
-
-And, for maximizing, we need to substitue
-$
-	\frac{\sum r_j}{n_i}
-$ with $N$
-\begin{align*}
-	p_i^{(max, \, non\text{-}normalized)} = \frac{8N^2}{k (N+1)(3N+1)}
-\end{align*}
-
-
-We apply min-max normalization given by,
-\begin{align*}
-	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
-\end{align*}
-
-we substitute their corresponding values to get the final form of Normalized Performance Measure (same as when N is even):
-\begin{align*}
-	\boxed{
-		\mathbf{
-			P_i = \frac{-n_i +  \sum\limits_{j=1}^{n_i} r_j}{n_i \cdot (N - 1)}}
-	}
-\end{align*}
+\begin{pot}[\ref{thm:non-normalized-maxima}]
+	Maximizing \autoref{thm:non-normalized-performance-measure} i.e \textbf{Non-normalized Performance Measure} which in turn dependent on maximizing $\frac{\sum r_j}{n_i}$.
+\end{pot}
+\begin{enumerate}[\textit{Scenario:}] 
+	\item \textbf{N is even}, Similar in how we derived the minima, we need to maximize the non-normalize performance measure:
+	\begin{align*}
+		p_i^{(non\text{-}normalized)} = \frac{8}{k(3N + 2)}\cdot \frac{\sum r_j}{n_i}
+	\end{align*}
+	As we already know, 
+	\begin{align*}
+		\frac{8}{k(3N + 2)} = Constant
+	\end{align*}
+	Maxima depends on $\frac{\sum r_j}{n_i}$, which needs to be maximized. Therefore, $r_j$ will contain higher ranks, such as $N, N-1, N-2,... ,k$. So, the lowest rank in this arithmetic series can contain is k. Because, there are k groups, that means, each will have at least one element, occupying the lowest ranks, to maximize $\frac{\sum r_j}{n_i}$. That means, first group will contain rank 1, second group will contain rank 2, so on..., and the $k^{th}$ group will have the rest of the elements from rank $k^{th}$ to $N^{th}$ element which we are trying to maximize. Then $\sum r_j$, as sum of the arithmetic series  $N, N-1, N-2,... ,k$ can be simplified to:
+	\begin{align*}
+		\sum r_j = \frac{(N-k+1)(N+k)}{2}
+	\end{align*}
+	As, $n_i$ are the number of elements in the group which is equal to $N-k+1$, then simplifying $\frac{\sum r_j}{n_i}$, by substituting their corresponding values:
+	\begin{align*}
+		\frac{\sum r_j}{n_i} = \frac{N+k}{2}
+	\end{align*}
+	Now to maximize, we can substitute k with N, as k are number of groups, and the max number of groups would be equal to total number of items in the collection, where each group has just one element.
+	hence maximum value comes out to be:
+	\begin{align*}
+		\frac{\sum r_j}{n_i} = N
+	\end{align*}
+	
+	Therefore maxima of Non-normalized Measure is:
+	\begin{align*}
+		p_i^{(max, \, non\text{-}normalized)} = \frac{8N}{k(3N + 2)}
+	\end{align*}
+	Hence, when N is even, \autoref{thm:non-normalized-maxima} derived.
+	\item \textbf{N is odd}, then we already know sum of upper dominant half for it from \autoref{thm:sum-upper-dominant-half}:
+	\begin{align*}
+		S_{UDH} = \frac{(N+1)(3N+1)}{8}
+	\end{align*}
+	
+	Substituting $S_{UDH}$ (from \autoref{thm:sum-upper-dominant-half}) and $w_i$ (from \autoref{thm:weight-bias}) in \autoref{thm:non-normalized-performance-measure}, 
+	we get:
+	
+	\begin{align*}
+		p_i^{(non\text{-}normalized)} = \frac{8N}{k(N+1)(3N+1)} \cdot \frac{\sum r_j}{n_i}
+	\end{align*}
+	As we already established, that to maximize, we need to equate $\frac{\sum r_j}{n_i} = N$.
+	Therefore,
+	\begin{align*}
+		p_i^{(max, \, non\text{-}normalized)} = \frac{8N^2}{k(N+1)(3N+1)}
+	\end{align*}
+	Hence, when N is odd, \autoref{thm:non-normalized-maxima} derived.
+\end{enumerate}
 
 \section{Normalized Performance Measure}
 
@@ -594,16 +609,13 @@ This formulae is the conclusion of whole paper, which is named Normalized Perfor
 
 \subsection{Derivation of Normalized Performance Measure}
 
-For normalizing the performance we will find the theoretical minima and maxima of non-normalized performance. 
-
-\subsubsection{Final formualae of Normalized Performance Measure}
-Normalized Performance measure would be given by:
+So, now to normalize the \textbf{Non-normalize Performance Measure}, we will apply the formula below:
 \begin{align*}
 	P_i = \frac{p_i^{(non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}
 	\label{eq:normalized-simpler}
 \end{align*}
 
-Now substituting their corresponding values we get the final form of Normalized Performance Measure:
+Now substituting their corresponding values, from \autoref{thm:non-normalized-performance-measure}, \autoref{thm:non-normalized-minima} and \autoref{thm:non-normalized-maxima}, and simplifying we get the final form of Normalized Performance Measure:
 \begin{align*}
 	\boxed{
 		\mathbf{
@@ -617,14 +629,14 @@ Now substituting their corresponding values we get the final form of Normalized 
 	\item[] \textbf{$N$}: Total number of elements across all group combined.
 \end{itemize}
 
-\subsubsection{Range of Normalized Performance Measure}
-Minima of $P_i = 0$, which means is the least dominant performance, that means in the entire collection they have a group containing, one element with Rank 1. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(min, \, non\text{-}normalized)}$, thus, putting the value in the \autoref{eq:normalized-simpler}, we get:
+\subsection{Range of Normalized Performance Measure}
+Minima of Normalized Performance Measure, $P_i = 0$. In other words, is the least dominant performance in the entire collection. This happens when a group contains one element with Rank 1. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(min, \, non\text{-}normalized)}$, and normalizing the non-performance measure, we will get:
 \begin{equation}
 	P_i^{(min)} = \frac{p_i^{(min, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 0
 \end{equation}
 
 Similarly,
-Maxima of $P_i^{(max)} = 1$, which means is the most dominant performance, that means in the entire collection they have a group containing, one element with Rank $N^{th}$, the highest ranked element possible. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(max, \, non\text{-}normalized)}$, thus, putting the value in the \autoref{eq:normalized-simpler}, we get:
+Maxima of $P_i^{(max)} = 1$. In other words, is the most dominant performance in the entire collection. This happens when a group contains one element with Rank $N^{th}$, the highest ranked element possible. Mathematically, $p_i^{(non\text{-}normalized)} =  p_i^{(max, \, non\text{-}normalized)}$, and normalizing the non-performance measure, we will get:
 \begin{equation}
 	P_i^{(max)} = \frac{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}}{p_i^{(max, \, non\text{-}normalized)} - p_i^{(min, \, non\text{-}normalized)}} = 1
 \end{equation}
@@ -672,7 +684,6 @@ on which we have performed the Kruskal Wallis H Test and Dunnett's Test. And, th
 	
 
 \begin{center}
-	\renewcommand{\arraystretch}{1.3}
 	\begin{tabular}{lccccc}
 		\toprule
 		\textbf{Group} &
@@ -770,12 +781,10 @@ We have used this simple numerical example to validate the theoretical Maxima an
 \end{center}
 
 
-This is numerically validated via Python code, by applying the formulae discussed in the research paper, the code snippet is attached below:
-
-
+This is numerically validated via Python code, by applying the formulae discussed in the research paper, the \hyperref[code:numerical-validation-minima-maxima]{Code Snippet: Numerical Maxima and Minima Validation} is attached below:
 \begin{mintedbox}{python}
 	def setPerformanceMeasureValue(self):
-	"""Calculates the normalized performance value, using the formula in the research paper
+	"""Calculates the normalized performance value, using the formula
 	"""
 	ni = self.getElementCount()
 	sigma_ri = self.getRankedGroupSum()
@@ -783,8 +792,9 @@ This is numerically validated via Python code, by applying the formulae discusse
 	k = self.parent.getNumberOfGroups()
 	self.performanceMeasureValue = (-ni + sigma_ri)/(ni*(n-1))
 \end{mintedbox}
+\label{code:numerical-validation-minima-maxima}
 
-\autoref{fig:output-numerical-validation-minima-maxima} shows the output of Maxima and Minima Validation.
+See \autoref{fig:output-numerical-validation-minima-maxima}, the output for the \hyperref[code:numerical-validation-minima-maxima]{Code Snippet: Numerical Maxima and Minima Validation}.
 \begin{figure}
 	\caption{Output: Numerical Validation of Range for Normalized Performance Measure via Python}
 	\centering
@@ -803,11 +813,9 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 	\item Tied ranks (items's frequency $>=1$)
 	\item Total number of participants is odd ($N = 15$)
 \end{itemize}
-\pagebreak
 \begin{enumerate}[Step 1.]
 	\item Data-set: Each group represents a therapy technique, where participant's give a post-therapy feedback out of 15. Higher scores indicate better performance. Control groups are the participants, who just spent time alone with their thoughts. All the participants are going through a tough life situation of Divorce.\footnote{Fictitious data used for demonstration purposes only and doesn't represent the true effectiveness of the therapy}
 	\begin{center}
-		\renewcommand{\arraystretch}{1.3}
 		\begin{tabular}{|l|l|}
 			\hline
 			\textbf{Group} & \textbf{Post-Therapy Scores} \\
@@ -815,7 +823,7 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 			Control (n = 3) & 6, 12, 12 \\
 			CBT (n = 5) & 14, 15, 13, 13, 15 \\
 			Mindfulness (n = 4) & 9, 8, 8, 7 \\
-			Psychoanalytic (n = 3) & 2, 1, 3 \\
+			Psychoanalysis (n = 3) & 2, 1, 3 \\
 			\hline
 		\end{tabular}
 		\captionof{table}{Post-therapy improvement scores by group}
@@ -823,7 +831,6 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 	
 	\item Assign Ranks (Handling Ties): Ranks are assigned in ascending order. Tied scores receive the average of their rank positions.
 	\begin{center}
-		\renewcommand{\arraystretch}{1.3}
 		\begin{tabular}{|c|c|c|}
 			\hline
 			\textbf{Score} & \textbf{Frequency} & \textbf{Assigned Rank} \\
@@ -843,10 +850,8 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 		\end{tabular}
 		\captionof{table}{Assigned ranks (ties averaged)}
 	\end{center}
-	\pagebreak
 	\item Group-wise Ranked Values:
 	\begin{center}
-		\renewcommand{\arraystretch}{1.3}
 		\begin{tabular}{|l|l|c|c|}
 			\hline
 			\textbf{Group} & \textbf{Ranks} & $\sum r_j$ & $n_i$ \\
@@ -854,7 +859,7 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 			Control & 4, 9.5, 9.5 & 23 & 3 \\
 			CBT & 13, 14.5, 11.5, 11.5, 14.5 & 65 & 5 \\
 			Mindfulness & 8, 6.5, 6.5, 5 & 26 & 4 \\
-			Psychoanalytic & 2, 1, 3 & 6 & 3 \\
+			Psychoanalysis & 2, 1, 3 & 6 & 3 \\
 			\hline
 		\end{tabular}
 		\captionof{table}{Group-wise ranks and rank sums}
@@ -867,7 +872,6 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 	Where $N = 15$ (total items).
 	Calculated values for each group:
 	\begin{center}
-		\renewcommand{\arraystretch}{1.3}
 		\begin{tabular}{|l|c|c|c|c|}
 			\hline
 			\textbf{Group} & $n_i$ & $\sum r_j$ & Formula Result & $P_i$ \\
@@ -875,7 +879,7 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 			Control & 3 & 23 & $\frac{-3 + 23}{3 \times 14}$ & 0.476 \\
 			CBT & 5 & 65 & $\frac{-5 + 65}{5 \times 14}$ & 0.857 \\
 			Mindfulness & 4 & 26 & $\frac{-4 + 26}{4 \times 14}$ & 0.393 \\
-			Psychoanalytic & 3 & 6 & $\frac{-3 + 6}{3 \times 14}$ & 0.071 \\
+			Psychoanalysis & 3 & 6 & $\frac{-3 + 6}{3 \times 14}$ & 0.071 \\
 			\hline
 		\end{tabular}
 		\captionof{table}{Normalized Performance Calculations}
@@ -883,13 +887,21 @@ To explicitly demonstrate the utility and robustness of the Normalized Performan
 	
 	\item Interpretation of Performance Values
 	\begin{itemize}
+		\item \textbf{Control}: $P_i = 0.476$ → Baseline for performance
 		\item \textbf{CBT}: $P_i = 0.857$ → Exceptional group performance
-		\item \textbf{Psychoanalytic}: $P_i = 0.071$ → Dismissal performance
-		\item \textbf{Control}: $P_i = 0.476$ → Mid-performing (baseline)
 		\item \textbf{Mindfulness}: $P_i = 0.393$ → Slightly below Control
+		\item \textbf{Psychoanalysis}: $P_i = 0.071$ → Dismissal performance
 	\end{itemize}
-
 \end{enumerate}
+These results are also shown via code: \autoref{fig:box-plot-detailed-example-output}. And they also confirm to the \autoref{table:p-value-relationship} i.e. pValue of CBT and Psychoanalysis <= 0.05, and deviated from the control group, indicating exceptional and dismissal performance respectively.
+\begin{figure}
+	\caption{Output of the Detailed Example via Python Code:}
+	\centering
+	\includegraphics [scale=0.65]{output-detailed-example.png}
+	\label{fig:box-plot-detailed-example-output}
+\end{figure}
+\section{Conclusion}
+This work methodically introduced a novel approach to Group Performace Analysis for even unequal group elements, by deriving the Normalized Performance Measure which indicates the performance on a universal scale of range [0, 1] where 0 and 1 denotes the worst and best performance respectively.
 
 \pagebreak
 \bibliographystyle{refs-model}
