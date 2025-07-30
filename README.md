@@ -44,8 +44,9 @@ N = sum of n_i over all groups
 │ │ │ ├── data_group.py
 │ │ │ └── data_element.py
 | | | ├── code_doc/
-│ │ ├── numerical_validation_kruskal_dunnett_performance_measure
-│ │ └── numerical_validation_minima_maxima_performance_measure
+│ │ ├── numerical_validation_kruskal_dunnett_performance_measure.py
+│ │ └── numerical_validation_minima_maxima_performance_measure.py
+| | └──numerical_validation_detailed_example_execution.py
 │ └── mathematical_validation/
 │ └── mathematical_validation_normalized_performacne_measure.ipynb
 ├── Latex
@@ -70,11 +71,14 @@ N = sum of n_i over all groups
   - `data_collection.py`: Manages multiple groups.  
   - `__init__.py`: Initializes the folder as a Python module.
 
-- **`Code/numerical_validation/numerical_validation_kruskal_dunnett_performance_measure/`**  
+- **`Code/numerical_validation/numerical_validation_kruskal_dunnett_performance_measure.py`**  
   Contains scripts and logic applying Kruskal-Wallis H-test and Dunnett post-hoc test for comparing groups on performance.
 
-- **`Code/numerical_validation/numerical_validation_minima_maxima_performance_measure/`**  
+- **`Code/numerical_validation/numerical_validation_minima_maxima_performance_measure.py`**  
   Focuses on normalized scoring based on identifying minima and maxima in rank comparison.
+
+- **`Code/numerical_validation/numerical_validation_detailed_example_execution.py`**  
+  Detailed Example Implementation, which results are posted in the research paper
 
 - **`Code/mathematical_validation/`**  
   Symbolic or mathematical validation of the Normalized Performance Measure.  
