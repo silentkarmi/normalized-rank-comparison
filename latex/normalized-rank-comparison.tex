@@ -100,19 +100,21 @@ linkedin=ninjaadvisor]
 \credit{}
 
 \begin{abstract}
-	 A non-parametric method is introduced for evaluating group-level performance based on rank sums and a multiplicative corrective adjustment, termed weight bias, that compensates for unequal group sizes. The resulting measure is scale-normalized to [0,1], enabling interpretable performance comparisons within and across collections. Formal derivations, mathematical validation, and a numerical example are provided.
+	 A non-parametric method is introduced for evaluating group-level performance based on rank sums and a multiplicative corrective factor, termed weight bias, that adjusts for unequal group sizes. The resulting measure is scale-normalized to [0,1], enabling interpretable performance comparisons within and across collections. Formal derivations, mathematical and numerical validation, acluding cross-validation against established statistical methods, are provided.
 \end{abstract}
 
-%\begin{graphicalabstract}
-%	\centering
-%	\includegraphics[scale=0.5]{dominance-intuition}
-%\end{graphicalabstract}
-%
-%\begin{highlights}
-%	\item Research highlights item 1
-%	\item Research highlights item 2
-%	\item Research highlights item 3
-%\end{highlights}
+\begin{graphicalabstract}
+	\centering
+	\includegraphics[scale=0.33]{Graphical-Abstract-for-Group-Performance-Analysis}
+\end{graphicalabstract}
+
+\begin{highlights}
+	\item A novel non-parametric method is presented for evaluating group performance, introducing a scale-normalized measure that adjusts for unequal group sizes and enables direct comparisons.
+	\item The method quantifies group performance on a universal, interpretable scale from 0 (least dominant) to 1 (most dominant), offering a practical approach to assessing performance magnitude.
+	\item The measure's theoretical foundation is validated through a combination of formal mathematical derivations, numerical cross-validation against established statistical tests (Kruskal-Wallis H test and Dunnett’s test), and a comprehensive numerical example.
+	\item This approach complements existing statistical methodologies by answering "what Deviation?" on a practical scale, as opposed to solely identifying the presence ("is Deviation?" i.e. Kruskal-Wallis H test) or location ("where Deviation?" i.e. Dunnett's test) of differences among groups.
+	\item The formula is designed for wide applicability across diverse fields such as psychology, medicine, education, and business, where group performance comparisons with unequal sample sizes are common.
+\end{highlights}
 
 \begin{keywords}
 	Non-Parametric Method \sep 
@@ -665,6 +667,8 @@ Apply, \cite{kruskal1952use} H Test. Then, using the 'H' characteristic, the sig
 \end{center}
 So, if we are able to show numerically, by taking an example, that the results follow the same results as in summarized in the \autoref{table:p-value-relationship}, then Normalized Performance Measure can be said to be validated.
 
+A more detailed theoretical exploration of the relationship between the Normalized Performance Measure and p-values is an area for future research.
+
 \subsubsection{Simulated Data Numerical Cross Validation: Medical Drug Performance}
 To cross validate the relationship between pValue and Normalized Performance measure, along with a Control Group, we would compare three experimental groups with Drug A, Drug B and Drug C. This simulated data\footnote{fictitious data is being used} is shown in the form of BoxPlot in \autoref{fig:box-plot}, 
 \begin{figure}
@@ -890,11 +894,11 @@ These results are also shown via code: \autoref{fig:box-plot-detailed-example-ou
 \begin{figure}
 	\caption{Output of the Detailed Example via Python Code:}
 	\centering
-	\includegraphics [scale=0.65]{output-detailed-example.png}
+	\includegraphics [scale=0.55]{output-detailed-example.png}
 	\label{fig:box-plot-detailed-example-output}
 \end{figure}
 \section{Conclusion}
-This study presents a non-parametric method for evaluating group-level performance, incorporating a normalization procedure that compensates for unequal group sizes. The resulting measure maps group performance onto a universal scale from 0 (worst) to 1 (best), enabling interpretable comparisons both within and across collections.
+This study presents a non-parametric method for evaluating group-level performance, incorporating a normalization procedure that adjusts for unequal group sizes. The resulting measure maps group performance onto a universal scale from 0 (worst) to 1 (best), enabling interpretable comparisons both within and across collections. In contrast to established methods, which determine the presence of a statistically significant difference (e.g., Kruskal-Wallis H Test) or identify specific deviations (e.g., Dunnett's Test), the Normalized Performance Measure provides a quantifiable and practical scale to assess the magnitude of group deviation.
 
 \pagebreak
 \bibliographystyle{refs-model}
