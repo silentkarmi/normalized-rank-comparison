@@ -77,7 +77,7 @@
 \shortauthors{Kartikeya Mishra}
 
 
-\title [mode = title]{A \textsf{Novel} Method for Ranking Group Performance}            
+\title [mode = title]{A Non-Parametric, Rank-Based Method for Scale-Normalized Evaluation of Group Performance with Unequal Group Sizes}            
 \tnotemark[1]
 
 \tnotetext[1]{This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.}          
@@ -100,7 +100,7 @@ linkedin=ninjaadvisor]
 \credit{}
 
 \begin{abstract}
-	This paper introduces a novel non-parametric method for calculating group-level performance scores, incorporating rank sums, weight bias adjustments for unequal group sizes, and cross-collection interpretability. Theoretical derivations, mathematical and numerical validations with a detailed example are discussed.
+	 A non-parametric method is introduced for evaluating group-level performance based on rank sums and a multiplicative corrective adjustment, termed weight bias, that compensates for unequal group sizes. The resulting measure is scale-normalized to [0,1], enabling interpretable performance comparisons within and across collections. Formal derivations, mathematical validation, and a numerical example are provided.
 \end{abstract}
 
 %\begin{graphicalabstract}
@@ -115,13 +115,16 @@ linkedin=ninjaadvisor]
 %\end{highlights}
 
 \begin{keywords}
-	Normalized Rank Comparison \sep Performance Analysis \sep Weighted Bias  \sep Statistical Methods
+	Non-Parametric Method \sep 
+	Group Performance Evaluation \sep
+	Scale-Normalized Measure \sep 
+	Unequal Group Sizes \sep 
+	Weight Bias Adjustment 
 \end{keywords}
 %\end{frontmatter}
 \maketitle
 \section{Introduction}
-This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing unequal number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from worst to best performance on a universal scale, is interpretable and practical, thus can be visualized as 0 to 100\% prominence in performance via $P_i * 100$. 
-This standardized scale can be used to compare within cross-collection with different scales. The \autoref{fig:superset-collection} illustrates towards which scenario, this formula can be applied to.
+This formula can numerically identify the performance of a group $P_i$ within a collection of groups containing unequal number of elements. This novel approach takes into account weight bias inherent in the formula itself. The performance measure, $P_i$ numerically falls in the normalized range of [0,1] from worst to best performance on a universal scale, is interpretable and practical, thus can be visualized as 0 to 100\% prominence in performance via $P_i * 100$. This standardized scale can be used to compare within cross-collection with different scales. The \autoref{fig:superset-collection} illustrates towards which scenario, this formula can be applied to.
 \begin{figure}
 	\centering   
     \includegraphics [scale=0.5]{superset_collection.png}
@@ -141,7 +144,7 @@ The following terms are used throughout this paper:
 	\textbf{Performance Measure} is a singular value for the performance of a group on a scale indicating worst to best.
 \end{definition}
 
-The inspiration for the formula came from the idea from \cite{mann1947test}, which uses median to calculate p-value significance. While the idea draws inspiration from their work, but applied in the context of assessing multiple group performance comparison having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
+The inspiration for the formula came from \cite{mann1947test}, which uses median to calculate p-value significance. While the idea draws inspiration from their work, but applied in the context of assessing multiple group performance comparison having unequal elements, and expanded to create a standardize scale with cross-collection interpretability.
 
 These well-known concepts have been used to derive the formulae:
 \begin{enumerate}[i]
@@ -324,18 +327,11 @@ Derivation of $S_{UDH}$:
 	\begin{align*}
 	S_{UDH} = S - S_{lower}
 	\end{align*}
-	Substituting the formulas:
+	Substituting the formulas, we get the Sum of Upper Dominant Half:
 	\begin{align*}
 	S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
 	\end{align*}
 }
-
-\item{Final Formula for Sum of Upper Dominant Half:}
-\begin{align*}
-S_{UDH} = \frac{N(N + 1)}{2} - \frac{a(a+1)}{2}
-\label{eq:SUDH}
-\end{align*}
-
 where,
 \begin{itemize}
   \item[] \( N \): Total number of items.
@@ -456,12 +452,9 @@ Hence, \autoref{thm:weight-bias} derived.
 \subsubsection{Final Formula for unbiased (but non\text{-}normalized) Performance Measure}
 
 As mentioned earlier, biased performance measure is made unbiased by multiplying the adjustment factor (weight bias). Therefore, from \autoref{thm:non-normalized-biased-performance-measure} and \autoref{thm:weight-bias}, we can write:
-
 \begin{align*}
 	p_i^{(non\text{-}normalized)} = w_i * p^{(biased)}
 \end{align*}
-
-
 Substituting their corresponding values, we derived the non-normalized performance measure\footnote{In this research paper, $p_i^{(non\text{-}normalized)}$ = $p_i^{(unbiased)}$ are same, but for standardization sake, we will use $p_i^{(non\text{-}normalized)}$ moving forward.}, as stated in the beginning of the section, in \autoref{thm:non-normalized-performance-measure}:
 \begin{align*}
     p_i^{(non\text{-}normalized)} = \frac{N}{k n_i} \cdot \frac{\sum r_j}{ S_{UDH} }
@@ -512,8 +505,9 @@ As the \autoref{thm:non-normalized-performance-measure} i.e. Non-normalized perf
 	\begin{align*}
 		p_i^{(min, \, non\text{-}normalized)} = \frac{8}{k(3N + 2)}
 	\end{align*}
-		Hence, when N is even, we derived the minima in \autoref{thm:non-normalized-minima}
-	\item \textbf{N is odd}, we already know the sum of upper dominant half \begin{align*}
+		Hence, when N is even, we derived the minima in \autoref{thm:non-normalized-minima}.
+	\item \textbf{N is odd}, we already know the Sum of Upper Dominant Half: 
+	\begin{align*}
 		S_{UDH} = \frac{(N+1)(3N+1)}{8}
 	\end{align*}
 	Substituting $S_{UDH}$ (from \autoref{thm:sum-upper-dominant-half}) and $w_i$ (from \autoref{thm:weight-bias}) in \autoref{thm:non-normalized-performance-measure}, 
@@ -526,7 +520,7 @@ As the \autoref{thm:non-normalized-performance-measure} i.e. Non-normalized perf
 	\begin{align*}
 		p_i^{(min, \, non\text{-}normalized)} = \frac{8N}{k (N+1)(3N+1)}
 	\end{align*}
-	Hence, when N is odd, we derived the minima in \autoref{thm:non-normalized-minima}
+	Hence, when N is odd, we derived the minima in \autoref{thm:non-normalized-minima}.
 \end{enumerate}
 
 \subsubsection{Maxima of Non-normalized Performance Measure}
@@ -901,7 +895,7 @@ These results are also shown via code: \autoref{fig:box-plot-detailed-example-ou
 	\label{fig:box-plot-detailed-example-output}
 \end{figure}
 \section{Conclusion}
-This work methodically introduced a novel approach to Group Performace Analysis for even unequal group elements, by deriving the Normalized Performance Measure which indicates the performance on a universal scale of range [0, 1] where 0 and 1 denotes the worst and best performance respectively.
+This study presents a non-parametric method for evaluating group-level performance, incorporating a normalization procedure that compensates for unequal group sizes. The resulting measure maps group performance onto a universal scale from 0 (worst) to 1 (best), enabling interpretable comparisons both within and across collections.
 
 \pagebreak
 \bibliographystyle{refs-model}
